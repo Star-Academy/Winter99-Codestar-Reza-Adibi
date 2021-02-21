@@ -27,8 +27,7 @@ public class InvertedIndex {
      * @param content text of document.
      */
     public void AddDocumet(String id, String content) {
-        String lowerCaseContent = content.toLowerCase();
-        String[] words = lowerCaseContent.split("[, ?.@]+");
+        String[] words = content.toLowerCase().split("\\W+");
         int wordsCount = 0;
         for (String word : words) {
             // todo: get word's base and filter usless words.
