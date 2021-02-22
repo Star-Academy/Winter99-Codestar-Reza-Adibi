@@ -11,6 +11,9 @@ public class Main {
         // System.out.println(invertedIndex.invertedIndexMap);
         ArrayList words = new ArrayList<String>();
         words.add("is");
-        System.out.println(Filterer.AndWords(invertedIndex, null, words));
+        words.add("file");
+        words.add("document");
+        // System.out.println(Filterer.AndWords(invertedIndex, null, words));
+        System.out.println(Filterer.OrWords(invertedIndex, null, words));
     }
 }
