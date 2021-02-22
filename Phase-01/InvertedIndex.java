@@ -50,10 +50,22 @@ public class InvertedIndex {
     }
 
     /**
-     * return true if this data structure contains no word. 
-     * @return return {@code true} if this data structure contains no word otherwise return {@code false}.
+     * return true if this data structure contains no word.
+     * 
+     * @return return {@code true} if this data structure contains no word otherwise
+     *         return {@code false}.
      */
     public boolean IsEmpty() {
         return invertedIndexMap.isEmpty();
+    }
+
+    /**
+     * Returns {@code true} if this data structure contains the word.
+     * 
+     * @param word word whose presence in this data structure is to be tested.
+     * @return return {@code true} if this data structure contains the word.
+     */
+    public boolean containsWord(String word) {
+        return invertedIndexMap.containsKey(word);
     }
 }
