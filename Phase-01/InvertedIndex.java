@@ -10,9 +10,9 @@ public class InvertedIndex {
     }
 
     /**
-     * get multuple contents( strings ) and add their words to InvertedIndex.
+     * get multuple contents( {@code String} ) and add their words to InvertedIndex.
      * 
-     * @param docs Map( documentName => documentText ).
+     * @param docs Map( document Name => document Text ).
      */
     public void AddDocumets(Map<String, String> docs) {
         for (String docID : docs.keySet()) {
@@ -21,9 +21,9 @@ public class InvertedIndex {
     }
 
     /**
-     * get single content( string ) and add its words to InvertedIndex.
+     * get single content( {@code String} ) and add its words to InvertedIndex.
      * 
-     * @param id      name of document.
+     * @param id      id of document.
      * @param content text of document.
      */
     public void AddDocumet(String id, String content) {
@@ -43,9 +43,17 @@ public class InvertedIndex {
      * search for a word in all indexed documents.
      * 
      * @param word the word that you want to search for it.
-     * @return Map( documentName => word indexes ).
+     * @return Map( document Name => word indexes ).
      */
     public Map<String, ArrayList<Integer>> SearchForWord(String word) {
         return invertedIndexMap.get(word);
+    }
+
+    /**
+     * return true if this data structure contains no word. 
+     * @return return {@code true} if this data structure contains no word otherwise return {@code false}.
+     */
+    public boolean IsEmpty() {
+        return invertedIndexMap.isEmpty();
     }
 }
