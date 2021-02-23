@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Main {
@@ -11,9 +12,10 @@ public class Main {
         // System.out.println(invertedIndex.invertedIndexMap);
         ArrayList words = new ArrayList<String>();
         words.add("is");
-        words.add("file");
-        words.add("document");
-        // System.out.println(Filterer.AndWords(invertedIndex, null, words));
-        System.out.println(Filterer.OrWords(invertedIndex, null, words));
+//        words.add("file");
+//        words.add("document");
+//         System.out.println(Filterer.AndWords(invertedIndex, null, words));
+//        System.out.println(Filterer.OrWords(invertedIndex, null, words));
+        System.out.println(Filterer.NotWords(invertedIndex, (HashSet<String>) invertedIndex.GetAllDocIDs(), words));
     }
 }
