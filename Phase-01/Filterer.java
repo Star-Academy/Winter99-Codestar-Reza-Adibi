@@ -103,12 +103,12 @@ public class Filterer {
      * @return set of docIDs( String ) or null( error ).
      */
     public static HashSet<String> NotWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) {
-        if (words == null || words.isEmpty())
-            return null;
         if (invertedIndex == null || invertedIndex.IsEmpty())
             return null;
         if (initialSet == null || initialSet.isEmpty())
             return null;
+        if (words == null || words.isEmpty())
+            return initialSet;
         /* add docID sets of words to one HashSet. */
         HashSet<String> wordsDocIDs = new HashSet<String>();
         for (String word : words) {
