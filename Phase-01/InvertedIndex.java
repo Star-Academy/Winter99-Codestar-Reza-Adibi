@@ -78,7 +78,7 @@ public class InvertedIndex {
      *
      * @return Set of all docIDs of this inverted index.
      */
-    public Set<String> GetAllDocIDs() {
-        return allDocIDs;
+    public HashSet<String> GetAllDocIDs() {
+        return (HashSet<String>) allDocIDs;
     }
 }
