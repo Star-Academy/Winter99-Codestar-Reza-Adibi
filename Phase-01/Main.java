@@ -8,7 +8,7 @@ public class Main {
         TextFileReader reader = new TextFileReader();
         Map<String, String> result = reader.readAllFileInFolder("EnglishData");
         InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.AddDocumets(result);
+        invertedIndex.AddDocuments(result);
         Map<String, ArrayList<String>> filters = This.GetFiltersFromUser();
         System.out.println(This.GetResult(invertedIndex, filters));
     }
@@ -20,7 +20,7 @@ public class Main {
      * @param filters       "and", "or" & "not" filters.
      * @return set of docIDs that satisfy filters.
      */
-    private Set GetResult(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
+    private HashSet<String> GetResult(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
         HashSet<String> andResult = null;
         HashSet<String> orResult = null;
         if (!filters.get("or").isEmpty()) {
@@ -47,27 +47,18 @@ public class Main {
      * @return filters Map( ["and", "or", "not"] => ArrayList of words ).
      */
     private Map<String, ArrayList<String>> GetFiltersFromUser() {
-        Map<String, ArrayList<String>> words = new HashMap<String, ArrayList<String>>();
-        words.put("and", new ArrayList<String>());
-        words.put("or", new ArrayList<String>());
-        words.put("not", new ArrayList<String>());
+        Map<String, ArrayList<String>> words = new HashMap<>();
+        words.put("and", new ArrayList<>());
+        words.put("or", new ArrayList<>());
+        words.put("not", new ArrayList<>());
         System.out.println("write your key words:");
         String userInput = scanner.nextLine();
         String[] rawWords = userInput.toLowerCase().split("[, .]");
         for (String rawWord : rawWords) {
             switch (rawWord.charAt(0)) {
-                case '+': {
-                    words.get("or").add(rawWord.substring(1));
-                    break;
-                }
-                case '-': {
-                    words.get("not").add(rawWord.substring(1));
-                    break;
-                }
-                default: {
-                    words.get("and").add(rawWord);
-                    break;
-                }
+                case '+' -> words.get("or").add(rawWord.substring(1));
+                case '-' -> words.get("not").add(rawWord.substring(1));
+                default -> words.get("and").add(rawWord);
             }
         }
         return words;

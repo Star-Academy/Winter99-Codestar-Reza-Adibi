@@ -1,23 +1,23 @@
 import java.util.*;
 
 public class InvertedIndex {
-    private Map<String, Map<String, ArrayList<Integer>>> invertedIndexMap = null;
-    private Set<String> allDocIDs = null;
+    private final Map<String, Map<String, ArrayList<Integer>>> invertedIndexMap;
+    private final Set<String> allDocIDs;
 
     public InvertedIndex() {
-        invertedIndexMap = new HashMap<String, Map<String, ArrayList<Integer>>>();
-        allDocIDs = new HashSet<String>();
+        invertedIndexMap = new HashMap<>();
+        allDocIDs = new HashSet<>();
     }
 
     /**
-     * get multuple contents( {@code String} ) and add their words to InvertedIndex.
+     * get multiple contents( {@code String} ) and add their words to InvertedIndex.
      *
      * @param docs Map( document Name => document Text ).
      */
-    public void AddDocumets(Map<String, String> docs) {
+    public void AddDocuments(Map<String, String> docs) {
         for (String docID : docs.keySet()) {
             allDocIDs.add(docID);
-            AddDocumet(docID, docs.get(docID));
+            AddDocument(docID, docs.get(docID));
         }
     }
 
@@ -27,14 +27,14 @@ public class InvertedIndex {
      * @param id      id of document.
      * @param content text of document.
      */
-    public void AddDocumet(String id, String content) {
+    public void AddDocument(String id, String content) {
         String[] words = content.toLowerCase().split("\\W+");
         int wordsCount = 0;
         for (String word : words) {
-            // todo: get word's base and filter usless words.
+            // todo: get word's base and filter useless words.
             /* add new word to inverted index. */
             if (!invertedIndexMap.containsKey(word)) {
-                invertedIndexMap.put(word, new HashMap<String, ArrayList<Integer>>());
+                invertedIndexMap.put(word, new HashMap<>());
             }
             /* add new docID to words docID HashSet. */
             if (!invertedIndexMap.get(word).containsKey(id))

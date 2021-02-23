@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -30,13 +29,12 @@ public class Filterer {
                 startingWord = word;
             }
         }
-        /* first filter with  */
+        /* first filter initialSet with startingWord */
         HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.SearchForWord(startingWord).keySet());
         if (initialSet == null) {
             initialSet = wordDocIDs;
         } else {
-            HashSet<String> initialSetTemp = new HashSet<String>();
-            initialSetTemp.addAll(initialSet);
+            HashSet<String> initialSetTemp = new HashSet<>(initialSet);
             for (String docID : initialSetTemp) {
                 if (!wordDocIDs.contains(docID))
                     initialSet.remove(docID);
@@ -47,18 +45,13 @@ public class Filterer {
         /* remove unwanted docIDs from "initial set". */
         for (String word : words) {
             wordDocIDs = new HashSet<>(invertedIndex.SearchForWord(word).keySet());
-            if (initialSet == null) {
-                initialSet = wordDocIDs;
-            } else {
-                HashSet<String> initialSetTemp = new HashSet<String>();
-                initialSetTemp.addAll(initialSet);
-                for (String docID : initialSetTemp) {
-                    if (!wordDocIDs.contains(docID))
-                        initialSet.remove(docID);
-                }
-                if (initialSet.isEmpty())
-                    return new HashSet<>();
+            HashSet<String> initialSetTemp = new HashSet<>(initialSet);
+            for (String docID : initialSetTemp) {
+                if (!wordDocIDs.contains(docID))
+                    initialSet.remove(docID);
             }
+            if (initialSet.isEmpty())
+                return new HashSet<>();
         }
         return initialSet;
     }
@@ -110,7 +103,7 @@ public class Filterer {
         if (words == null || words.isEmpty())
             return initialSet;
         /* add docID sets of words to one HashSet. */
-        HashSet<String> wordsDocIDs = new HashSet<String>();
+        HashSet<String> wordsDocIDs = new HashSet<>();
         for (String word : words) {
             if (invertedIndex.containsWord(word)) {
                 wordsDocIDs.addAll(invertedIndex.SearchForWord(word).keySet());
@@ -122,8 +115,7 @@ public class Filterer {
                 initialSet.remove(docID);
             }
         } else {
-            HashSet<String> initialSetTemp = new HashSet<>();
-            initialSetTemp.addAll(initialSet);
+            HashSet<String> initialSetTemp = new HashSet<>(initialSet);
             for (String docID : initialSetTemp
             ) {
                 if (wordsDocIDs.contains(docID))
