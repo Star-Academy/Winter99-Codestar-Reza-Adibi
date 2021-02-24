@@ -10,7 +10,7 @@ public class Main {
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.AddDocuments(result);
         Map<String, ArrayList<String>> filters = This.GetFiltersFromUser();
-        System.out.println(Filterer.GetResult(invertedIndex, filters));
+        System.out.println(Filterer.FilterDocIDs(invertedIndex, filters));
     }
 
     /**

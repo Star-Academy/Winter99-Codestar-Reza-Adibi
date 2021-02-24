@@ -10,7 +10,7 @@ public class Filterer {
      * @param filters       "and", "or" & "not" filters.
      * @return set of docIDs that satisfy filters.
      */
-    public static HashSet<String> GetResult(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
+    public static HashSet<String> FilterDocIDs(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
         HashSet<String> andResult = null;
         HashSet<String> orResult = null;
         try {
