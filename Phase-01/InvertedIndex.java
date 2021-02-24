@@ -49,8 +49,8 @@ public class InvertedIndex {
      * @param word the word that you want to search for it.
      * @return Map(document Name = > word indexes).
      */
-    public Map<String, ArrayList<Integer>> SearchForWord(String word) {
-        return invertedIndexMap.get(word);
+    public HashSet<String> GetWordDocIDs(String word) {
+        return (HashSet<String>) invertedIndexMap.get(word).keySet();
     }
 
     /**
