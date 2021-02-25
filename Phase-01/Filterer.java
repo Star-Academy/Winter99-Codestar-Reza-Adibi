@@ -15,20 +15,20 @@ public class Filterer {
         HashSet<String> orResult = null;
         try {
             if (!filters.get("or").isEmpty()) {
-                orResult = Filterer.OrWords(invertedIndex, new HashSet<>(), filters.get("or"));
+                orResult = OrWords(invertedIndex, new HashSet<>(), filters.get("or"));
             }
             if (!filters.get("and").isEmpty()) {
-                andResult = Filterer.AndWords(invertedIndex, orResult, filters.get("and"));
+                andResult = AndWords(invertedIndex, orResult, filters.get("and"));
             }
             if (filters.get("not").isEmpty()) {
                 return filters.get("and").isEmpty() ? orResult : andResult;
             }
             if (!filters.get("or").isEmpty() && filters.get("and").isEmpty()) {
-                return Filterer.NotWords(invertedIndex, orResult, filters.get("not"));
+                return NotWords(invertedIndex, orResult, filters.get("not"));
             } else if (!filters.get("and").isEmpty()) {
-                return Filterer.NotWords(invertedIndex, andResult, filters.get("not"));
+                return NotWords(invertedIndex, andResult, filters.get("not"));
             } else {
-                return Filterer.NotWords(invertedIndex, invertedIndex.GetAllDocIDs(), filters.get("not"));
+                return NotWords(invertedIndex, invertedIndex.GetAllDocIDs(), filters.get("not"));
             }
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
@@ -80,7 +80,7 @@ public class Filterer {
         if (words == null || words.isEmpty())
             throw new Exception("words List is empty!");
         for (String word : words) {
-            if (!invertedIndex.containsWord(word))
+            if (!invertedIndex.ContainsWord(word))
                 continue;
             HashSet<String> wordDocs = new HashSet<>(invertedIndex.GetWordDocIDs(word));
             if (initialSet == null) {
@@ -156,7 +156,7 @@ public class Filterer {
         String chosenWord = words.get(0);
         int minDocIDCount = Integer.MAX_VALUE;
         for (String word : words) {
-            if (!invertedIndex.containsWord(word))
+            if (!invertedIndex.ContainsWord(word))
                 throw new Exception("database doesn't contain word!");
             HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.GetWordDocIDs(word));
             if (wordDocIDs.size() < minDocIDCount) {
