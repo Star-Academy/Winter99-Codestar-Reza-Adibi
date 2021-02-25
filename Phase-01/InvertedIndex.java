@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class InvertedIndex {
-    private final Map<String, Map<String, ArrayList<Integer>>> invertedIndexMap;
-    private final Set<String> allDocIDs;
+    private final HashMap<String, Map<String, ArrayList<Integer>>> invertedIndexMap;
+    private final HashSet<String> allDocIDs;
 
     public InvertedIndex() {
         invertedIndexMap = new HashMap<>();
@@ -50,7 +50,7 @@ public class InvertedIndex {
      * @return Map(document Name = > word indexes).
      */
     public HashSet<String> GetWordDocIDs(String word) {
-        return (HashSet<String>) invertedIndexMap.get(word).keySet();
+        return new HashSet<>(invertedIndexMap.get(word).keySet());
     }
 
     /**
@@ -69,7 +69,7 @@ public class InvertedIndex {
      * @param word word whose presence in this data structure is to be tested.
      * @return return {@code true} if this data structure contains the word.
      */
-    public boolean containsWord(String word) {
+    public boolean ContainsWord(String word) {
         return invertedIndexMap.containsKey(word);
     }
 
@@ -79,6 +79,6 @@ public class InvertedIndex {
      * @return Set of all docIDs of this inverted index.
      */
     public HashSet<String> GetAllDocIDs() {
-        return (HashSet<String>) allDocIDs;
+        return allDocIDs;
     }
 }

@@ -32,6 +32,7 @@ public class Main {
                 default -> words.get("and").add(rawWord);
             }
         }
+        scanner.close();
         return words;
     }
 }
