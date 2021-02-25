@@ -1,15 +1,13 @@
 import java.util.*;
 
 public class Main {
-    Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Main This = new Main();
+    public static void main(String[] args) throws Exception {
         TextFileReader reader = new TextFileReader();
         Map<String, String> result = reader.readAllFileInFolder("EnglishData");
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.AddDocuments(result);
-        Map<String, ArrayList<String>> filters = This.GetFiltersFromUser();
+        Map<String, ArrayList<String>> filters = GetFiltersFromUser();
         System.out.println(Filterer.FilterDocIDs(invertedIndex, filters));
     }
 
@@ -18,7 +16,8 @@ public class Main {
      *
      * @return filters Map( ["and", "or", "not"] => ArrayList of words ).
      */
-    private Map<String, ArrayList<String>> GetFiltersFromUser() {
+    static private Map<String, ArrayList<String>> GetFiltersFromUser() {
+        final Scanner scanner = new Scanner(System.in);
         Map<String, ArrayList<String>> words = new HashMap<>();
         words.put("and", new ArrayList<>());
         words.put("or", new ArrayList<>());
