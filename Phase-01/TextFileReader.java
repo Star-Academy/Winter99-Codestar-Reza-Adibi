@@ -5,24 +5,26 @@ import java.util.Map;
 public class TextFileReader {
 
     /**
-     * Reads all the files in the folder as text
+     * Reads all the files in the folder as text.
+     *
      * @param folderPath
-     * @return map (file name) ==>> (file content)
+     * @return Map(file name = > file content).
      */
-    public Map<String, String> readAllFileInFolder(String folderPath) {
+    public static Map<String, String> readAllFileInFolder(String folderPath) {
         Map<String, String> result = new HashMap<>();
         for (File f : listOfFileInFolder(folderPath)) {
             result.put(f.getName(), readTextFile(f));
         }
         return result;
     }
-    
+
     /**
-     * 
-     * @param folderPath
-     * @return list of all files stored in the folder
+     * get Array of files in given directory.
+     *
+     * @param folderPath path to directory.
+     * @return Array of all files stored in the folder
      */
-    private File[] listOfFileInFolder(String folderPath) {
+    private static File[] listOfFileInFolder(String folderPath) {
         File folder = new File(folderPath);
         // todo: filter files
         return folder.listFiles();
@@ -30,11 +32,11 @@ public class TextFileReader {
 
     /**
      * Read the file given as parameter
+     *
      * @param file input file
      * @return content of the file
      */
-
-    public String readTextFile(File file) {
+    public static String readTextFile(File file) {
         FileReader fileReader = null;
         BufferedReader reader = null;
         try {

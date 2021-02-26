@@ -3,8 +3,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        TextFileReader reader = new TextFileReader();
-        Map<String, String> result = reader.readAllFileInFolder("EnglishData");
+        Map<String, String> result = TextFileReader.readAllFileInFolder("EnglishData");
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.AddDocuments(result);
         Map<String, ArrayList<String>> filters = GetFiltersFromUser();
