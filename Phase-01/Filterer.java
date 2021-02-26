@@ -15,19 +15,31 @@ public class Filterer {
         HashSet<String> orResult = null;
         try {
             if (!filters.get("or").isEmpty()) {
+                /* docs(a|b|c) if a, b and c are "Or" filters.*/
                 orResult = OrWords(invertedIndex, new HashSet<>(), filters.get("or"));
             }
             if (!filters.get("and").isEmpty()) {
+                /* docs((a|b|c)&(d&e&f)) if a, b and c are "Or" filters and d, e and f are "And" filters.*/
                 andResult = AndWords(invertedIndex, orResult, filters.get("and"));
             }
+            /* we don't have "Not" filters.*/
             if (filters.get("not").isEmpty()) {
+                /*if we have "And" filters return andResult otherwise return orResult.*/
                 return filters.get("and").isEmpty() ? orResult : andResult;
             }
+            /* we don't have "And" filters.*/
             if (!filters.get("or").isEmpty() && filters.get("and").isEmpty()) {
+                /* orResult-docs(a|b|c) if a, b and c are "Not" filters.*/
                 return NotWords(invertedIndex, orResult, filters.get("not"));
-            } else if (!filters.get("and").isEmpty()) {
+            }
+            /* we have "And" filters.*/
+            else if (!filters.get("and").isEmpty()) {
+                /* andResult-docs(a|b|c) if a, b and c are "Not" filters.*/
                 return NotWords(invertedIndex, andResult, filters.get("not"));
-            } else {
+            }
+            /* we only have "Not" filters.*/
+            else {
+                /* AllDocs-docs(a|b|c) if a, b and c are "Not" filters.*/
                 return NotWords(invertedIndex, invertedIndex.GetAllDocIDs(), filters.get("not"));
             }
         } catch (Exception exception) {
