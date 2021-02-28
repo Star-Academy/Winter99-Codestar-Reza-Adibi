@@ -14,10 +14,10 @@ public class InvertedIndex {
      *
      * @param docs Map( document Name => document Text ).
      */
-    public void AddDocuments(Map<String, String> docs) {
+    public void addDocuments(Map<String, String> docs) {
         for (String docID : docs.keySet()) {
             allDocIDs.add(docID);
-            AddDocument(docID, docs.get(docID));
+            addDocument(docID, docs.get(docID));
         }
     }
 
@@ -27,19 +27,19 @@ public class InvertedIndex {
      * @param id      id of document.
      * @param content text of document.
      */
-    public void AddDocument(String id, String content) {
-        String[] words = content.toLowerCase().split("\\W+");
+    public void addDocument(String id, String content) {
+        StringTokenizer stringTokenizer = new StringTokenizer(content);
         int wordsCount = 0;
-        for (String word : words) {
-            // todo: get word's base and filter useless words.
+        while (stringTokenizer.hasMoreTokens()) {
+            String token = stringTokenizer.nextToken();
             /* add new word to inverted index. */
-            if (!invertedIndexMap.containsKey(word)) {
-                invertedIndexMap.put(word, new HashMap<>());
+            if (!invertedIndexMap.containsKey(token)) {
+                invertedIndexMap.put(token, new HashMap<>());
             }
             /* add new docID to words docID HashSet. */
-            if (!invertedIndexMap.get(word).containsKey(id))
-                invertedIndexMap.get(word).put(id, new ArrayList<>());
-            invertedIndexMap.get(word).get(id).add(wordsCount++);
+            if (!invertedIndexMap.get(token).containsKey(id))
+                invertedIndexMap.get(token).put(id, new ArrayList<>());
+            invertedIndexMap.get(token).get(id).add(wordsCount++);
         }
     }
 
@@ -49,7 +49,7 @@ public class InvertedIndex {
      * @param word the word that you want to search for it.
      * @return Map(document Name = > word indexes).
      */
-    public HashSet<String> GetWordDocIDs(String word) {
+    public HashSet<String> getWordDocIDs(String word) {
         return new HashSet<>(invertedIndexMap.get(word).keySet());
     }
 
@@ -59,7 +59,7 @@ public class InvertedIndex {
      * @return return {@code true} if this data structure contains no word otherwise
      * return {@code false}.
      */
-    public boolean IsEmpty() {
+    public boolean isEmpty() {
         return invertedIndexMap.isEmpty();
     }
 
@@ -69,7 +69,7 @@ public class InvertedIndex {
      * @param word word whose presence in this data structure is to be tested.
      * @return return {@code true} if this data structure contains the word.
      */
-    public boolean ContainsWord(String word) {
+    public boolean containsWord(String word) {
         return invertedIndexMap.containsKey(word);
     }
 
@@ -78,7 +78,7 @@ public class InvertedIndex {
      *
      * @return Set of all docIDs of this inverted index.
      */
-    public HashSet<String> GetAllDocIDs() {
+    public HashSet<String> getAllDocIDs() {
         return allDocIDs;
     }
 }

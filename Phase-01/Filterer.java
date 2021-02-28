@@ -10,17 +10,17 @@ public class Filterer {
      * @param filters       "and", "or" & "not" filters.
      * @return set of docIDs that satisfy filters.
      */
-    public static HashSet<String> FilterDocIDs(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
+    public static HashSet<String> filterDocIDs(InvertedIndex invertedIndex, Map<String, ArrayList<String>> filters) {
         HashSet<String> andResult = null;
         HashSet<String> orResult = null;
         try {
             if (!filters.get("or").isEmpty()) {
                 /* docs(a|b|c) if a, b and c are "Or" filters.*/
-                orResult = OrWords(invertedIndex, new HashSet<>(), filters.get("or"));
+                orResult = orWords(invertedIndex, new HashSet<>(), filters.get("or"));
             }
             if (!filters.get("and").isEmpty()) {
                 /* docs((a|b|c)&(d&e&f)) if a, b and c are "Or" filters and d, e and f are "And" filters.*/
-                andResult = AndWords(invertedIndex, orResult, filters.get("and"));
+                andResult = andWords(invertedIndex, orResult, filters.get("and"));
             }
             /* we don't have "Not" filters.*/
             if (filters.get("not").isEmpty()) {
@@ -30,17 +30,17 @@ public class Filterer {
             /* we don't have "And" filters.*/
             if (!filters.get("or").isEmpty() && filters.get("and").isEmpty()) {
                 /* orResult-docs(a|b|c) if a, b and c are "Not" filters.*/
-                return NotWords(invertedIndex, orResult, filters.get("not"));
+                return notWords(invertedIndex, orResult, filters.get("not"));
             }
-            /* we have "And" filters.*/
+            /* we have "And" filters and we may have "Or" filters too.*/
             else if (!filters.get("and").isEmpty()) {
                 /* andResult-docs(a|b|c) if a, b and c are "Not" filters.*/
-                return NotWords(invertedIndex, andResult, filters.get("not"));
+                return notWords(invertedIndex, andResult, filters.get("not"));
             }
             /* we only have "Not" filters.*/
             else {
                 /* AllDocs-docs(a|b|c) if a, b and c are "Not" filters.*/
-                return NotWords(invertedIndex, invertedIndex.GetAllDocIDs(), filters.get("not"));
+                return notWords(invertedIndex, invertedIndex.getAllDocIDs(), filters.get("not"));
             }
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
@@ -58,20 +58,20 @@ public class Filterer {
      * @param words         list of words( String ).
      * @return set of docIDs( String ) or null( error ).
      */
-    public static HashSet<String> AndWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
-        if (invertedIndex == null || invertedIndex.IsEmpty())
+    public static HashSet<String> andWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
+        if (invertedIndex == null || invertedIndex.isEmpty())
             throw new Exception("database is empty!");
         if (words == null || words.isEmpty())
             throw new Exception("words List is empty!");
-        String startingWord = GetWordWithLeastDocIDs(invertedIndex, words);
+        String startingWord = getWordWithLeastDocIDs(invertedIndex, words);
         initialSet = removeUncommonItems(
-                initialSet != null ? initialSet : invertedIndex.GetWordDocIDs(startingWord),
-                invertedIndex.GetWordDocIDs(startingWord)
+                initialSet != null ? initialSet : invertedIndex.getWordDocIDs(startingWord),
+                invertedIndex.getWordDocIDs(startingWord)
         );
         for (String word : words) {
             if (initialSet.isEmpty())
                 return new HashSet<>();
-            initialSet = removeUncommonItems(initialSet, invertedIndex.GetWordDocIDs(word));
+            initialSet = removeUncommonItems(initialSet, invertedIndex.getWordDocIDs(word));
         }
         return initialSet;
     }
@@ -86,15 +86,15 @@ public class Filterer {
      * @param words         list of words( String ).
      * @return set of docIDs( String ) or null( error ).
      */
-    public static HashSet<String> OrWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
-        if (invertedIndex == null || invertedIndex.IsEmpty())
+    public static HashSet<String> orWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
+        if (invertedIndex == null || invertedIndex.isEmpty())
             throw new Exception("database is empty!");
         if (words == null || words.isEmpty())
             throw new Exception("words List is empty!");
         for (String word : words) {
-            if (!invertedIndex.ContainsWord(word))
+            if (!invertedIndex.containsWord(word))
                 continue;
-            HashSet<String> wordDocs = new HashSet<>(invertedIndex.GetWordDocIDs(word));
+            HashSet<String> wordDocs = new HashSet<>(invertedIndex.getWordDocIDs(word));
             if (initialSet == null) {
                 initialSet = wordDocs;
             } else {
@@ -114,14 +114,14 @@ public class Filterer {
      * @param words         list of words( String ).
      * @return set of docIDs( String ) or null( error ).
      */
-    public static HashSet<String> NotWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
-        if (words == null || words.isEmpty())
-            throw new Exception("words List is empty!");
+    public static HashSet<String> notWords(InvertedIndex invertedIndex, HashSet<String> initialSet, ArrayList<String> words) throws Exception {
         if (initialSet == null || initialSet.isEmpty())
             throw new Exception("initialSet is empty!");
-        if (invertedIndex == null || invertedIndex.IsEmpty())
+        if (invertedIndex == null || invertedIndex.isEmpty())
             throw new Exception("database is empty!");
-        HashSet<String> wordsDocIDs = OrWords(invertedIndex, new HashSet<>(), words);
+        if (words == null || words.isEmpty())
+            return initialSet;
+        HashSet<String> wordsDocIDs = orWords(invertedIndex, new HashSet<>(), words);
         /* check which one is a smaller set, initialSet or wordsDocIDs then remove common items by looping trough smaller set. */
         if (initialSet.size() > wordsDocIDs.size()) {
             for (String docID : wordsDocIDs) {
@@ -164,13 +164,13 @@ public class Filterer {
      * @return word with least docIDs.
      * @throws Exception
      */
-    private static String GetWordWithLeastDocIDs(InvertedIndex invertedIndex, ArrayList<String> words) throws Exception {
+    private static String getWordWithLeastDocIDs(InvertedIndex invertedIndex, ArrayList<String> words) throws Exception {
         String chosenWord = words.get(0);
         int minDocIDCount = Integer.MAX_VALUE;
         for (String word : words) {
-            if (!invertedIndex.ContainsWord(word))
+            if (!invertedIndex.containsWord(word))
                 throw new Exception("database doesn't contain word!");
-            HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.GetWordDocIDs(word));
+            HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.getWordDocIDs(word));
             if (wordDocIDs.size() < minDocIDCount) {
                 minDocIDCount = wordDocIDs.size();
                 chosenWord = word;
