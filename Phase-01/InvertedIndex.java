@@ -28,10 +28,10 @@ public class InvertedIndex {
      * @param content text of document.
      */
     public void addDocument(String id, String content) {
-        StringTokenizer stringTokenizer = new StringTokenizer(content);
+        Tokenizer tokenizer = new Tokenizer(content);
+        ArrayList<String> tokens = tokenizer.getTokens();
         int wordsCount = 0;
-        while (stringTokenizer.hasMoreTokens()) {
-            String token = stringTokenizer.nextToken();
+        for (String token : tokens) {
             /* add new word to inverted index. */
             if (!invertedIndexMap.containsKey(token)) {
                 invertedIndexMap.put(token, new HashMap<>());

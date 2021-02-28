@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Console implements UserInterface {
-    public static HashMap<Character, String> filters;
+    static HashMap<Character, String> filters;
+    static String inputSplitRegEx = "[, .]";
 
     static {
         filters = new HashMap<>();
@@ -47,12 +47,16 @@ public class Console implements UserInterface {
         HashMap<String, ArrayList<String>> userFilters = new HashMap<>();
         for (String filterName : filters.values())
             userFilters.put(filterName, new ArrayList<>());
-        String[] rawWords = userInput.toLowerCase().split("[, .]");
+        String[] rawWords = userInput.split(inputSplitRegEx);
         for (String rawWord : rawWords) {
-            if (filters.containsKey(rawWord.charAt(0)))
-                userFilters.get(filters.get(rawWord.charAt(0))).add(rawWord.substring(1));
-            else
-                userFilters.get(filters.get(' ')).add(rawWord);
+            char rawWordFirstCharacter = rawWord.charAt(0);
+            if (filters.containsKey(rawWordFirstCharacter)) {
+                String wordToken = Tokenizer.wordToToken(rawWord.substring(1));
+                userFilters.get(filters.get(rawWordFirstCharacter)).add(wordToken);
+            } else {
+                String wordToken = Tokenizer.wordToToken(rawWord);
+                userFilters.get(filters.get(' ')).add(wordToken);
+            }
         }
         return userFilters;
     }
