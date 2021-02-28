@@ -24,7 +24,7 @@ public class TextFileReader {
      * @param folderPath path to directory.
      * @return Array of all files stored in the folder
      */
-    private static File[] listOfFileInFolder(String folderPath) {
+    protected static File[] listOfFileInFolder(String folderPath) {
         File folder = new File(folderPath);
         // todo: filter files
         return folder.listFiles();
