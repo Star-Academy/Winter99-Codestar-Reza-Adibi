@@ -1,3 +1,4 @@
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -5,12 +6,17 @@ import java.util.Scanner;
 public class Console implements UserInterface {
     static HashMap<Character, String> filters;
     static String inputSplitRegEx = "[, .]";
+    final Scanner scanner;
 
     static {
         filters = new HashMap<>();
         filters.put('+', "or");
         filters.put('-', "not");
         filters.put(' ', "and");
+    }
+
+    protected Console(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     /**
@@ -20,7 +26,6 @@ public class Console implements UserInterface {
      */
     @Override
     public HashMap<String, ArrayList<String>> getUserInputFilters() {
-        final Scanner scanner = new Scanner(System.in);
         System.out.println("write your words:");
         do {
             String userInput = scanner.nextLine();
@@ -41,7 +46,7 @@ public class Console implements UserInterface {
      * @return map(filter name = > array of words).
      * @throws Exception
      */
-    private HashMap<String, ArrayList<String>> stringToFilter(String userInput) throws Exception {
+    protected HashMap<String, ArrayList<String>> stringToFilter(String userInput) throws Exception {
         if (userInput == null || userInput.isEmpty())
             throw new Exception("UserInterface.stringToFilter(): empty string received.");
         HashMap<String, ArrayList<String>> userFilters = new HashMap<>();

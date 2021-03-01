@@ -6,7 +6,7 @@ public class Main {
         Map<String, String> result = TextFileReader.readAllFileInFolder("EnglishData");
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.addDocuments(result);
-        UserInterface ui = new Console();
+        UserInterface ui = new Console(new Scanner(System.in));
         Map<String, ArrayList<String>> filters = ui.getUserInputFilters();
         System.out.println(Filterer.filterDocIDs(invertedIndex, filters));
     }
