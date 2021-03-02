@@ -12,8 +12,12 @@ public class TextFileReader {
      */
     public static Map<String, String> readAllFileInFolder(String folderPath) {
         Map<String, String> result = new HashMap<>();
-        for (File f : listOfFileInFolder(folderPath)) {
-            result.put(f.getName(), readTextFile(f));
+        try {
+            for (File f : listOfFileInFolder(folderPath)) {
+                result.put(f.getName(), readTextFile(f));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -36,30 +40,17 @@ public class TextFileReader {
      * @param file input file
      * @return content of the file
      */
-    public static String readTextFile(File file) {
+    public static String readTextFile(File file) throws IOException {
         FileReader fileReader = null;
         BufferedReader reader = null;
-        try {
-            fileReader = new FileReader(file);
-            reader = new BufferedReader(fileReader);
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        fileReader = new FileReader(file);
+        reader = new BufferedReader(fileReader);
+        String line;
+        StringBuilder sb = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+            sb.append("\n");
         }
-        return "";
+        return sb.toString();
     }
 }

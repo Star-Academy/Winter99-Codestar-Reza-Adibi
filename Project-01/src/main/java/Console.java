@@ -21,7 +21,7 @@ public class Console implements UserInterface {
     /**
      * get filters from user.
      *
-     * @return map(filter name = > array of words).
+     * @return map(filter name = > array of token).
      */
     @Override
     public HashMap<String, ArrayList<String>> getUserInputFilters() {
@@ -42,7 +42,7 @@ public class Console implements UserInterface {
      * get a text and pars it into filters.
      *
      * @param userInput
-     * @return map(filter name = > array of words).
+     * @return map(filter name = > array of tokens).
      * @throws Exception
      */
     protected HashMap<String, ArrayList<String>> stringToFilter(String userInput) throws Exception {
