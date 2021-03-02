@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class InvertedIndex {
-    protected final HashMap<String, Map<String, ArrayList<Integer>>> invertedIndexMap;
+    protected final HashMap<String, HashMap<String, ArrayList<Integer>>> invertedIndexMap;
     protected final HashSet<String> allDocIDs;
 
     public InvertedIndex() {
@@ -47,10 +47,10 @@ public class InvertedIndex {
      * search for a word in all indexed documents.
      *
      * @param token the word token you want to search for it.
-     * @return Map(document Name = > word indexes).
+     * @return Map(document Name = > word indexes) or an empty HashMap.
      */
     public HashSet<String> getTokenDocIDs(String token) {
-        return new HashSet<>(invertedIndexMap.get(token).keySet());
+        return containsWord(token) ? new HashSet<>(invertedIndexMap.get(token).keySet()) : new HashSet<>();
     }
 
     /**

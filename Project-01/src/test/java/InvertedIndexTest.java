@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,18 +22,12 @@ public class InvertedIndexTest {
         documents.put("docID1", "test text1");
         documents.put("docID2", "test text2");
         HashMap<String, HashMap<String, ArrayList<Integer>>> correctResult = new HashMap<>();
-        correctResult.put("test", new HashMap<>());
-        correctResult.put("text1", new HashMap<>());
-        correctResult.put("text2", new HashMap<>());
-        correctResult.get("test").put("docID1", new ArrayList<>());
-        correctResult.get("test").put("docID2", new ArrayList<>());
-        correctResult.get("text1").put("docID1", new ArrayList<>());
-        correctResult.get("text2").put("docID2", new ArrayList<>());
-        correctResult.get("test").get("docID1").add(0);
-        correctResult.get("test").get("docID2").add(0);
-        correctResult.get("text1").get("docID1").add(1);
-        correctResult.get("text2").get("docID2").add(1);
-
+        addDataDirectlyToInvertedIndexMap(correctResult, new String[][]{
+                {"test", "docID1", "0"},
+                {"text1", "docID1", "1"},
+                {"test", "docID2", "0"},
+                {"text2", "docID2", "1"},
+        });
         invertedIndex.addDocuments(documents);
         assertEquals(correctResult, invertedIndex.invertedIndexMap);
     }
@@ -41,14 +36,11 @@ public class InvertedIndexTest {
     public void addDocumentTest() {
         InvertedIndex invertedIndex = new InvertedIndex();
         HashMap<String, HashMap<String, ArrayList<Integer>>> correctResult = new HashMap<>();
-        correctResult.put("test", new HashMap<>());
-        correctResult.put("text1", new HashMap<>());
-        correctResult.get("test").put("docID1", new ArrayList<>());
-        correctResult.get("text1").put("docID1", new ArrayList<>());
-        correctResult.get("test").get("docID1").add(0);
-        correctResult.get("test").get("docID1").add(2);
-        correctResult.get("text1").get("docID1").add(1);
-
+        addDataDirectlyToInvertedIndexMap(correctResult, new String[][]{
+                {"test", "docID1", "0"},
+                {"text1", "docID1", "1"},
+                {"test", "docID1", "2"},
+        });
         invertedIndex.addDocument("docID1", "test text1 test");
         assertEquals(correctResult, invertedIndex.invertedIndexMap);
     }
@@ -56,14 +48,11 @@ public class InvertedIndexTest {
     @Test
     public void getWordDocIDsTest() {
         InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.invertedIndexMap.put("test", new HashMap<>());
-        invertedIndex.invertedIndexMap.put("text1", new HashMap<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID2", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("text1").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").get("docID1").add(0);
-        invertedIndex.invertedIndexMap.get("test").get("docID2").add(0);
-        invertedIndex.invertedIndexMap.get("text1").get("docID1").add(1);
+        addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
+                {"test", "docID1", "0"},
+                {"text1", "docID1", "1"},
+                {"test", "docID2", "0"},
+        });
         HashSet<String> correctResult = new HashSet<>();
         HashSet<String> testResult;
 
@@ -76,37 +65,34 @@ public class InvertedIndexTest {
         correctResult.add("docID2");
         testResult = invertedIndex.getTokenDocIDs("test");
         assertEquals(correctResult, testResult);
+
+        correctResult.clear();
+        testResult = invertedIndex.getTokenDocIDs("lala");
+        assertEquals(correctResult, testResult);
     }
 
     @Test
     public void isEmptyTest() {
         InvertedIndex invertedIndex = new InvertedIndex();
-
-        assertEquals(true, invertedIndex.isEmpty());
-
-        invertedIndex.invertedIndexMap.put("test", new HashMap<>());
-        invertedIndex.invertedIndexMap.put("text1", new HashMap<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID2", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("text1").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").get("docID1").add(0);
-        invertedIndex.invertedIndexMap.get("test").get("docID2").add(0);
-        invertedIndex.invertedIndexMap.get("text1").get("docID1").add(1);
-
+        addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
+                {"test", "docID1", "0"},
+                {"text", "docID1", "1"},
+                {"test", "docID2", "0"},
+        });
         assertEquals(false, invertedIndex.isEmpty());
+
+        invertedIndex.invertedIndexMap.clear();
+        assertEquals(true, invertedIndex.isEmpty());
     }
 
     @Test
     public void containsWordTest() {
         InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.invertedIndexMap.put("test", new HashMap<>());
-        invertedIndex.invertedIndexMap.put("text1", new HashMap<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").put("docID2", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("text1").put("docID1", new ArrayList<>());
-        invertedIndex.invertedIndexMap.get("test").get("docID1").add(0);
-        invertedIndex.invertedIndexMap.get("test").get("docID2").add(0);
-        invertedIndex.invertedIndexMap.get("text1").get("docID1").add(1);
+        addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
+                {"test", "docID1", "0"},
+                {"text", "docID1", "1"},
+                {"test", "docID2", "0"},
+        });
 
         assertEquals(true, invertedIndex.containsWord("test"));
 
@@ -125,5 +111,21 @@ public class InvertedIndexTest {
         correctResult.add("docID1");
         correctResult.add("docID2");
         assertEquals(correctResult, invertedIndex.getAllDocIDs());
+    }
+
+    /**
+     * get array of arrays of strings and return HashMap of HashMaps of ArrayLists.
+     *
+     * @param map                     ex: [["hello", "docID1", "0"], ["hell", "docID2", "0"]].
+     * @param arrayOfWord_DocID_Index ex:{"hello"=>{"docID1"=>[0]}, "hell"=>{"docID2"=>[0]}}.
+     */
+    public void addDataDirectlyToInvertedIndexMap(HashMap<String, HashMap<String, ArrayList<Integer>>> map, String[][] arrayOfWord_DocID_Index) {
+        for (String[] word_DocID_Index : arrayOfWord_DocID_Index) {
+            if (!map.containsKey(word_DocID_Index[0]))
+                map.put(word_DocID_Index[0], new HashMap<>());
+            if (!map.get(word_DocID_Index[0]).containsKey(word_DocID_Index[1]))
+                map.get(word_DocID_Index[0]).put(word_DocID_Index[1], new ArrayList<>());
+            map.get(word_DocID_Index[0]).get(word_DocID_Index[1]).add(Integer.parseInt(word_DocID_Index[2]));
+        }
     }
 }
