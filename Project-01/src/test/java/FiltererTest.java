@@ -16,7 +16,7 @@ public class FiltererTest {
 
     static {
         invertedIndex = new InvertedIndex();
-        invertedIndex.addDocument("testFile1", "this is the first test FiLe!");
+        invertedIndex.addDocument("testFile1", "this is the first test FiLe hoho!");
         invertedIndex.addDocument("testFile2", "this is Not the test FiLe one it's tf two!");
     }
 
@@ -93,11 +93,25 @@ public class FiltererTest {
         HashSet<String> correctResult = new HashSet<>();
         HashSet<String> testResult;
 
-        /* remove "testFile1" from initialSet.*/
+        /* remove "testFile1" from initialSet( initialSet size is greater than word's docID set ).*/
         words.add("one");
         correctResult.add("testFile1");
         initialSet.add("testFile1");
         initialSet.add("testFile2");
+        assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
+        try {
+            testResult = filterer.notWords(initialSet, words);
+            assertEquals(correctResult, testResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /* remove "testFile1" from initialSet( initialSet size is lesser than word's docID set ).*/
+        words.clear();
+        words.add("is");
+        correctResult.clear();
+        initialSet.clear();
+        initialSet.add("testFile1");
         assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
         try {
             testResult = filterer.notWords(initialSet, words);
@@ -112,6 +126,9 @@ public class FiltererTest {
         words.add("hell");
         correctResult.clear();
         correctResult.add("testFile1");
+        initialSet.clear();
+        initialSet.add("testFile1");
+        initialSet.add("testFile2");
         assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
         try {
             testResult = filterer.notWords(initialSet, words);
@@ -153,12 +170,28 @@ public class FiltererTest {
             e.printStackTrace();
         }
 
-        /* two valid filters. */
+        /* two valid filters with common docID. */
         words.clear();
         words.add("one");
         words.add("is");
         correctResult.clear();
         correctResult.add("testFile2");
+        initialSet.clear();
+        assertDoesNotThrow(() -> filterer.andWords(null, words));
+        try {
+            testResult = filterer.andWords(null, words);
+            assertEquals(correctResult, testResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /* two valid filters with uncommon docID. */
+        words.clear();
+        words.add("one");
+        words.add("two");
+        words.add("first");
+        words.add("hoho");
+        correctResult.clear();
         initialSet.clear();
         assertDoesNotThrow(() -> filterer.andWords(null, words));
         try {

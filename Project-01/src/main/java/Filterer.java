@@ -68,13 +68,13 @@ public class Filterer {
             return new HashSet<>();
         String startingWord = getWordWithLeastDocIDs(words);
         initialSet = removeUncommonItems(
-                initialSet != null ? initialSet : invertedIndex.getWordDocIDs(startingWord),
-                invertedIndex.getWordDocIDs(startingWord)
+                initialSet != null ? initialSet : invertedIndex.getTokenDocIDs(startingWord),
+                invertedIndex.getTokenDocIDs(startingWord)
         );
         for (String word : words) {
             if (initialSet.isEmpty())
                 return new HashSet<>();
-            initialSet = removeUncommonItems(initialSet, invertedIndex.getWordDocIDs(word));
+            initialSet = removeUncommonItems(initialSet, invertedIndex.getTokenDocIDs(word));
         }
         return initialSet;
     }
@@ -92,7 +92,7 @@ public class Filterer {
         for (String word : words) {
             if (!invertedIndex.containsWord(word))
                 continue;
-            HashSet<String> wordDocs = new HashSet<>(invertedIndex.getWordDocIDs(word));
+            HashSet<String> wordDocs = new HashSet<>(invertedIndex.getTokenDocIDs(word));
             if (initialSet == null) {
                 initialSet = wordDocs;
             } else {
@@ -162,7 +162,7 @@ public class Filterer {
         for (String word : words) {
             if (!invertedIndex.containsWord(word))
                 throw new Exception("database doesn't contain word!");
-            HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.getWordDocIDs(word));
+            HashSet<String> wordDocIDs = new HashSet<>(invertedIndex.getTokenDocIDs(word));
             if (wordDocIDs.size() < minDocIDCount) {
                 minDocIDCount = wordDocIDs.size();
                 chosenWord = word;
