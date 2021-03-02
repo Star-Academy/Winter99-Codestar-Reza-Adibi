@@ -8,7 +8,8 @@ public class Main {
         invertedIndex.addDocuments(result);
         UserInterface ui = new Console(new Scanner(System.in));
         Map<String, ArrayList<String>> filters = ui.getUserInputFilters();
-        System.out.println(Filterer.filterDocIDs(invertedIndex, filters));
+        Filterer searchEngine = new Filterer(invertedIndex);
+        System.out.println(searchEngine.filterDocIDs(filters));
     }
 
 }
