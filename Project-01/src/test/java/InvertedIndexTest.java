@@ -29,7 +29,7 @@ public class InvertedIndexTest {
     }
 
     @Test
-    public void addDocumentTest() {
+    public void addDocumentTestValidDocument() {
         InvertedIndex invertedIndex = new InvertedIndex();
         HashMap<String, HashMap<String, ArrayList<Integer>>> correctResult = new HashMap<>();
         GeneralFunctions.addDataDirectlyToInvertedIndexMap(correctResult, new String[][]{
@@ -42,7 +42,28 @@ public class InvertedIndexTest {
     }
 
     @Test
-    public void getWordDocIDsTest() {
+    public void addDocumentTestEmptyDocument() {
+        InvertedIndex invertedIndex = new InvertedIndex();
+        HashMap<String, HashMap<String, ArrayList<Integer>>> correctResult = new HashMap<>();
+        invertedIndex.addDocument("docID1", "");
+        assertEquals(correctResult, invertedIndex.invertedIndexMap);
+    }
+
+    @Test
+    public void getWordDocIDsTestTokenHasDocID() {
+        InvertedIndex invertedIndex = new InvertedIndex();
+        GeneralFunctions.addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
+                {"test", "docID1", "0"},
+                {"text1", "docID1", "1"},
+                {"test", "docID2", "0"},
+        });
+        HashSet<String> correctResult = new HashSet<>(Arrays.asList("docID1", "docID2"));
+        HashSet<String> testResult = invertedIndex.getTokenDocIDs("test");
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getWordDocIDsTestTokenDoesNotHasDocID() {
         InvertedIndex invertedIndex = new InvertedIndex();
         GeneralFunctions.addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
                 {"test", "docID1", "0"},
@@ -50,24 +71,12 @@ public class InvertedIndexTest {
                 {"test", "docID2", "0"},
         });
         HashSet<String> correctResult = new HashSet<>();
-        HashSet<String> testResult;
-
-        correctResult.add("docID1");
-        testResult = invertedIndex.getTokenDocIDs("text1");
-        assertEquals(correctResult, testResult);
-
-        correctResult.clear();
-        correctResult.addAll(Arrays.asList("docID1", "docID2"));
-        testResult = invertedIndex.getTokenDocIDs("test");
-        assertEquals(correctResult, testResult);
-
-        correctResult.clear();
-        testResult = invertedIndex.getTokenDocIDs("lala");
+        HashSet<String> testResult = invertedIndex.getTokenDocIDs("lala");
         assertEquals(correctResult, testResult);
     }
 
     @Test
-    public void isEmptyTest() {
+    public void isEmptyTestNotEmptyInvertedIndex() {
         InvertedIndex invertedIndex = new InvertedIndex();
         GeneralFunctions.addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
                 {"test", "docID1", "0"},
@@ -75,35 +84,49 @@ public class InvertedIndexTest {
                 {"test", "docID2", "0"},
         });
         assertFalse(invertedIndex.isEmpty());
+    }
 
-        invertedIndex.invertedIndexMap.clear();
+    @Test
+    public void isEmptyTestEmptyInvertedIndex() {
+        InvertedIndex invertedIndex = new InvertedIndex();
         assertTrue(invertedIndex.isEmpty());
     }
 
     @Test
-    public void containsWordTest() {
+    public void containsWordTestValidWord() {
         InvertedIndex invertedIndex = new InvertedIndex();
         GeneralFunctions.addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
                 {"test", "docID1", "0"},
                 {"text", "docID1", "1"},
                 {"test", "docID2", "0"},
         });
-
         assertTrue(invertedIndex.containsWord("test"));
+    }
 
+    @Test
+    public void containsWordTestInvalidWord() {
+        InvertedIndex invertedIndex = new InvertedIndex();
+        GeneralFunctions.addDataDirectlyToInvertedIndexMap(invertedIndex.invertedIndexMap, new String[][]{
+                {"test", "docID1", "0"},
+                {"text", "docID1", "1"},
+                {"test", "docID2", "0"},
+        });
         assertFalse(invertedIndex.containsWord("nup"));
     }
 
     @Test
-    public void getAllDocIDsTest() {
+    public void getAllDocIDsTestEmptyInvertedIndex() {
         InvertedIndex invertedIndex = new InvertedIndex();
         HashSet<String> correctResult = new HashSet<>();
-
         assertEquals(correctResult, invertedIndex.getAllDocIDs());
+    }
 
+    @Test
+    public void getAllDocIDsTestNotEmptyInvertedIndex() {
+        InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.addDocument("docID1", "text");
         invertedIndex.addDocument("docID2", "text");
-        correctResult.addAll(Arrays.asList("docID1", "docID2"));
+        HashSet<String> correctResult = new HashSet<>(Arrays.asList("docID1", "docID2"));
         assertEquals(correctResult, invertedIndex.getAllDocIDs());
     }
 }

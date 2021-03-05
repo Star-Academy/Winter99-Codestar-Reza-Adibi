@@ -35,90 +35,104 @@ public class ConsoleTest {
     }
 
     @Test
-    public void getUserInputFiltersTest() {
-        /* get "and" filter. */
+    public void getUserInputFiltersTestSingleAndFilter() {
         HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"and"}, new String[]{"simple"});
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"and"}, new String[]{"simple"});
         when(scannerMock.nextLine()).thenReturn("simple");
         HashMap<String, ArrayList<String>> testResult = console.getUserInputFilters();
-        assertEquals(correctResult, testResult);
-
-        /* get "or" filter. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"or"}, new String[]{"test"});
-        when(scannerMock.nextLine()).thenReturn("+test");
-        testResult = console.getUserInputFilters();
-        assertEquals(correctResult, testResult);
-
-        /* get "not" filter. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"not"}, new String[]{"hahaha"});
-        when(scannerMock.nextLine()).thenReturn("-hahaha");
-        testResult = console.getUserInputFilters();
-        assertEquals(correctResult, testResult);
-
-        /* get all filters. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"and", "or", "not"}, new String[]{"simple", "test", "hahaha"});
-        when(scannerMock.nextLine()).thenReturn("simple +test -hahaha");
-        testResult = console.getUserInputFilters();
-        assertEquals(correctResult, testResult);
-
-        /* get empty string then all filters. */
-        when(scannerMock.nextLine()).thenReturn("").thenReturn("simple +test -hahaha");
-        testResult = console.getUserInputFilters();
         assertEquals(correctResult, testResult);
     }
 
     @Test
-    public void stringToFilterTest() {
-        HashMap<String, ArrayList<String>> correctResult;
-        HashMap<String, ArrayList<String>> testResult = null;
-
-        /* find "and" filter in string. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"and"}, new String[]{"simple"});
-        try {
-            testResult = console.stringToFilter("simple");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void getUserInputFiltersTestSingleOrFilter() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"or"}, new String[]{"test"});
+        when(scannerMock.nextLine()).thenReturn("+test");
+        HashMap<String, ArrayList<String>> testResult = console.getUserInputFilters();
         assertEquals(correctResult, testResult);
+    }
 
-        /* find "or" filter in string. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"or"}, new String[]{"test"});
+    @Test
+    public void getUserInputFiltersTestSingleNotFilter() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"not"}, new String[]{"hahaha"});
+        when(scannerMock.nextLine()).thenReturn("-hahaha");
+        HashMap<String, ArrayList<String>> testResult = console.getUserInputFilters();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getUserInputFiltersTestAllFilters() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"and", "or", "not"}, new String[]{"simple", "test", "hahaha"});
+        when(scannerMock.nextLine()).thenReturn("simple +test -hahaha");
+        HashMap<String, ArrayList<String>> testResult = console.getUserInputFilters();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getUserInputFiltersTestEmptyInput() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"and", "or", "not"}, new String[]{"simple", "test", "hahaha"});
+        when(scannerMock.nextLine()).thenReturn("").thenReturn("simple +test -hahaha");
+        HashMap<String, ArrayList<String>> testResult = console.getUserInputFilters();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void stringToFilterTestSingleAndFilter() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"and"}, new String[]{"simple"});
         try {
-            testResult = console.stringToFilter("+test");
+            HashMap<String, ArrayList<String>> testResult = console.stringToFilter("simple");
+            assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
         }
-        assertEquals(correctResult, testResult);
+    }
 
-        /* find "not" filter in string. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"not"}, new String[]{"hahaha"});
+    @Test
+    public void stringToFilterTestSingleOrFilter() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"or"}, new String[]{"test"});
         try {
-            testResult = console.stringToFilter("-hahaha");
+            HashMap<String, ArrayList<String>> testResult = console.stringToFilter("+test");
+            assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
         }
-        assertEquals(correctResult, testResult);
+    }
 
-        /* find all filters in string. */
-        correctResult = GeneralFunctions.initialFiltersMap();
-        GeneralFunctions.insertDataToAnswerMap(correctResult, new String[]{"and", "or", "not"}, new String[]{"simple", "test", "hahaha"});
+    @Test
+    public void stringToFilterTestSingleNotFilter() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"not"}, new String[]{"hahaha"});
         try {
-            testResult = console.stringToFilter("simple +test -hahaha");
+            HashMap<String, ArrayList<String>> testResult = console.stringToFilter("-hahaha");
+            assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
         }
-        assertEquals(correctResult, testResult);
+    }
 
-        /* get empty string. */
+    @Test
+    public void stringToFilterTestAllFilters() {
+        HashMap<String, ArrayList<String>> correctResult = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToFiltersMap(correctResult, new String[]{"and", "or", "not"}, new String[]{"simple", "test", "hahaha"});
+        try {
+            HashMap<String, ArrayList<String>> testResult = console.stringToFilter("simple +test -hahaha");
+            assertEquals(correctResult, testResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    public void stringToFilterTestEmptyString() {
         assertThrows(Exception.class, () -> console.stringToFilter(""));
     }
 

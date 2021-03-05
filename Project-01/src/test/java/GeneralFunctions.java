@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GeneralFunctions {
+    private static final String[] filterTypes = new String[]{"and", "or", "not"};
 
     protected static HashMap<String, ArrayList<String>> initialFiltersMap() {
         HashMap<String, ArrayList<String>> map = new HashMap<>();
-        map.put("and", new ArrayList<>());
-        map.put("or", new ArrayList<>());
-        map.put("not", new ArrayList<>());
+        for (String filterType : filterTypes)
+            map.put(filterType, new ArrayList<>());
         return map;
     }
 
-    protected static void insertDataToAnswerMap(HashMap<String, ArrayList<String>> answerMap, String[] filterTypes, String[] filterValues) {
+    protected static void insertDataToFiltersMap(HashMap<String, ArrayList<String>> answerMap, String[] filterTypes, String[] filterValues) {
         for (int i = 0; i < filterTypes.length; i++) {
             answerMap.get(filterTypes[i]).add(filterValues[i]);
         }

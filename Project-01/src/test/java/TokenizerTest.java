@@ -8,64 +8,74 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TokenizerTest {
     @Test
-    public void constructorTest() {
+    public void constructorTestValidInputText() {
         assertDoesNotThrow(() -> new Tokenizer("this is tokenizer!"));
+    }
 
+    @Test
+    public void constructorTestEmptyInputText() {
         assertDoesNotThrow(() -> new Tokenizer(""));
     }
 
     @Test
-    public void getTokensTest() {
-        Tokenizer tokenizer;
-        ArrayList<String> correctResult = new ArrayList<>();
-        ArrayList<String> testResult;
-
-        /* single word. */
-        correctResult.add("hello");
-        tokenizer = new Tokenizer("hello");
-        testResult = tokenizer.getTokens();
-        assertEquals(correctResult, testResult);
-
-        /* single number. */
-        correctResult.clear();
-        correctResult.add("202020");
-        tokenizer = new Tokenizer("202020");
-        testResult = tokenizer.getTokens();
-        assertEquals(correctResult, testResult);
-
-        /* single word with upper case characters. */
-        correctResult.clear();
-        correctResult.add("hello");
-        tokenizer = new Tokenizer("HeLlO");
-        testResult = tokenizer.getTokens();
-        assertEquals(correctResult, testResult);
-
-        /* word, underline and some invalid characters. */
-        correctResult.clear();
-        correctResult.addAll(Arrays.asList("___", "hello"));
-        tokenizer = new Tokenizer(">><<___----hello+-*/");
-        testResult = tokenizer.getTokens();
-        assertEquals(correctResult, testResult);
-
-        /* two same words. */
-        correctResult.clear();
-        correctResult.addAll(Arrays.asList("hello", "hello"));
-        tokenizer = new Tokenizer("hello hello");
-        testResult = tokenizer.getTokens();
+    public void getTokensTestSingleWord() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("hello"));
+        Tokenizer tokenizer = new Tokenizer("hello");
+        ArrayList<String> testResult = tokenizer.getTokens();
         assertEquals(correctResult, testResult);
     }
 
     @Test
-    public void stringToTokenTest() {
-        String correctResult;
-        String testResult;
-
-        correctResult = "hello";
-        testResult = Tokenizer.wordToToken("hello");
+    public void getTokensTestSingleUppercaseWord() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("hello"));
+        Tokenizer tokenizer = new Tokenizer("HELLO");
+        ArrayList<String> testResult = tokenizer.getTokens();
         assertEquals(correctResult, testResult);
+    }
 
-        correctResult = "hello";
-        testResult = Tokenizer.wordToToken("HeLLo");
+    @Test
+    public void getTokensTestSingleNumber() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("202020"));
+        Tokenizer tokenizer = new Tokenizer("202020");
+        ArrayList<String> testResult = tokenizer.getTokens();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getTokensTestSingleUnderLineString() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("___"));
+        Tokenizer tokenizer = new Tokenizer("___");
+        ArrayList<String> testResult = tokenizer.getTokens();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getTokensTestWordsAndSeparators() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("___", "hell", "159357"));
+        Tokenizer tokenizer = new Tokenizer("___+))\"\';:<>?/\\[]{},.\n(*&^%$#@!~=hell 159357");
+        ArrayList<String> testResult = tokenizer.getTokens();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void getTokensTestRepeatWord() {
+        ArrayList<String> correctResult = new ArrayList<>(Arrays.asList("hello", "hello"));
+        Tokenizer tokenizer = new Tokenizer("hello hello");
+        ArrayList<String> testResult = tokenizer.getTokens();
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void stringToTokenTestLowercaseString() {
+        String correctResult = "hello";
+        String testResult = Tokenizer.wordToToken("hello");
+        assertEquals(correctResult, testResult);
+    }
+
+    @Test
+    public void stringToTokenTestUppercaseString() {
+        String correctResult = "hello";
+        String testResult = Tokenizer.wordToToken("HELLO");
         assertEquals(correctResult, testResult);
     }
 }

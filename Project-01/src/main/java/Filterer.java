@@ -63,10 +63,15 @@ public class Filterer {
      * @param words      list of words( String ).
      * @return set of docIDs( String ) or null( error ).
      */
-    public HashSet<String> andWords(HashSet<String> initialSet, ArrayList<String> words) throws Exception {
+    public HashSet<String> andWords(HashSet<String> initialSet, ArrayList<String> words) {
         if (words == null || words.isEmpty())
             return new HashSet<>();
-        String startingWord = getWordWithLeastDocIDs(words);
+        String startingWord;
+        try {
+            startingWord = getWordWithLeastDocIDs(words);
+        } catch (Exception e) {
+            return new HashSet<>();
+        }
         initialSet = removeUncommonItems(
                 initialSet != null ? initialSet : invertedIndex.getTokenDocIDs(startingWord),
                 invertedIndex.getTokenDocIDs(startingWord)
@@ -109,9 +114,9 @@ public class Filterer {
      * @param words      list of words( String ).
      * @return set of docIDs( String ) or null( error ).
      */
-    public HashSet<String> notWords(HashSet<String> initialSet, ArrayList<String> words) throws Exception {
+    public HashSet<String> notWords(HashSet<String> initialSet, ArrayList<String> words) {
         if (initialSet == null || initialSet.isEmpty())
-            throw new Exception("initialSet is empty!");
+            return new HashSet<>();
         if (words == null || words.isEmpty())
             return initialSet;
         HashSet<String> wordsDocIDs = orWords(new HashSet<>(), words);
