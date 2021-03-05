@@ -21,8 +21,13 @@ public class FiltererTest {
     }
 
     @BeforeEach
-    public void initialClasses() throws Exception {
-        filterer = new Filterer(invertedIndex);
+    public void initialClasses() {
+        try {
+            filterer = new Filterer(invertedIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
     @Test
@@ -40,13 +45,13 @@ public class FiltererTest {
         words.add("one");
         String testResult;
 
-        assertDoesNotThrow(() -> filterer.getWordWithLeastDocIDs(words));
         try {
             String correctResult = "one";
             testResult = filterer.getWordWithLeastDocIDs(words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         words.add("dubdub");
@@ -98,12 +103,12 @@ public class FiltererTest {
         correctResult.add("testFile1");
         initialSet.add("testFile1");
         initialSet.add("testFile2");
-        assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
         try {
             testResult = filterer.notWords(initialSet, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* remove "testFile1" from initialSet( initialSet size is lesser than word's docID set ).*/
@@ -112,12 +117,12 @@ public class FiltererTest {
         correctResult.clear();
         initialSet.clear();
         initialSet.add("testFile1");
-        assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
         try {
             testResult = filterer.notWords(initialSet, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* we have a valid and an invalid filter. */
@@ -129,21 +134,21 @@ public class FiltererTest {
         initialSet.clear();
         initialSet.add("testFile1");
         initialSet.add("testFile2");
-        assertDoesNotThrow(() -> filterer.notWords(initialSet, words));
         try {
             testResult = filterer.notWords(initialSet, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* we have no filter. */
-        assertDoesNotThrow(() -> filterer.notWords(initialSet, new ArrayList<>()));
         try {
             testResult = filterer.notWords(initialSet, new ArrayList<>());
             assertEquals(initialSet, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* initial set is empty. */
@@ -162,12 +167,12 @@ public class FiltererTest {
         correctResult.add("testFile2");
         initialSet.add("testFile1");
         initialSet.add("testFile2");
-        assertDoesNotThrow(() -> filterer.andWords(initialSet, words));
         try {
             testResult = filterer.andWords(initialSet, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* two valid filters with common docID. */
@@ -177,12 +182,12 @@ public class FiltererTest {
         correctResult.clear();
         correctResult.add("testFile2");
         initialSet.clear();
-        assertDoesNotThrow(() -> filterer.andWords(null, words));
         try {
             testResult = filterer.andWords(null, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* two valid filters with uncommon docID. */
@@ -193,12 +198,12 @@ public class FiltererTest {
         words.add("hoho");
         correctResult.clear();
         initialSet.clear();
-        assertDoesNotThrow(() -> filterer.andWords(null, words));
         try {
             testResult = filterer.andWords(null, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* a valid and an invalid filter. */
@@ -210,12 +215,12 @@ public class FiltererTest {
         assertThrows(Exception.class, () -> filterer.andWords(null, words));
 
         /* we have no filters. */
-        assertDoesNotThrow(() -> filterer.andWords(initialSet, new ArrayList<>()));
         try {
             testResult = filterer.andWords(initialSet, new ArrayList<>());
             assertEquals(new HashSet<>(), testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
     }
 
@@ -231,12 +236,12 @@ public class FiltererTest {
         correctResult.add("testFile1");
         correctResult.add("testFile2");
         initialSet.add("testFile1");
-        assertDoesNotThrow(() -> filterer.orWords(initialSet, words));
         try {
             testResult = filterer.orWords(initialSet, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* two valid filters. */
@@ -247,12 +252,12 @@ public class FiltererTest {
         correctResult.add("testFile1");
         correctResult.add("testFile2");
         initialSet.clear();
-        assertDoesNotThrow(() -> filterer.orWords(null, words));
         try {
             testResult = filterer.orWords(null, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* a valid and an invalid filter. */
@@ -262,21 +267,21 @@ public class FiltererTest {
         correctResult.clear();
         correctResult.add("testFile2");
         initialSet.clear();
-        assertDoesNotThrow(() -> filterer.orWords(null, words));
         try {
             testResult = filterer.orWords(null, words);
             assertEquals(correctResult, testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
 
         /* we have no filters. */
-        assertDoesNotThrow(() -> filterer.orWords(initialSet, new ArrayList<>()));
         try {
             testResult = filterer.orWords(initialSet, new ArrayList<>());
             assertEquals(new HashSet<>(), testResult);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
     }
 
@@ -289,70 +294,70 @@ public class FiltererTest {
         /* only "and" filter. */
         correctResult = new HashSet<>();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"and"}, new String[]{"one"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"and"}, new String[]{"one"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* only "or" filter. */
         correctResult.clear();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"or"}, new String[]{"one"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"or"}, new String[]{"one"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* only "not" filter. */
         correctResult.clear();
         correctResult.add("testFile1");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"not"}, new String[]{"one"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"not"}, new String[]{"one"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* "and" and "or" filters. */
         correctResult.clear();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"or", "and"}, new String[]{"one", "is"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"or", "and"}, new String[]{"one", "is"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* "not" and "or" filters. */
         correctResult.clear();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"or", "not"}, new String[]{"is", "first"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"or", "not"}, new String[]{"is", "first"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* "and" and "not" filters. */
         correctResult.clear();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"and", "not"}, new String[]{"is", "first"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"and", "not"}, new String[]{"is", "first"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* all filters. */
         correctResult.clear();
         correctResult.add("testFile2");
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"or", "and", "not"}, new String[]{"is", "test", "first"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"or", "and", "not"}, new String[]{"is", "test", "first"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* invalid "or" and "not" filters. */
         correctResult.clear();
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"or", "not"}, new String[]{"bye", "something"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"or", "not"}, new String[]{"bye", "something"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
 
         /* invalid "and" and "not" filters. */
         correctResult.clear();
-        filters = Functions.initialFiltersMap();
-        Functions.insertDataToAnswerMap(filters, new String[]{"and", "not"}, new String[]{"something", "lala"});
+        filters = GeneralFunctions.initialFiltersMap();
+        GeneralFunctions.insertDataToAnswerMap(filters, new String[]{"and", "not"}, new String[]{"something", "lala"});
         testResult = filterer.filterDocIDs(filters);
         assertEquals(correctResult, testResult);
     }

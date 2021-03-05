@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Functions {
+public class GeneralFunctions {
 
     protected static HashMap initialFiltersMap() {
         HashMap<String, ArrayList<String>> map = new HashMap<>();

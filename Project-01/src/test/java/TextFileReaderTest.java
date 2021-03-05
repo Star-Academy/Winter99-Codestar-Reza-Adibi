@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TextFileReaderTest {
     @Test
@@ -37,10 +34,11 @@ public class TextFileReaderTest {
         File correctFile = new File("data\\simple.txt");
         String correctFileText = "this is simple file\n";
         String testTextCF = null;
-        assertDoesNotThrow(() -> TextFileReader.readTextFile(correctFile));
         try {
             testTextCF = TextFileReader.readTextFile(correctFile);
         } catch (IOException e) {
+            e.printStackTrace();
+            fail();
         }
         assertEquals(testTextCF, correctFileText);
 
