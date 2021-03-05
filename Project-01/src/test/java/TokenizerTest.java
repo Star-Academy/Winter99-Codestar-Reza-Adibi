@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,16 +42,14 @@ public class TokenizerTest {
 
         /* word, underline and some invalid characters. */
         correctResult.clear();
-        correctResult.add("___");
-        correctResult.add("hello");
+        correctResult.addAll(Arrays.asList("___", "hello"));
         tokenizer = new Tokenizer(">><<___----hello+-*/");
         testResult = tokenizer.getTokens();
         assertEquals(correctResult, testResult);
 
         /* two same words. */
         correctResult.clear();
-        correctResult.add("hello");
-        correctResult.add("hello");
+        correctResult.addAll(Arrays.asList("hello", "hello"));
         tokenizer = new Tokenizer("hello hello");
         testResult = tokenizer.getTokens();
         assertEquals(correctResult, testResult);

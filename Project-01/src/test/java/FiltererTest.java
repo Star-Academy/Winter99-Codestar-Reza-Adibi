@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -40,11 +41,9 @@ public class FiltererTest {
     @Test
     public void getWordWithLeastDocIDsTest() {
         ArrayList<String> words = new ArrayList<>();
-        words.add("this");
-        words.add("is");
-        words.add("one");
         String testResult;
 
+        words.addAll(Arrays.asList("this", "is", "one"));
         try {
             String correctResult = "one";
             testResult = filterer.getWordWithLeastDocIDs(words);
@@ -60,16 +59,8 @@ public class FiltererTest {
 
     @Test
     public void removeUncommonItemsTest() {
-        HashSet<String> firstSet = new HashSet<>();
-        firstSet.add("hello");
-        firstSet.add("i");
-        firstSet.add("am");
-        firstSet.add("john");
-        HashSet<String> secondSet = new HashSet<>();
-        secondSet.add("you");
-        secondSet.add("know");
-        secondSet.add("nothing");
-        secondSet.add("john");
+        HashSet<String> firstSet = new HashSet<>(Arrays.asList("hello", "i", "am", "john"));
+        HashSet<String> secondSet = new HashSet<>(Arrays.asList("you", "know", "nothing", "john"));
         HashSet<String> correctResult;
         HashSet<String> testResult;
 
@@ -101,8 +92,7 @@ public class FiltererTest {
         /* remove "testFile1" from initialSet( initialSet size is greater than word's docID set ).*/
         words.add("one");
         correctResult.add("testFile1");
-        initialSet.add("testFile1");
-        initialSet.add("testFile2");
+        initialSet.addAll(Arrays.asList("testFile1", "testFile2"));
         try {
             testResult = filterer.notWords(initialSet, words);
             assertEquals(correctResult, testResult);
@@ -127,13 +117,11 @@ public class FiltererTest {
 
         /* we have a valid and an invalid filter. */
         words.clear();
-        words.add("one");
-        words.add("hell");
+        words.addAll(Arrays.asList("one", "hell"));
         correctResult.clear();
         correctResult.add("testFile1");
         initialSet.clear();
-        initialSet.add("testFile1");
-        initialSet.add("testFile2");
+        initialSet.addAll(Arrays.asList("testFile1", "testFile2"));
         try {
             testResult = filterer.notWords(initialSet, words);
             assertEquals(correctResult, testResult);
@@ -165,8 +153,7 @@ public class FiltererTest {
         /* remove "testFile1" from initial set. */
         words.add("one");
         correctResult.add("testFile2");
-        initialSet.add("testFile1");
-        initialSet.add("testFile2");
+        initialSet.addAll(Arrays.asList("testFile1", "testFile2"));
         try {
             testResult = filterer.andWords(initialSet, words);
             assertEquals(correctResult, testResult);
@@ -177,8 +164,7 @@ public class FiltererTest {
 
         /* two valid filters with common docID. */
         words.clear();
-        words.add("one");
-        words.add("is");
+        words.addAll(Arrays.asList("one", "is"));
         correctResult.clear();
         correctResult.add("testFile2");
         initialSet.clear();
@@ -192,10 +178,7 @@ public class FiltererTest {
 
         /* two valid filters with uncommon docID. */
         words.clear();
-        words.add("one");
-        words.add("two");
-        words.add("first");
-        words.add("hoho");
+        words.addAll(Arrays.asList("one", "two", "first", "hoho"));
         correctResult.clear();
         initialSet.clear();
         try {
@@ -208,8 +191,7 @@ public class FiltererTest {
 
         /* a valid and an invalid filter. */
         words.clear();
-        words.add("one");
-        words.add("hell");
+        words.addAll(Arrays.asList("one", "hell"));
         correctResult.clear();
         initialSet.clear();
         assertThrows(Exception.class, () -> filterer.andWords(null, words));
@@ -233,8 +215,7 @@ public class FiltererTest {
 
         /* add "testFile2" to initialSet. */
         words.add("one");
-        correctResult.add("testFile1");
-        correctResult.add("testFile2");
+        correctResult.addAll(Arrays.asList("testFile1", "testFile2"));
         initialSet.add("testFile1");
         try {
             testResult = filterer.orWords(initialSet, words);
@@ -246,11 +227,9 @@ public class FiltererTest {
 
         /* two valid filters. */
         words.clear();
-        words.add("one");
-        words.add("first");
+        words.addAll(Arrays.asList("one", "first"));
         correctResult.clear();
-        correctResult.add("testFile1");
-        correctResult.add("testFile2");
+        correctResult.addAll(Arrays.asList("testFile1", "testFile2"));
         initialSet.clear();
         try {
             testResult = filterer.orWords(null, words);
@@ -262,8 +241,7 @@ public class FiltererTest {
 
         /* a valid and an invalid filter. */
         words.clear();
-        words.add("one");
-        words.add("hell");
+        words.addAll(Arrays.asList("one", "hell"));
         correctResult.clear();
         correctResult.add("testFile2");
         initialSet.clear();
