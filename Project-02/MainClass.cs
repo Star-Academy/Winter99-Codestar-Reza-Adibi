@@ -22,29 +22,34 @@ namespace Project_02 {
         private static DataSorce[] dataSorces = new DataSorce[]{
             new DataSorce(
                 SorceType.File,
-                "E:/Programing/CodeStarWinter99/Project-02/Project-02/TestData/Students.json",
+                "./../../../TestData/Students.json",
                 typeof(Student)
             ),
             new DataSorce(
                 SorceType.File,
-                "E:/Programing/CodeStarWinter99/Project-02/Project-02/TestData/Scores.json",
+                "E:/Programing/CodeStarWinter99/Project-02/TestData/Scores.json",
                 typeof(StudentScore)
             )
         };
 
         static void Main(string[] args) {
             Dictionary<string, object> allDatas = new Dictionary<string, object>();
-            foreach (DataSorce dataSorce in Project_02.MainClass.dataSorces) {
-                DataGetter dataGetter = null;
+            foreach (DataSorce dataSorce in dataSorces) {
+                DataReader dataGetter = null;
                 if (dataSorce.sorceType == SorceType.File) {
                     dataGetter = new FileReader(dataSorce.sorceAccessInfo);
                 }
-                MethodInfo method = typeof(DataGetter).GetMethod(nameof(DataGetter.GetObjects));
+                MethodInfo method = typeof(DataReader).GetMethod(nameof(DataReader.GetObjects));
                 MethodInfo generic = method.MakeGenericMethod(dataSorce.dataType);
                 allDatas.Add(dataSorce.dataType.ToString(), generic.Invoke(dataGetter, null));
             }
-            (new ResultMaker(allDatas)).GetBestStrudents();
-
+            try {
+                var bestStudents = (new ResultMaker(allDatas)).GetTopStrudents();
+                new ConsoleUI().DisplayObjects(bestStudents);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+            }
         }
     }
 }
