@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 
 namespace Project_02 {
-    public class FileReader : DataGetter {
+    public class FileReader : DataReader {
         private string filePath;
         private string fileText;
         public FileReader(string filePath) {

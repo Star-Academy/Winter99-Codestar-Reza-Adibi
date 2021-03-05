@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Project_02 {
-    interface DataGetter {
+    interface DataReader {
         /// <summary>
         /// get all T data from DataSorce as IEnumerable of T objects. 
         /// </summary>
