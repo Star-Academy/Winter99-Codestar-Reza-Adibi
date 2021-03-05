@@ -10,8 +10,8 @@ public class TextFileReaderTest {
     @Test
     public void readAllFilesInFolderTest() {
         HashMap<String, String> correctResult = new HashMap<>();
-        correctResult.put("simple.txt", "this is simple file\n");
-        correctResult.put("simple2.txt", "this is second document\n");
+        correctResult.put("simple.txt", "this is simple file");
+        correctResult.put("simple2.txt", "this is second document");
         HashMap<String, String> testResult = null;
         testResult = (HashMap<String, String>) TextFileReader.readAllFileInFolder("data");
         assertEquals(correctResult, testResult, "reader returns wrong result");
@@ -32,7 +32,7 @@ public class TextFileReaderTest {
     @Test
     public void readTextFileTest() {
         File correctFile = new File("data\\simple.txt");
-        String correctFileText = "this is simple file\n";
+        String correctFileText = "this is simple file";
         String testTextCF = null;
         try {
             testTextCF = TextFileReader.readTextFile(correctFile);
