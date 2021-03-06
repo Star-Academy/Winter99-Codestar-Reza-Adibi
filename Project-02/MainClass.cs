@@ -25,12 +25,12 @@ namespace Project_02 {
             Dictionary<string, object> allDatas = new Dictionary<string, object>();
             foreach (DataSorce dataSorce in dataSorces) {
                 DataReader dataGetter = null;
-                if (dataSorce.sorceType == SorceType.File) {
-                    dataGetter = new FileReader(dataSorce.sorceAccessInfo);
+                if (dataSorce.SorceType == SorceType.File) {
+                    dataGetter = new FileReader(dataSorce.SorceAccessInfo);
                 }
                 MethodInfo method = typeof(DataReader).GetMethod(nameof(DataReader.GetObjects));
-                MethodInfo generic = method.MakeGenericMethod(dataSorce.dataType);
-                allDatas.Add(dataSorce.dataType.ToString(), generic.Invoke(dataGetter, null));
+                MethodInfo generic = method.MakeGenericMethod(dataSorce.DataType);
+                allDatas.Add(dataSorce.DataType.ToString(), generic.Invoke(dataGetter, null));
             }
             try {
                 ProjectDataBase dataBase = new LocalDataBase(allDatas);

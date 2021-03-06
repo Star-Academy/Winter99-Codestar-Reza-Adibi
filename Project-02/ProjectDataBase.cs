@@ -8,13 +8,13 @@ namespace Project_02 {
     }
     public struct DataSorce {
         public DataSorce(SorceType sorceType, string sorceAccessInfo, Type dataType) : this() {
-            this.sorceType = sorceType;
-            this.sorceAccessInfo = sorceAccessInfo;
-            this.dataType = dataType;
+            SorceType = sorceType;
+            SorceAccessInfo = sorceAccessInfo;
+            DataType = dataType;
         }
-        public SorceType sorceType { get; }
-        public string sorceAccessInfo { get; }
-        public Type dataType { get; }
+        public SorceType SorceType { get; }
+        public string SorceAccessInfo { get; }
+        public Type DataType { get; }
     }
     public enum SorceType { File }
 }
