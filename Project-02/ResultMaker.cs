@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Project_02 {
-    class ResultMaker {
-        private Dictionary<string, object> datas;
+    public class ResultMaker {
+        protected Dictionary<string, object> datas;
         public ResultMaker(Dictionary<string, object> datas) {
             this.datas = datas;
         }

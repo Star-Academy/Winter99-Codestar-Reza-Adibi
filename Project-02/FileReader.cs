@@ -5,8 +5,8 @@ using System.Text.Json;
 
 namespace Project_02 {
     public class FileReader : DataReader {
-        private string filePath;
-        private string fileText;
+        public string filePath;
+        public string fileText;
         public FileReader(string filePath) {
             this.filePath = filePath;
             fileText = null;
@@ -32,11 +32,12 @@ namespace Project_02 {
         /// <returns>
         ///     json files text as string.
         /// </returns>
-        protected void ReadJsonFile() {
+        public void ReadJsonFile() {
             string jsonTest = "";
             try {
                 StreamReader streamReader = new StreamReader(filePath);
                 jsonTest = streamReader.ReadToEnd();
+                streamReader.Close();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);

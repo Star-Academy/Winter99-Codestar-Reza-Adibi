@@ -27,7 +27,7 @@ namespace Project_02 {
             ),
             new DataSorce(
                 SorceType.File,
-                "E:/Programing/CodeStarWinter99/Project-02/TestData/Scores.json",
+                "./../../../TestData/Scores.json",
                 typeof(StudentScore)
             )
         };
