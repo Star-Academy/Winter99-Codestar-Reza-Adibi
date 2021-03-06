@@ -7,17 +7,6 @@ using System.Reflection;
 using System.Collections;
 
 namespace Project_02 {
-    struct DataSorce {
-        public DataSorce(SorceType sorceType, string sorceAccessInfo, Type dataType) : this() {
-            this.sorceType = sorceType;
-            this.sorceAccessInfo = sorceAccessInfo;
-            this.dataType = dataType;
-        }
-        public SorceType sorceType { get; }
-        public string sorceAccessInfo { get; }
-        public Type dataType { get; }
-    }
-    enum SorceType { File }
     class MainClass {
         private static DataSorce[] dataSorces = new DataSorce[]{
             new DataSorce(
@@ -44,7 +33,8 @@ namespace Project_02 {
                 allDatas.Add(dataSorce.dataType.ToString(), generic.Invoke(dataGetter, null));
             }
             try {
-                var bestStudents = (new ResultMaker(allDatas)).GetTopStrudents();
+                ProjectDataBase dataBase = new LocalDataBase(allDatas);
+                var bestStudents = (new ResultMaker(dataBase)).GetTopStudents();
                 new ConsoleUI().DisplayObjects(bestStudents);
             }
             catch (Exception e) {
