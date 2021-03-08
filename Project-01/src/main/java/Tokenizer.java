@@ -16,10 +16,12 @@ public class Tokenizer {
      * @return array list of tokens.
      */
     public ArrayList<String> getTokens() {
-        ArrayList<String> tokens = new ArrayList<String>();
-        String[] words = inputText.toLowerCase().split(tokenRegEx);
+        ArrayList<String> tokens = new ArrayList<>();
+        String[] words = inputText.split(tokenRegEx);
         for (String word : words) {
-            tokens.add(wordToToken(word));
+            String token = wordToToken(word);
+            if (!token.isEmpty())
+                tokens.add(token);
         }
         return tokens;
     }

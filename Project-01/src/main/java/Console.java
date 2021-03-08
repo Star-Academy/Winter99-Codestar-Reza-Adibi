@@ -3,8 +3,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Console implements UserInterface {
-    static HashMap<Character, String> filters;
-    static String inputSplitRegEx = "[, .]";
+    protected final static HashMap<Character, String> filters;
+    protected final static String inputSplitRegEx = "[, .]";
+    final Scanner scanner;
 
     static {
         filters = new HashMap<>();
@@ -13,14 +14,17 @@ public class Console implements UserInterface {
         filters.put(' ', "and");
     }
 
+    protected Console(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     /**
      * get filters from user.
      *
-     * @return map(filter name = > array of words).
+     * @return map(filter name = > array of token).
      */
     @Override
     public HashMap<String, ArrayList<String>> getUserInputFilters() {
-        final Scanner scanner = new Scanner(System.in);
         System.out.println("write your words:");
         do {
             String userInput = scanner.nextLine();
@@ -38,10 +42,10 @@ public class Console implements UserInterface {
      * get a text and pars it into filters.
      *
      * @param userInput
-     * @return map(filter name = > array of words).
+     * @return map(filter name = > array of tokens).
      * @throws Exception
      */
-    private HashMap<String, ArrayList<String>> stringToFilter(String userInput) throws Exception {
+    protected HashMap<String, ArrayList<String>> stringToFilter(String userInput) throws Exception {
         if (userInput == null || userInput.isEmpty())
             throw new Exception("UserInterface.stringToFilter(): empty string received.");
         HashMap<String, ArrayList<String>> userFilters = new HashMap<>();

@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class InvertedIndex {
-    private final HashMap<String, Map<String, ArrayList<Integer>>> invertedIndexMap;
-    private final HashSet<String> allDocIDs;
+    protected final HashMap<String, HashMap<String, ArrayList<Integer>>> invertedIndexMap;
+    protected final HashSet<String> allDocIDs;
 
     public InvertedIndex() {
         invertedIndexMap = new HashMap<>();
@@ -16,7 +16,6 @@ public class InvertedIndex {
      */
     public void addDocuments(Map<String, String> docs) {
         for (String docID : docs.keySet()) {
-            allDocIDs.add(docID);
             addDocument(docID, docs.get(docID));
         }
     }
@@ -24,12 +23,13 @@ public class InvertedIndex {
     /**
      * get single content( {@code String} ) and add its words to InvertedIndex.
      *
-     * @param id      id of document.
+     * @param docID   id of document.
      * @param content text of document.
      */
-    public void addDocument(String id, String content) {
+    public void addDocument(String docID, String content) {
         Tokenizer tokenizer = new Tokenizer(content);
         ArrayList<String> tokens = tokenizer.getTokens();
+        allDocIDs.add(docID);
         int wordsCount = 0;
         for (String token : tokens) {
             /* add new word to inverted index. */
@@ -37,20 +37,20 @@ public class InvertedIndex {
                 invertedIndexMap.put(token, new HashMap<>());
             }
             /* add new docID to words docID HashSet. */
-            if (!invertedIndexMap.get(token).containsKey(id))
-                invertedIndexMap.get(token).put(id, new ArrayList<>());
-            invertedIndexMap.get(token).get(id).add(wordsCount++);
+            if (!invertedIndexMap.get(token).containsKey(docID))
+                invertedIndexMap.get(token).put(docID, new ArrayList<>());
+            invertedIndexMap.get(token).get(docID).add(wordsCount++);
         }
     }
 
     /**
      * search for a word in all indexed documents.
      *
-     * @param word the word that you want to search for it.
-     * @return Map(document Name = > word indexes).
+     * @param token the word token you want to search for it.
+     * @return Map(document Name = > word indexes) or an empty HashMap.
      */
-    public HashSet<String> getWordDocIDs(String word) {
-        return new HashSet<>(invertedIndexMap.get(word).keySet());
+    public HashSet<String> getTokenDocIDs(String token) {
+        return containsWord(token) ? new HashSet<>(invertedIndexMap.get(token).keySet()) : new HashSet<>();
     }
 
     /**
