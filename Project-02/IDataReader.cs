@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Project_02 {
-    interface DataReader {
+    interface IDataReader {
         /// <summary>
         /// get all T data from DataSorce as IEnumerable of T objects. 
         /// </summary>

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project_02 {
-    class LocalDataBase : ProjectDataBase {
+    class LocalDataBase : IProgrammeDataBase {
         public Dictionary<string, object> datas;
         public LocalDataBase(Dictionary<string, object> datas = null) {
             this.datas = datas;
@@ -17,7 +14,6 @@ namespace Project_02 {
             IEnumerable<StudentScore> scores = (IEnumerable<StudentScore>)scoresObject;
             return (List<StudentScore>)scores;
         }
-
         public List<Student> GetStudents() {
             object studentsObject = null;
             if (!datas.TryGetValue(typeof(Student).ToString(), out studentsObject) || studentsObject == null)

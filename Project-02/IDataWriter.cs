@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 
 namespace Project_02 {
-    interface DataWriter {
+    interface IDataWriter {
         /// <summary>
         /// show given IEnumarable of objects.
         /// </summary>

@@ -4,9 +4,9 @@ using System.IO;
 using System.Text.Json;
 
 namespace Project_02 {
-    public class FileReader : DataReader {
-        public string filePath;
-        public string fileText;
+    public class FileReader : IDataReader {
+        protected string filePath;
+        protected string fileText;
         public FileReader(string filePath) {
             this.filePath = filePath;
             fileText = null;
@@ -22,7 +22,6 @@ namespace Project_02 {
             }
             return result;
         }
-
         /// <summary>
         ///     get path to json file and read it's text.
         /// </summary>
@@ -35,9 +34,7 @@ namespace Project_02 {
         public void ReadJsonFile() {
             string jsonTest = "";
             try {
-                StreamReader streamReader = new StreamReader(filePath);
-                jsonTest = streamReader.ReadToEnd();
-                streamReader.Close();
+                jsonTest = File.ReadAllText(filePath);
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);

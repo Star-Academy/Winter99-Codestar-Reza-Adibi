@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace Project_02 {
     public class ResultMaker {
-        ProjectDataBase dataBase;
-        public ResultMaker(ProjectDataBase dataBase) {
+        IProgrammeDataBase dataBase;
+        public ResultMaker(IProgrammeDataBase dataBase) {
             this.dataBase = dataBase;
         }
         /// <summary>
-        /// find top students using students and their scores.
+        /// Find top students using students and their scores.
         /// </summary>
         /// <param name="topStudentsCount">
-        /// number of top strudents.
+        /// Number of top strudents.
         /// </param>
         /// <returns>
-        /// list of Tuple( "student first name", "student last name", "student average score" ).
+        /// IEnumerable of StudentGrades.
         /// </returns>
-        public List<Tuple<string, string, double>> GetTopStudents(int topStudentsCount = 3) {
+        public IEnumerable<StudentGrade> GetTopStudents(int topStudentsCount = 3) {
             List<Student> studentsData = dataBase.GetStudents();
             List<StudentScore> scores = dataBase.GetStudentScores();
             var studentsAvrageScore =
@@ -34,20 +34,21 @@ namespace Project_02 {
                     student => student.studentNumber,
                     studentAvrageScore => studentAvrageScore.StudentNumber,
                     (stdAvrScr, std) => (
+                        std.StudentNumber,
                         std.FirstName,
                         std.LastName,
                         stdAvrScr.scoreAverage
-                    )).
+                    )
+                ).
                 OrderByDescending(item => item.scoreAverage).
                 Take(topStudentsCount);
-            List<Tuple<string, string, double>> lt = new List<Tuple<string, string, double>>();
             foreach (var topStudent in topStudents)
-                lt.Add(new Tuple<string, string, double>(
+                yield return new StudentGrade(
+                    topStudent.StudentNumber,
                     topStudent.FirstName,
                     topStudent.LastName,
                     topStudent.scoreAverage
-                ));
-            return lt;
+                );
         }
     }
 }
