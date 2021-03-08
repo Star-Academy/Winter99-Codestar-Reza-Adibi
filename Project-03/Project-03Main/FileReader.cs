@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Project_03 {
     public class FileReader {
@@ -9,12 +7,23 @@ namespace Project_03 {
         public FileReader(string directoryPath) {
             this.directoryPath = directoryPath;
         }
+        /// <summary>
+        /// Read and concat text files in given directory.
+        /// </summary>
+        /// <returns>
+        /// All texts in given directory.
+        /// </returns>
         public string GetRawData() {
             var stringData = "";
-            var pathes = Directory.GetFiles(directoryPath);
-            foreach (string path in pathes)
-                stringData += File.ReadAllText(path) + '\n';
-            stringData = stringData.Remove(stringData.Length - 1);
+            try {
+                var pathes = Directory.GetFiles(directoryPath);
+                foreach (string path in pathes)
+                    stringData += File.ReadAllText(path) + '\n';
+                stringData = stringData.Remove(stringData.Length - 1);
+            }
+            catch (Exception exception) {
+                Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
+            }
             return stringData;
         }
     }

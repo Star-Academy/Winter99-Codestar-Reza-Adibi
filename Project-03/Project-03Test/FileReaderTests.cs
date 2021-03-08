@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Xunit;
 using Project_03;
@@ -15,9 +14,9 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetRawDataTest() {
-            string correctResult = "this is simple file\nthis is second document";
+            string expectedResult = "this is simple file\nthis is second document";
             string testResult = fileReader.GetRawData();
-            Assert.Equal(correctResult, testResult);
+            Assert.Equal(expectedResult, testResult);
         }
         ~FileReaderTests() {
             File.Delete(directoryPath + "\\sample");
