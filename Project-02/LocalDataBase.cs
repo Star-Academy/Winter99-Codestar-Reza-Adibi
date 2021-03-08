@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Project_02 {
     class LocalDataBase : IProgrammeDataBase {
         public Dictionary<string, object> datas;
+
         public LocalDataBase(Dictionary<string, object> datas = null) {
             this.datas = datas;
         }

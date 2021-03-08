@@ -18,6 +18,7 @@ namespace Project_02 {
         /// </returns>
         public List<StudentScore> GetStudentScores();
     }
+
     public struct Datasource {
         public Datasource(SourceType sorceType, string sorceAccessInfo, Type dataType) : this() {
             SorceType = sorceType;
@@ -28,5 +29,6 @@ namespace Project_02 {
         public string SorceAccessInfo { get; }
         public Type DataType { get; }
     }
+
     public enum SourceType { File }
 }

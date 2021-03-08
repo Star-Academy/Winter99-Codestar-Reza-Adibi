@@ -7,6 +7,7 @@ namespace Project_02 {
     public class FileReader : IDataReader {
         protected string filePath;
         protected string fileText;
+
         public FileReader(string filePath) {
             this.filePath = filePath;
             fileText = null;

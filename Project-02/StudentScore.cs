@@ -3,6 +3,7 @@
         public int StudentNumber { get; set; }
         public string Lesson { get; set; }
         public double Score { get; set; }
+
         public StudentScore(int StudentNumber, string Lesson, double Score) {
             this.StudentNumber = StudentNumber;
             this.Lesson = Lesson;

@@ -5,6 +5,7 @@ using System.Linq;
 namespace Project_02 {
     public class ResultMaker {
         IProgrammeDataBase dataBase;
+
         public ResultMaker(IProgrammeDataBase dataBase) {
             this.dataBase = dataBase;
         }
