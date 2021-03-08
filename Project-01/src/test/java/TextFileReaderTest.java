@@ -4,17 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TextFileReaderTest {
     @Test
     public void readAllFilesInFolderTestValidPath() {
-        HashMap<String, String> correctResult = new HashMap<>();
+        Map<String, String> correctResult = new HashMap<>();
         correctResult.put("simple.txt", "this is simple file");
         correctResult.put("simple2.txt", "this is second document");
-        HashMap<String, String> testResult = null;
-        testResult = (HashMap<String, String>) TextFileReader.readAllFileInFolder("data");
+        Map<String, String> testResult = TextFileReader.readAllFileInFolder("data");
         assertEquals(correctResult, testResult, "reader returns wrong result");
     }
 

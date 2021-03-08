@@ -3,8 +3,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Console implements UserInterface {
-    static HashMap<Character, String> filters;
-    static String inputSplitRegEx = "[, .]";
+    protected final static HashMap<Character, String> filters;
+    protected final static String inputSplitRegEx = "[, .]";
     final Scanner scanner;
 
     static {

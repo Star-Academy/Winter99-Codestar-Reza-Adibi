@@ -30,7 +30,6 @@ public class TextFileReader {
      */
     protected static File[] listOfFileInFolder(String folderPath) {
         File folder = new File(folderPath);
-        // todo: filter files
         return folder.listFiles();
     }
 
@@ -41,17 +40,15 @@ public class TextFileReader {
      * @return content of the file
      */
     public static String readTextFile(File file) throws IOException {
-        FileReader fileReader = null;
-        BufferedReader reader = null;
-        fileReader = new FileReader(file);
-        reader = new BufferedReader(fileReader);
+        FileReader fileReader = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder();
         String line;
-        StringBuilder sb = new StringBuilder();
         while ((line = reader.readLine()) != null) {
-            sb.append(line);
-            sb.append("\n");
+            stringBuilder.append(line);
+            stringBuilder.append("\n");
         }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
     }
 }
