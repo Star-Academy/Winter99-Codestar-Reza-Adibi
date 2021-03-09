@@ -1,5 +1,6 @@
 using System.IO;
 using Xunit;
+using System.Collections.Generic;
 using Project_03;
 
 namespace Project_03Test {
@@ -14,8 +15,11 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetRawDataTest() {
-            string expectedResult = "this is simple file\nthis is second document";
-            string testResult = fileReader.GetRawData();
+            Dictionary<string, string> expectedResult = new Dictionary<string, string> {
+                { directoryPath + "\\sample", "this is simple file" },
+                { directoryPath + "\\sample2", "this is second document" }
+            };
+            Dictionary<string, string> testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
         }
         ~FileReaderTests() {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Project_03 {
@@ -13,13 +14,12 @@ namespace Project_03 {
         /// <returns>
         /// All texts in given directory.
         /// </returns>
-        public string GetRawData() {
-            var stringData = "";
+        public Dictionary<string, string> GetRawData() {
+            var stringData = new Dictionary<string, string>();
             try {
                 var pathes = Directory.GetFiles(directoryPath);
                 foreach (string path in pathes)
-                    stringData += File.ReadAllText(path) + '\n';
-                stringData = stringData.Remove(stringData.Length - 1);
+                    stringData.Add(path, File.ReadAllText(path));
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
