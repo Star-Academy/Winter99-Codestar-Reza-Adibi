@@ -38,11 +38,17 @@ namespace Project_03 {
             }
         }
         /// <summary>
-        /// 
+        /// Try to get token's documentIDs from InvertedIndex. 
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="output"></param>
-        /// <returns></returns>
+        /// <param name="token">
+        /// The token that you want its List of documentIDs.
+        /// </param>
+        /// <param name="output">
+        /// Output List of documentIDs.
+        /// </param>
+        /// <returns>
+        /// If invertedIndex contains token "true", otherwise "false".
+        /// </returns>
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             if (tokenMap.TryGetValue(token, out output))
                 return true;
