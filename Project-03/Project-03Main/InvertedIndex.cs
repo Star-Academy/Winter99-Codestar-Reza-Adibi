@@ -54,5 +54,14 @@ namespace Project_03 {
                 return true;
             return false;
         }
+        public override bool Equals(object obj) {
+            if (this.GetType() != obj.GetType())
+                return false;
+            InvertedIndex invertedIndex = (InvertedIndex)obj;
+            if (this.TokenMap == invertedIndex.TokenMap)
+                return true;
+            return false;
+
+        }
     }
 }

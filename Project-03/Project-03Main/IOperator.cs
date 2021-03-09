@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Project_03 {
     public interface IOperator {
+        public int Value { get; }
         public InvertedIndex InvertedIndex { get; }
         public string Token { get; }
         /// <summary>

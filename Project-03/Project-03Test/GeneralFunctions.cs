@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Project_03Test {
     public class GeneralFunctions {
+        /// <summary>
+        /// Initial test InvertedIndex with default values. 
+        /// </summary>
+        /// <returns>
+        /// An InvertedIndex with default values.
+        /// </returns>
         public static InvertedIndex InitialInvertedIndex() {
             InvertedIndex invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(new List<Tuple<string, string>> {
