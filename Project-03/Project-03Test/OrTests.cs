@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Project_03;
-using Moq;
-using Xunit;
+﻿using Project_03;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace Project_03Test {
-    public class AndTests {
+    public class OrTests {
         [Fact]
-        public void AndTest() {
-            List<string> expectedResult = new List<string> { "file1" };
+        public void OrTest() {
+            List<string> expectedResult = new List<string> { "file1", "file2", "file3" };
             var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(new List<Tuple<string, string>> {
                 new Tuple<string, string>("file1","test"),
@@ -16,16 +16,16 @@ namespace Project_03Test {
                 new Tuple<string, string>("file1","test2"),
                 new Tuple<string, string>("file3","test2"),
             });
-            IOperator firesOperator = new And("test", invertedIndex);
-            IOperator secondOperator = new And("test2", invertedIndex);
-            List<string> testResult = new List<string> { "file1", "file2", "file3" };
+            IOperator firesOperator = new Or("test", invertedIndex);
+            IOperator secondOperator = new Or("test2", invertedIndex);
+            List<string> testResult = new List<string>();
             testResult = firesOperator.Filter(testResult);
             testResult = secondOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void AndTestEmptyStartList() {
-            List<string> expectedResult = new List<string>();
+        public void OrTestwithStartingList() {
+            List<string> expectedResult = new List<string> { "file1", "file2", "file3", "file4" };
             var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(new List<Tuple<string, string>> {
                 new Tuple<string, string>("file1","test"),
@@ -33,11 +33,13 @@ namespace Project_03Test {
                 new Tuple<string, string>("file1","test2"),
                 new Tuple<string, string>("file3","test2"),
             });
-            IOperator testOperator = new And("test", invertedIndex);
-            List<string> testResult = new List<string>();
-            testResult = testOperator.Filter(testResult);
+            IOperator firesOperator = new Or("test", invertedIndex);
+            IOperator secondOperator = new Or("test2", invertedIndex);
+            List<string> testResult = new List<string> { "file4" };
+            testResult = firesOperator.Filter(testResult);
+            testResult = secondOperator.Filter(testResult);
+            testResult = testResult.OrderBy(item => item).ToList();
             Assert.Equal(expectedResult, testResult);
-
         }
     }
 }
