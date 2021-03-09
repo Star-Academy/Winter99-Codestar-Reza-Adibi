@@ -62,5 +62,12 @@ namespace Project_03Test {
             }
             Assert.Equal(expectedResult, testResult);
         }
+        [Fact]
+        public void TokenizeTes() {
+            string word = "STRING";
+            string expectedResult = "string";
+            string testResult = Tokenizer.Tokenize(word);
+            Assert.Equal(expectedResult, testResult);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Project_03 {
     public class InvertedIndex {
@@ -21,10 +20,14 @@ namespace Project_03 {
             Console.WriteLine(tokenMap.ToString());
         }
         /// <summary>
-        /// 
+        /// Insert documentID to token's documentIDs List. 
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="documentID"></param>
+        /// <param name="token">
+        /// Your token
+        /// </param>
+        /// <param name="documentID">
+        /// Token's documentID.
+        /// </param>
         private void InsertData(string token, string documentID) {
             List<string> documentIDs;
             if (tokenMap.TryGetValue(token, out documentIDs))
@@ -33,6 +36,17 @@ namespace Project_03 {
                 documentIDs = new List<string> { documentID };
                 tokenMap.Add(token, documentIDs);
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
+            if (tokenMap.TryGetValue(token, out output))
+                return true;
+            return false;
         }
     }
 }

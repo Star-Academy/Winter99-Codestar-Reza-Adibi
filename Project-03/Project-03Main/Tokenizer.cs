@@ -47,7 +47,7 @@ namespace Project_03 {
         /// <returns>
         /// A token created from input word.
         /// </returns>
-        private string Tokenize(string word) {
+        public static string Tokenize(string word) {
             string token = word.ToLower();
             return token;
         }

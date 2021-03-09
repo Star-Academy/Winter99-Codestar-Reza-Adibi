@@ -34,5 +34,31 @@ namespace Project_03Test {
             Dictionary<string, List<string>> testResult = invertedIndex.TokenMap;
             Assert.Equal(expectedResult, testResult);
         }
+        [Fact]
+        public void GetTokenDocumentIDsTestInvertedIndexContainsToken() {
+            List<Tuple<string, string>> dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
+            List<string> expectedResult = new List<string> { "file1" };
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.InsertDatas(dataMap);
+            List<string> testResult;
+            invertedIndex.TryGetTokenDocumentIDs("hello", out testResult);
+            Assert.Equal(expectedResult, testResult);
+        }
+        [Fact]
+        public void GetTokenDocumentIDsTestInvertedIndexDoesNotContainsToken() {
+            List<Tuple<string, string>> dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
+            List<string> expectedResult = new List<string> { "file1" };
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.InsertDatas(dataMap);
+            List<string> testResult;
+            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
+        }
+        [Fact]
+        public void GetTokenDocumentIDsTestInvertedIndexIsEmpty() {
+            List<string> expectedResult = new List<string> { "file1" };
+            InvertedIndex invertedIndex = new InvertedIndex();
+            List<string> testResult;
+            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
+        }
     }
 }
