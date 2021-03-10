@@ -4,10 +4,10 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public Student(int StudentNumber, string FirstName, string LastName) {
-            this.StudentNumber = StudentNumber;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
+        public Student(int studentNumber, string firstName, string lastName) {
+            this.StudentNumber = studentNumber;
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
         public override bool Equals(object obj) {
             if (obj.GetType() != GetType())
