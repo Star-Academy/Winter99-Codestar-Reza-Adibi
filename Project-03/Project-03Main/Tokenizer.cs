@@ -60,6 +60,10 @@ namespace Project_03 {
         public bool EndOfText() {
             if (pointer >= words.Count)
                 return true;
+            else if (words.ElementAt(pointer) == "") {
+                pointer++;
+                return EndOfText();
+            }
             return false;
         }
     }

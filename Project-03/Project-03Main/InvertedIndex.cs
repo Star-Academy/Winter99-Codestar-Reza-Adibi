@@ -17,7 +17,6 @@ namespace Project_03 {
         public void InsertDatas(List<Tuple<string, string>> data) {
             foreach (Tuple<string, string> pair in data)
                 InsertData(pair.Item2, pair.Item1);
-            Console.WriteLine(tokenMap.ToString());
         }
         /// <summary>
         /// Insert documentID to token's documentIDs List. 
