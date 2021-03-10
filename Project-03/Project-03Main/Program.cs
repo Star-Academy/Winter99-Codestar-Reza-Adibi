@@ -13,11 +13,30 @@ namespace Project_03 {
             List<string> result = FindResult(operators);
             ui.ShowOutput(ResultToString(result));
         }
-
-        private static string ResultToString(List<string> listOfStrings) {
-            if (listOfStrings.Count == 0)
-                return "no Result!";
-            return String.Join("\n", listOfStrings);
+        private static InvertedIndex InitialDataBase() {
+            FileReader fileReader = new FileReader(dataPath);
+            InvertedIndex invertedIndex = new InvertedIndex();
+            Dictionary<string, string> directoryData = fileReader.GetRawData();
+            foreach (KeyValuePair<string, string> pair in directoryData) {
+                List<Tuple<string, string>> documentIdTokenPairs = GetDocumentTokens(pair.Key, pair.Value);
+                invertedIndex.InsertDatas(documentIdTokenPairs);
+            }
+            return invertedIndex;
+        }
+        private static List<Tuple<string, string>> GetDocumentTokens(string documentID, string documentText) {
+            List<Tuple<string, string>> documentIdTokenPairs = new List<Tuple<string, string>>();
+            Tokenizer tokenizer = new Tokenizer(documentText);
+            while (!tokenizer.EndOfText())
+                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, tokenizer.GetNextToken()));
+            return documentIdTokenPairs;
+        }
+        private static List<IOperator> GetOperatorsFromUser(IUserInterface ui) {
+            string userInputText = ui.UserInput;
+            OperatorExtractor operatorExtractor = new OperatorExtractor(userInputText);
+            List<IOperator> operators = new List<IOperator>();
+            while (!operatorExtractor.EndOfText())
+                operators.Add(operatorExtractor.GetNextOperator(invertedIndex));
+            return operators.OrderBy(op => op.Value).ToList();
         }
 
         private static List<string> FindResult(List<IOperator> operators) {
@@ -31,33 +50,10 @@ namespace Project_03 {
             }
             return result;
         }
-
-        private static List<IOperator> GetOperatorsFromUser(IUserInterface ui) {
-            string userInputText = ui.UserInput;
-            OperatorExtractor operatorExtractor = new OperatorExtractor(userInputText);
-            List<IOperator> operators = new List<IOperator>();
-            while (!operatorExtractor.EndOfText())
-                operators.Add(operatorExtractor.GetNextOperator(invertedIndex));
-            return operators.OrderBy(op => op.Value).ToList();
+        private static string ResultToString(List<string> listOfStrings) {
+            if (listOfStrings.Count == 0)
+                return "no Result!";
+            return String.Join("\n", listOfStrings);
         }
-
-        static InvertedIndex InitialDataBase() {
-            FileReader fileReader = new FileReader(dataPath);
-            InvertedIndex invertedIndex = new InvertedIndex();
-            Dictionary<string, string> directoryData = fileReader.GetRawData();
-            foreach (KeyValuePair<string, string> pair in directoryData) {
-                List<Tuple<string, string>> documentIdTokenPairs = GetDocumentTokens(pair.Key, pair.Value);
-                invertedIndex.InsertDatas(documentIdTokenPairs);
-            }
-            return invertedIndex;
-        }
-        static List<Tuple<string, string>> GetDocumentTokens(string documentID, string documentText) {
-            List<Tuple<string, string>> documentIdTokenPairs = new List<Tuple<string, string>>();
-            Tokenizer tokenizer = new Tokenizer(documentText);
-            while (!tokenizer.EndOfText())
-                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, tokenizer.GetNextToken()));
-            return documentIdTokenPairs;
-        }
-
     }
 }
