@@ -1,12 +1,12 @@
 ﻿using Moq;
 using Project_03;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Project_03Test {
+    [ExcludeFromCodeCoverage]
     public class OperatorExtractorTests {
         [Fact]
         public void GetNextOperatorTestSingleOr() {

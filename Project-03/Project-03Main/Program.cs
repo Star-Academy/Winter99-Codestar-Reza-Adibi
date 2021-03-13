@@ -7,11 +7,13 @@ namespace Project_03 {
         private static string dataPath = @"..\..\..\..\TestData\EnglishData";
         private static InvertedIndex invertedIndex;
         static void Main(string[] args) {
-            invertedIndex = InitialDataBase();
-            IUserInterface ui = new ConsoleUI();
-            List<IOperator> operators = GetOperatorsFromUser(ui);
-            List<string> result = FindResult(operators);
-            ui.ShowOutput(ResultToString(result));
+            FileReader fileReader = new FileReader("wrong path");
+            Dictionary<string, string> testResult = fileReader.GetRawData();
+            //invertedIndex = InitialDataBase();
+            //IUserInterface ui = new ConsoleUI();
+            //List<IOperator> operators = GetOperatorsFromUser(ui);
+            //List<string> result = FindResult(operators);
+            //ui.ShowOutput(ResultToString(result));
         }
         private static InvertedIndex InitialDataBase() {
             FileReader fileReader = new FileReader(dataPath);

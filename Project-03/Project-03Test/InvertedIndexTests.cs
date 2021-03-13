@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Project_03;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Project_03Test {
+    [ExcludeFromCodeCoverage]
     public class InvertedIndexTests {
         [Fact]
         public void InsertDatasTestSingleData() {

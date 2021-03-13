@@ -1,9 +1,19 @@
 ﻿using Project_03;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Project_03Test {
+    [ExcludeFromCodeCoverage]
     public class TokenizerTests {
+        [Fact]
+        public void GetNextTokenTestEmptyInput() {
+            string expectedResult = null;
+            string inputText = "";
+            Tokenizer tokenizer = new Tokenizer(inputText);
+            string testResult = tokenizer.GetNextToken();
+            Assert.Equal(expectedResult, testResult);
+        }
         [Fact]
         public void GetNextTokenTestSingleLowercaseWord() {
             string expectedResult = "string";
@@ -63,7 +73,7 @@ namespace Project_03Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void TokenizeTes() {
+        public void TokenizeTest() {
             string word = "STRING";
             string expectedResult = "string";
             string testResult = Tokenizer.Tokenize(word);

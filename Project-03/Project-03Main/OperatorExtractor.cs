@@ -14,10 +14,7 @@ namespace Project_03 {
             var words = text.Split(separatorsRegex);
             var tokens = new List<string>();
             foreach (string word in words)
-                if (word == "")
-                    continue;
-                else
-                    tokens.Add(Tokenizer.Tokenize(word));
+                tokens.Add(Tokenizer.Tokenize(word));
             return tokens;
         }
         public IOperator GetNextOperator(InvertedIndex invertedIndex) {

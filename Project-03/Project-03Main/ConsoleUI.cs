@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Project_03 {
-    class ConsoleUI : IUserInterface {
+    public class ConsoleUI : IUserInterface {
         public string UserInput { get { return GetUserInput(); } }
         public ConsoleUI() {
             Console.WriteLine("Hello dear user!");

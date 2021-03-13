@@ -21,6 +21,8 @@ namespace Project_03 {
             return inputList;
         }
         public override bool Equals(object obj) {
+            if (obj == null)
+                return false;
             if (this.GetType() != obj.GetType())
                 return false;
             Or or = (Or)obj;

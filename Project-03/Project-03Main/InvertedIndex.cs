@@ -51,14 +51,5 @@ namespace Project_03 {
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             return tokenMap.TryGetValue(token, out output);
         }
-        public override bool Equals(object obj) {
-            if (this.GetType() != obj.GetType())
-                return false;
-            InvertedIndex invertedIndex = (InvertedIndex)obj;
-            if (this.TokenMap == invertedIndex.TokenMap)
-                return true;
-            return false;
-
-        }
     }
 }
