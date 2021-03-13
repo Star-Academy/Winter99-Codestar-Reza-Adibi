@@ -36,7 +36,7 @@ namespace Project_03 {
             List<IOperator> operators = new List<IOperator>();
             while (!operatorExtractor.EndOfText())
                 operators.Add(operatorExtractor.GetNextOperator(invertedIndex));
-            return operators.OrderBy(op => op.Value).ToList();
+            return operators.OrderBy(op => op.Priority).ToList();
         }
 
         private static List<string> FindResult(List<IOperator> operators) {

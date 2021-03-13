@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Project_03;
-using Moq;
 using Xunit;
-using System;
 
 namespace Project_03Test {
     public class AndTests {

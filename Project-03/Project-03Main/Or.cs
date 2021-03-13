@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Project_03 {
     public class Or : IOperator {
-        public static readonly int value = 1;
-        public int Value { get { return value; } }
+        public static readonly int priority = 1;
+        public int Priority { get { return priority; } }
         public InvertedIndex InvertedIndex { get; }
         public string Token { get; }
 

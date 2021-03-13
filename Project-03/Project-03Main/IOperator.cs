@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Project_03 {
     public interface IOperator {
-        public int Value { get; }
+        public int Priority { get; }
         public InvertedIndex InvertedIndex { get; }
         public string Token { get; }
         /// <summary>

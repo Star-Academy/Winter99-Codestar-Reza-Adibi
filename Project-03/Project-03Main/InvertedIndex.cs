@@ -49,9 +49,7 @@ namespace Project_03 {
         /// If invertedIndex contains token "true", otherwise "false".
         /// </returns>
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
-            if (tokenMap.TryGetValue(token, out output))
-                return true;
-            return false;
+            return tokenMap.TryGetValue(token, out output);
         }
         public override bool Equals(object obj) {
             if (this.GetType() != obj.GetType())

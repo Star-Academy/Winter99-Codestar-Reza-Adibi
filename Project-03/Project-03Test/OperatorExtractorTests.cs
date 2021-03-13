@@ -49,7 +49,7 @@ namespace Project_03Test {
             while (!operatorExtractor.EndOfText()) {
                 testResult.Add(operatorExtractor.GetNextOperator(invertedIndex.Object));
             }
-            testResult = testResult.OrderBy(item => item.Value).ToList();
+            testResult = testResult.OrderBy(item => item.Priority).ToList();
             Assert.Equal(expectedResult, testResult);
         }
     }

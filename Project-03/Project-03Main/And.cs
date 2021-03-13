@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Project_03 {
     public class And : IOperator {
-        public static readonly int value = 2;
-        public int Value { get { return value; } }
+        public static readonly int priority = 2;
+        public int Priority { get { return priority; } }
         public InvertedIndex InvertedIndex { get; }
         public string Token { get; }
-
 
         public And(string token, InvertedIndex invertedIndex) {
             Token = token;

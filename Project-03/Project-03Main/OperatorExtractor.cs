@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Project_03 {
     public class OperatorExtractor {
         private readonly List<string> tokens;
         private int pointer;
-        private static readonly string sepratorsRegex = " ";
+        private static readonly string separatorsRegex = " ";
 
         public OperatorExtractor(string text) {
             tokens = TextToTokens(text);
             pointer = 0;
         }
         private List<string> TextToTokens(string text) {
-            var words = text.Split(sepratorsRegex);
+            var words = text.Split(separatorsRegex);
             var tokens = new List<string>();
             foreach (string word in words)
                 if (word == "")
