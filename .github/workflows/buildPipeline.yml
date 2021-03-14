@@ -21,7 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      working-directory: .\Project-03\Project-03Main\
+      working-directory: Project-03\Project-03Main\Project-03.sln
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
