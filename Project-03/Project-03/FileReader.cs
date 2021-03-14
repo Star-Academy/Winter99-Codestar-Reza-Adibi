@@ -19,7 +19,7 @@ namespace Project_03 {
             try {
                 var pathes = Directory.GetFiles(directoryPath);
                 foreach (string path in pathes)
-                    stringData.Add(path, File.ReadAllText(path));
+                    stringData.Add(path.Replace("\\", "/"), File.ReadAllText(path));
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);

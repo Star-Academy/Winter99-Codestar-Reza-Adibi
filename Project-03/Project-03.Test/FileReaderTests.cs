@@ -10,16 +10,16 @@ namespace Project_03Test {
         private readonly string directoryPath;
         private readonly FileReader fileReader;
         public FileReaderTests() {
-            directoryPath = @"..\..\..\..\TestData\data";
-            File.WriteAllText(directoryPath + "\\sample", "this is simple file");
-            File.WriteAllText(directoryPath + "\\sample2", "this is second document");
+            directoryPath = @"../../../../TestData/data";
+            File.WriteAllText(directoryPath + "/sample", "this is simple file");
+            File.WriteAllText(directoryPath + "/sample2", "this is second document");
             fileReader = new FileReader(directoryPath);
         }
         [Fact]
         public void GetRawDataTest() {
             Dictionary<string, string> expectedResult = new Dictionary<string, string> {
-                { directoryPath + "\\sample", "this is simple file" },
-                { directoryPath + "\\sample2", "this is second document" }
+                { directoryPath + "/sample", "this is simple file" },
+                { directoryPath + "/sample2", "this is second document" }
             };
             Dictionary<string, string> testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
@@ -32,8 +32,8 @@ namespace Project_03Test {
             Assert.Equal(expectedResult, testResult);
         }
         ~FileReaderTests() {
-            File.Delete(directoryPath + "\\sample");
-            File.Delete(directoryPath + "\\sample2");
+            File.Delete(directoryPath + "/sample");
+            File.Delete(directoryPath + "/sample2");
         }
     }
 }

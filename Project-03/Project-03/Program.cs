@@ -4,16 +4,14 @@ using System.Linq;
 
 namespace Project_03 {
     class Program {
-        private static string dataPath = @"..\..\..\..\TestData\EnglishData";
+        private static string dataPath = "../../../../TestData/EnglishData";
         private static InvertedIndex invertedIndex;
         static void Main(string[] args) {
-            FileReader fileReader = new FileReader("wrong path");
-            Dictionary<string, string> testResult = fileReader.GetRawData();
-            //invertedIndex = InitialDataBase();
-            //IUserInterface ui = new ConsoleUI();
-            //List<IOperator> operators = GetOperatorsFromUser(ui);
-            //List<string> result = FindResult(operators);
-            //ui.ShowOutput(ResultToString(result));
+            invertedIndex = InitialDataBase();
+            IUserInterface ui = new ConsoleUI();
+            List<IOperator> operators = GetOperatorsFromUser(ui);
+            List<string> result = FindResult(operators);
+            ui.ShowOutput(ResultToString(result));
         }
         private static InvertedIndex InitialDataBase() {
             FileReader fileReader = new FileReader(dataPath);
