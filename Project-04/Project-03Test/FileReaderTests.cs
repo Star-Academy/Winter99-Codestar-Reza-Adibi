@@ -10,9 +10,9 @@ namespace Project_03Test {
         private readonly string directoryPath;
         private readonly FileReader fileReader;
         public FileReaderTests() {
-            directoryPath = @"..\..\..\..\TestData\data";
-            File.WriteAllText(directoryPath + "\\sample", "this is simple file");
-            File.WriteAllText(directoryPath + "\\sample2", "this is second document");
+            directoryPath = @"../../../../TestData/data";
+            File.WriteAllText(directoryPath + "/sample", "this is simple file");
+            File.WriteAllText(directoryPath + "/sample2", "this is second document");
             fileReader = new FileReader(directoryPath);
         }
         [Fact]
