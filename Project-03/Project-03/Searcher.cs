@@ -13,8 +13,10 @@ namespace Project_03 {
             bool firstOperatorIsAnd = operators.ElementAt(0).GetType() == typeof(And);
             for (int i = 0; i < operators.Count; i++) {
                 IOperator op = operators.ElementAt(i);
-                if (firstOperatorIsAnd)
+                if (firstOperatorIsAnd) {
                     op = new Or(op.Token, op.InvertedIndex);
+                    firstOperatorIsAnd = false;
+                }
                 result = op.Filter(result);
             }
             return result;
