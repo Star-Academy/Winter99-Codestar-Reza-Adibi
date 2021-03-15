@@ -1,8 +1,8 @@
+using Project_03;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Xunit;
-using System.Collections.Generic;
-using Project_03;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Project_03Test {
     [ExcludeFromCodeCoverage]

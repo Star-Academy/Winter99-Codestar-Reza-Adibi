@@ -1,4 +1,5 @@
 ﻿using Project_03;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -47,29 +48,24 @@ namespace Project_03Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void GetNextTokenTestMultiUniqueWords() {
-            HashSet<string> expectedResult = new HashSet<string> { "string", "___", "10254" };
+        public void GetAllTokensTestUniqueWords() {
+            List<Tuple<string, string>> expectedResult = new List<Tuple<string, string>> {
+                new Tuple<string, string>("id", "string"),
+                new Tuple<string, string>("id", "___"),
+                new Tuple<string, string>("id", "10254")
+            };
             string inputText = "!@#$%^&*()+=-/?><|\"\\;:'][{}STRING ___ 10254";
-            Tokenizer tokenizer = new Tokenizer(inputText);
-            HashSet<string> testResult = new HashSet<string>();
-            string token;
-            while (!tokenizer.EndOfText()) {
-                token = tokenizer.GetNextToken();
-                testResult.Add(token);
-            }
+            List<Tuple<string, string>> testResult = Tokenizer.GetAllTokens("id", inputText);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void GetNextTokenTestMultiUnuniqueWords() {
-            List<string> expectedResult = new List<string> { "string", "string" };
+        public void GetAllTokensTestUnuniqueWords() {
+            List<Tuple<string, string>> expectedResult = new List<Tuple<string, string>> {
+                new Tuple<string, string>("id", "string"),
+                new Tuple<string, string>("id", "string")
+            };
             string inputText = "string string";
-            Tokenizer tokenizer = new Tokenizer(inputText);
-            List<string> testResult = new List<string>();
-            string token;
-            while (!tokenizer.EndOfText()) {
-                token = tokenizer.GetNextToken();
-                testResult.Add(token);
-            }
+            List<Tuple<string, string>> testResult = Tokenizer.GetAllTokens("id", inputText);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]

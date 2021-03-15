@@ -2,7 +2,6 @@
 using Project_03;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Project_03Test {
@@ -36,7 +35,7 @@ namespace Project_03Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void GetNextOperatorTestMiltiOperators() {
+        public void GetAllOperatorTest() {
             var invertedIndex = new Mock<InvertedIndex>();
             List<IOperator> expectedResult = new List<IOperator> {
             new Or("hi",invertedIndex.Object),
@@ -45,11 +44,7 @@ namespace Project_03Test {
             };
             string text = "hi +hi -hi";
             OperatorExtractor operatorExtractor = new OperatorExtractor(text);
-            List<IOperator> testResult = new List<IOperator>();
-            while (!operatorExtractor.EndOfText()) {
-                testResult.Add(operatorExtractor.GetNextOperator(invertedIndex.Object));
-            }
-            testResult = testResult.OrderBy(item => item.Priority).ToList();
+            List<IOperator> testResult = OperatorExtractor.GetAllOperators(text, invertedIndex.Object);
             Assert.Equal(expectedResult, testResult);
         }
     }

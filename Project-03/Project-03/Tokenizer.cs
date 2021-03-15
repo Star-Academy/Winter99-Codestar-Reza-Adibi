@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,6 +8,7 @@ namespace Project_03 {
         private readonly List<string> words;
         private int pointer;
         private static readonly string regex = @"\W+";
+
         public Tokenizer(string text) {
             words = TextToWords(text);
             pointer = 0;
@@ -65,6 +67,19 @@ namespace Project_03 {
                 return EndOfText();
             }
             return false;
+        }
+        /// <summary>
+        /// Convert all of document text to tokens.
+        /// </summary>
+        /// <param name="documentID">ID of document.</param>
+        /// <param name="documentText">The document's content.</param>
+        /// <returns></returns>
+        public static List<Tuple<string, string>> GetAllTokens(string documentID, string documentText) {
+            List<Tuple<string, string>> documentIdTokenPairs = new List<Tuple<string, string>>();
+            Tokenizer tokenizer = new Tokenizer(documentText);
+            while (!tokenizer.EndOfText())
+                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, tokenizer.GetNextToken()));
+            return documentIdTokenPairs;
         }
     }
 }
