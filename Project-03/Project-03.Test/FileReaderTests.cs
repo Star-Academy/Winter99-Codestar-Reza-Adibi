@@ -1,4 +1,5 @@
 using Project_03;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace Project_03Test {
     [ExcludeFromCodeCoverage]
-    public class FileReaderTests {
+    public class FileReaderTests : IDisposable {
         private readonly string directoryPath;
         private readonly FileReader fileReader;
 
@@ -32,9 +33,14 @@ namespace Project_03Test {
             var testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
         }
-        ~FileReaderTests() {
+
+        public void Dispose() {
             File.Delete(directoryPath + "/sample");
             File.Delete(directoryPath + "/sample2");
+        }
+
+        ~FileReaderTests() {
+            Dispose();
         }
     }
 }

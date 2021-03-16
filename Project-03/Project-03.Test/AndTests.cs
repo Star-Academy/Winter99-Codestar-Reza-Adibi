@@ -21,7 +21,7 @@ namespace Project_03Test {
             var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("test", invertedIndex);
-            List<string> testResult = new List<string>();
+            var testResult = new List<string>();
             testResult = firestOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);
         }
@@ -30,7 +30,7 @@ namespace Project_03Test {
             var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("invalid", invertedIndex);
-            List<string> testResult = new List<string> { "file1", "file2", "file3" };
+            var testResult = new List<string> { "file1", "file2", "file3" };
             testResult = firestOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);
         }

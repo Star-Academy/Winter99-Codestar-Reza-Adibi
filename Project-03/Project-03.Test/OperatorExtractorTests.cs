@@ -7,9 +7,13 @@ using Xunit;
 namespace Project_03Test {
     [ExcludeFromCodeCoverage]
     public class OperatorExtractorTests {
+        private Mock<InvertedIndex> invertedIndex;
+
+        public OperatorExtractorTests() {
+            invertedIndex = new Mock<InvertedIndex>();
+        }
         [Fact]
         public void GetNextOperatorTestSingleOr() {
-            var invertedIndex = new Mock<InvertedIndex>();
             IOperator expectedResult = new Or("hi", invertedIndex.Object);
             var inputText = "+hi";
             var operatorExtractor = new OperatorExtractor(inputText);
@@ -18,7 +22,6 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetNextOperatorTestSingleAnd() {
-            var invertedIndex = new Mock<InvertedIndex>();
             IOperator expectedResult = new And("hi", invertedIndex.Object);
             var inputText = "hi";
             var operatorExtractor = new OperatorExtractor(inputText);
@@ -27,7 +30,6 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetNextOperatorTestSingleNot() {
-            var invertedIndex = new Mock<InvertedIndex>();
             IOperator expectedResult = new Not("hi", invertedIndex.Object);
             var inputText = "-hi";
             var operatorExtractor = new OperatorExtractor(inputText);
@@ -36,7 +38,6 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetAllOperatorTest() {
-            var invertedIndex = new Mock<InvertedIndex>();
             var expectedResult = new List<IOperator> {
             new Or("hi",invertedIndex.Object),
             new And("hi",invertedIndex.Object),

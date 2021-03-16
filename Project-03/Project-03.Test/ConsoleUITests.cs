@@ -8,15 +8,17 @@ using System.Diagnostics.CodeAnalysis;
 namespace Project_03Test {
     [ExcludeFromCodeCoverage]
     public class ConsoleUITests {
+        private IUserInterface ui;
+        public ConsoleUITests() {
+            ui = new ConsoleUI();
+        }
         [Fact]
         public void ShowOutputTestEmptyList() {
-            IUserInterface ui = new ConsoleUI();
             ui.ShowOutput(new List<string>());
             Assert.True(true);
         }
         [Fact]
         public void ShowOutputTest() {
-            IUserInterface ui = new ConsoleUI();
             ui.ShowOutput(new List<string> {
                 "id1","id2"
             });

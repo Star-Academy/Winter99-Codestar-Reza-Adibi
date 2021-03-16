@@ -41,9 +41,8 @@ namespace Project_03 {
         /// </summary>
         /// <returns>If pointer reached to end of text "True", otherwise "False".</returns>
         public bool EndOfText() {
-            if (pointer >= tokens.Count)
-                return true;
-            return false;
+            return pointer >= tokens.Count;
+
         }
         /// <summary>
         /// Get all operators from user input text.

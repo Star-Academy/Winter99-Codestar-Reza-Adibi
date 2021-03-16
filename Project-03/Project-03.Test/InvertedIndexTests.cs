@@ -7,11 +7,14 @@ using Xunit;
 namespace Project_03Test {
     [ExcludeFromCodeCoverage]
     public class InvertedIndexTests {
+        private InvertedIndex invertedIndex;
+        public InvertedIndexTests() {
+            invertedIndex = invertedIndex = new InvertedIndex();
+        }
         [Fact]
         public void InsertDatasTestSingleData() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
             var expectedResult = new Dictionary<string, List<string>> { { "hello", new List<string> { "file1" } } };
-            var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(dataMap);
             var testResult = invertedIndex.TokenMap;
             Assert.Equal(expectedResult, testResult);
@@ -30,7 +33,6 @@ namespace Project_03Test {
                 { "hello", new List<string> { "file1", "file1", "file2", "file2" } },
                 { "hello2", new List<string> { "file1", "file2" } }
             };
-            var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(dataMap);
             var testResult = invertedIndex.TokenMap;
             Assert.Equal(expectedResult, testResult);
@@ -39,7 +41,6 @@ namespace Project_03Test {
         public void GetTokenDocumentIDsTestInvertedIndexContainsToken() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
             var expectedResult = new List<string> { "file1" };
-            var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(dataMap);
             List<string> testResult;
             invertedIndex.TryGetTokenDocumentIDs("hello", out testResult);
@@ -49,7 +50,6 @@ namespace Project_03Test {
         public void GetTokenDocumentIDsTestInvertedIndexDoesNotContainsToken() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
             var expectedResult = new List<string> { "file1" };
-            var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(dataMap);
             List<string> testResult;
             Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
@@ -57,7 +57,6 @@ namespace Project_03Test {
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexIsEmpty() {
             var expectedResult = new List<string> { "file1" };
-            var invertedIndex = new InvertedIndex();
             List<string> testResult;
             Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
         }
