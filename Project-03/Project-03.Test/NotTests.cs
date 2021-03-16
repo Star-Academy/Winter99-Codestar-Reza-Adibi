@@ -9,7 +9,7 @@ namespace Project_03Test {
     public class NotTests {
         [Fact]
         public void FilterTestwithNullStartingList() {
-            List<string> expectedResult = new List<string>();
+            var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Not("test", invertedIndex);
             List<string> testResult = null;
@@ -18,20 +18,20 @@ namespace Project_03Test {
         }
         [Fact]
         public void FilterTestWithEmptyStartingList() {
-            List<string> expectedResult = new List<string>();
+            var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Not("test", invertedIndex);
-            List<string> testResult = new List<string>();
+            var testResult = new List<string>();
             testResult = firestOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
         public void FilterTestwithStartingList() {
-            List<string> expectedResult = new List<string> { "file4" };
+            var expectedResult = new List<string> { "file4" };
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Not("test", invertedIndex);
             IOperator secondOperator = new Not("test2", invertedIndex);
-            List<string> testResult = new List<string> { "file1", "file2", "file3", "file4" };
+            var testResult = new List<string> { "file1", "file2", "file3", "file4" };
             testResult = firestOperator.Filter(testResult);
             testResult = secondOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);

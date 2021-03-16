@@ -13,7 +13,7 @@ namespace Project_03Test {
         /// An InvertedIndex with default values.
         /// </returns>
         public static InvertedIndex InitialInvertedIndex() {
-            InvertedIndex invertedIndex = new InvertedIndex();
+            var invertedIndex = new InvertedIndex();
             invertedIndex.InsertDatas(new List<Tuple<string, string>> {
                 new Tuple<string, string>("file1","test"),
                 new Tuple<string, string>("file2","test"),

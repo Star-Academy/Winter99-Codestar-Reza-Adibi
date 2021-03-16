@@ -2,9 +2,9 @@
 
 namespace Project_03 {
     public interface IOperator {
-        public int Priority { get; }
-        public InvertedIndex InvertedIndex { get; }
-        public string Token { get; }
+        int Priority { get; }
+        InvertedIndex InvertedIndex { get; }
+        string Token { get; }
         /// <summary>
         /// Use operator on input list and Token's DocumentIds list.
         /// </summary>
@@ -14,6 +14,6 @@ namespace Project_03 {
         /// <returns>
         /// Result of using operator on operands( inputList and Token's DocumentIDs ).
         /// </returns>
-        public List<string> Filter(List<string> inputList);
+        List<string> Filter(List<string> inputList);
     }
 }

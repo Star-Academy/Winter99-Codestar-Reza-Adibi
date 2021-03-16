@@ -8,27 +8,27 @@ namespace Project_03Test {
     public class SearcherTests {
         [Fact]
         public void SearchTestInvertedIndexDataBase() {
-            List<string> expectedResult = new List<string> { "file2" };
-            InvertedIndex invertedIndex = GeneralFunctions.InitialInvertedIndex();
-            Searcher searcher = new Searcher();
-            List<IOperator> testOperators = new List<IOperator> {
+            var expectedResult = new List<string> { "file2" };
+            var invertedIndex = GeneralFunctions.InitialInvertedIndex();
+            var searcher = new Searcher();
+            var testOperators = new List<IOperator> {
                 new Or("test",invertedIndex),
                 new And("test",invertedIndex),
                 new Not("test2",invertedIndex)
             };
-            List<string> testResult = searcher.RunOperators(testOperators);
+            var testResult = searcher.RunOperators(testOperators);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
         public void SearchTestInvertedIndexDataBaseFirstOperatorIsAnd() {
-            List<string> expectedResult = new List<string> { "file2" };
-            InvertedIndex invertedIndex = GeneralFunctions.InitialInvertedIndex();
-            Searcher searcher = new Searcher();
-            List<IOperator> testOperators = new List<IOperator> {
+            var expectedResult = new List<string> { "file2" };
+            var invertedIndex = GeneralFunctions.InitialInvertedIndex();
+            var searcher = new Searcher();
+            var testOperators = new List<IOperator> {
                 new And("test",invertedIndex),
                 new Not("test2",invertedIndex)
             };
-            List<string> testResult = searcher.RunOperators(testOperators);
+            var testResult = searcher.RunOperators(testOperators);
             Assert.Equal(expectedResult, testResult);
         }
     }

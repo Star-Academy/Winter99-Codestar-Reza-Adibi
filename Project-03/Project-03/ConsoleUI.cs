@@ -12,11 +12,10 @@ namespace Project_03 {
                 do {
                     Console.WriteLine("Write your filters and use \" \"( spase ) as seprator:");
                     userInput = Console.ReadLine();
-                } while (userInput == "");
+                } while (string.IsNullOrWhiteSpace(userInput));
                 return userInput;
             }
         }
-
         public void ShowOutput(List<string> listOfStrings) {
             if (listOfStrings.Count == 0)
                 ShowOutput("no Result!");

@@ -10,7 +10,7 @@ namespace Project_03Test {
     public class OrTests {
         [Fact]
         public void FilterTestwithNullStartingList() {
-            List<string> expectedResult = new List<string> { "file1", "file2", "file3" };
+            var expectedResult = new List<string> { "file1", "file2", "file3" };
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Or("test", invertedIndex);
             IOperator secondOperator = new Or("test2", invertedIndex);
@@ -21,22 +21,22 @@ namespace Project_03Test {
         }
         [Fact]
         public void FilterTestwithEmptyStartingList() {
-            List<string> expectedResult = new List<string> { "file1", "file2", "file3" };
+            var expectedResult = new List<string> { "file1", "file2", "file3" };
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Or("test", invertedIndex);
             IOperator secondOperator = new Or("test2", invertedIndex);
-            List<string> testResult = new List<string>();
+            var testResult = new List<string>();
             testResult = firestOperator.Filter(testResult);
             testResult = secondOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
         public void FilterTestwithStartingList() {
-            List<string> expectedResult = new List<string> { "file1", "file2", "file3", "file4" };
+            var expectedResult = new List<string> { "file1", "file2", "file3", "file4" };
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new Or("test", invertedIndex);
             IOperator secondOperator = new Or("test2", invertedIndex);
-            List<string> testResult = new List<string> { "file4" };
+            var testResult = new List<string> { "file4" };
             testResult = firestOperator.Filter(testResult);
             testResult = secondOperator.Filter(testResult);
             testResult = testResult.OrderBy(item => item).ToList();

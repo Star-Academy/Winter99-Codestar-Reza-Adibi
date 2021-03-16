@@ -9,7 +9,7 @@ namespace Project_03Test {
     public class AndTests {
         [Fact]
         public void FilterTestwithNullStartingList() {
-            List<string> expectedResult = new List<string>();
+            var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("test", invertedIndex);
             List<string> testResult = null;
@@ -18,7 +18,7 @@ namespace Project_03Test {
         }
         [Fact]
         public void FilterTestWithEmptyStartingList() {
-            List<string> expectedResult = new List<string>();
+            var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("test", invertedIndex);
             List<string> testResult = new List<string>();
@@ -27,7 +27,7 @@ namespace Project_03Test {
         }
         [Fact]
         public void FilterTestInvalidToken() {
-            List<string> expectedResult = new List<string>();
+            var expectedResult = new List<string>();
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("invalid", invertedIndex);
             List<string> testResult = new List<string> { "file1", "file2", "file3" };
@@ -36,11 +36,11 @@ namespace Project_03Test {
         }
         [Fact]
         public void FilterTestStartingList() {
-            List<string> expectedResult = new List<string> { "file1" };
+            var expectedResult = new List<string> { "file1" };
             var invertedIndex = GeneralFunctions.InitialInvertedIndex();
             IOperator firestOperator = new And("test", invertedIndex);
             IOperator secondOperator = new And("test2", invertedIndex);
-            List<string> testResult = new List<string> { "file1", "file2", "file3" };
+            var testResult = new List<string> { "file1", "file2", "file3" };
             testResult = firestOperator.Filter(testResult);
             testResult = secondOperator.Filter(testResult);
             Assert.Equal(expectedResult, testResult);

@@ -34,10 +34,10 @@ namespace Project_03 {
         public string GetNextToken() {
             if (pointer == words.Count)
                 return null;
-            string word = words.ElementAt(pointer++);
+            var word = words.ElementAt(pointer++);
             if (word.Equals(""))
                 return GetNextToken();
-            string token = Tokenize(word);
+            var token = Tokenize(word);
             return token;
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace Project_03 {
         /// A token created from input word.
         /// </returns>
         public static string Tokenize(string word) {
-            string token = word.ToLower();
+            var token = word.ToLower();
             return token;
         }
         /// <summary>
@@ -75,8 +75,8 @@ namespace Project_03 {
         /// <param name="documentText">The document's content.</param>
         /// <returns></returns>
         public static List<Tuple<string, string>> GetAllTokens(string documentID, string documentText) {
-            List<Tuple<string, string>> documentIdTokenPairs = new List<Tuple<string, string>>();
-            Tokenizer tokenizer = new Tokenizer(documentText);
+            var documentIdTokenPairs = new List<Tuple<string, string>>();
+            var tokenizer = new Tokenizer(documentText);
             while (!tokenizer.EndOfText())
                 documentIdTokenPairs.Add(new Tuple<string, string>(documentID, tokenizer.GetNextToken()));
             return documentIdTokenPairs;

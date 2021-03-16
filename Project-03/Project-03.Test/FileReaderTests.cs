@@ -9,6 +9,7 @@ namespace Project_03Test {
     public class FileReaderTests {
         private readonly string directoryPath;
         private readonly FileReader fileReader;
+
         public FileReaderTests() {
             directoryPath = @"../../../../TestData/data";
             File.WriteAllText(directoryPath + "/sample", "this is simple file");
@@ -17,18 +18,18 @@ namespace Project_03Test {
         }
         [Fact]
         public void GetRawDataTest() {
-            Dictionary<string, string> expectedResult = new Dictionary<string, string> {
+            var expectedResult = new Dictionary<string, string> {
                 { directoryPath + "/sample", "this is simple file" },
                 { directoryPath + "/sample2", "this is second document" }
             };
-            Dictionary<string, string> testResult = fileReader.GetRawData();
+            var testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
         public void GetRawDataTestWrongPath() {
-            Dictionary<string, string> expectedResult = new Dictionary<string, string>();
-            FileReader fileReader = new FileReader("wrong path");
-            Dictionary<string, string> testResult = fileReader.GetRawData();
+            var expectedResult = new Dictionary<string, string>();
+            var fileReader = new FileReader("wrong path");
+            var testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
         }
         ~FileReaderTests() {

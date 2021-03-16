@@ -29,7 +29,7 @@ namespace Project_03 {
         /// <param name="invertedIndex">The inverted index that we are going to run operators on it.</param>
         /// <returns>Next operator from user Input text.</returns>
         public IOperator GetNextOperator(InvertedIndex invertedIndex) {
-            string operatorToken = tokens[pointer++];
+            var operatorToken = tokens[pointer++];
             switch (operatorToken[0]) {
                 case '+': return new Or(operatorToken.Substring(1), invertedIndex);
                 case '-': return new Not(operatorToken.Substring(1), invertedIndex);
@@ -52,8 +52,8 @@ namespace Project_03 {
         /// <param name="invertedIndex">The inverted index that we are going to run operators on it.</param>
         /// <returns>List of all operators order by priority.</returns>
         public static List<IOperator> GetAllOperators(string userInputText, InvertedIndex invertedIndex) {
-            OperatorExtractor operatorExtractor = new OperatorExtractor(userInputText);
-            List<IOperator> operators = new List<IOperator>();
+            var operatorExtractor = new OperatorExtractor(userInputText);
+            var operators = new List<IOperator>();
             while (!operatorExtractor.EndOfText())
                 operators.Add(operatorExtractor.GetNextOperator(invertedIndex));
             return operators.OrderBy(op => op.Priority).ToList();

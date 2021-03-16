@@ -9,8 +9,8 @@ namespace Project_03 {
         /// <param name="operators">List of operators orderd by priority.</param>
         /// <returns>List of document ids.</returns>
         public List<string> RunOperators(List<IOperator> operators) {
-            List<string> result = new List<string>();
-            bool firstOperatorIsAnd = operators.ElementAt(0).GetType() == typeof(And);
+            var result = new List<string>();
+            var firstOperatorIsAnd = operators.ElementAt(0).GetType() == typeof(And);
             for (int i = 0; i < operators.Count; i++) {
                 IOperator op = operators.ElementAt(i);
                 if (firstOperatorIsAnd) {

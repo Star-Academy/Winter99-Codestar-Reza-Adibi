@@ -14,7 +14,7 @@ namespace Project_03 {
         public List<string> Filter(List<string> inputList) {
             if (inputList == null || inputList.Count == 0)
                 return new List<string>();
-            List<string> tokenDocumentIDs = new List<string>();
+            var tokenDocumentIDs = new List<string>();
             InvertedIndex.TryGetTokenDocumentIDs(Token, out tokenDocumentIDs);
             inputList.RemoveAll(item => tokenDocumentIDs.Contains(item));
             return inputList;
