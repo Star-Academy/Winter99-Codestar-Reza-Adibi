@@ -3,7 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Project_03</RootNamespace>
+     <PackageId>StarAcademy.RezaAdibi.Project-03</PackageId>
+        <Authors>RezaAdibi</Authors>
+        <Company>Star Academy</Company>
   </PropertyGroup>
 
 </Project>
