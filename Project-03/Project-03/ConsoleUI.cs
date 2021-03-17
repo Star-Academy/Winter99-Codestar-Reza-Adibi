@@ -8,13 +8,26 @@ namespace Project_03 {
         }
         public string UserInput {
             get {
-                string userInput;
-                do {
-                    Console.WriteLine("Write your filters and use \" \"( spase ) as seprator:");
-                    userInput = Console.ReadLine();
-                } while (string.IsNullOrWhiteSpace(userInput));
-                return userInput;
+                return ReadFromConsole("Write your filters and use \" \"( spase ) as seprator:");
             }
+        }
+        public string UserDataPath {
+            get {
+                return ReadFromConsole("Write the path to your data directory( folder ):");
+            }
+        }
+        /// <summary>
+        /// Read data from console.
+        /// </summary>
+        /// <param name="message">The message that we show to user on console.</param>
+        /// <returns>User input.</returns>
+        private static string ReadFromConsole(string message) {
+            string userInput;
+            do {
+                Console.WriteLine(message);
+                userInput = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(@userInput));
+            return userInput;
         }
         public void ShowOutput(List<string> listOfStrings) {
             if (listOfStrings.Count == 0)

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace Project_03 {
     public interface IUserInterface {
-        String UserInput { get; }
+        string UserInput { get; }
+        string UserDataPath { get; }
+
         /// <summary>
         /// Show the search output to user.
         /// </summary>
