@@ -5,7 +5,7 @@ using Xunit;
 using Project_05;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Project_03Test {
+namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class ConsoleUITests {
         private IUserInterface ui;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Project_03Test {
+namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class InvertedIndexTests {
         private InvertedIndex invertedIndex;
@@ -26,8 +26,8 @@ namespace Project_03Test {
                 new Tuple<string, string>( "file1", "hello" ),
                 new Tuple<string, string>( "file2", "hello" ),
                 new Tuple<string, string>( "file2", "hello" ),
-                new Tuple<string, string>("file1", "hello2" ),
-                new Tuple<string, string>("file2", "hello2" )
+                new Tuple<string, string>( "file1", "hello2" ),
+                new Tuple<string, string>( "file2", "hello2" )
             };
             var expectedResult = new Dictionary<string, List<string>> {
                 { "hello", new List<string> { "file1", "file1", "file2", "file2" } },

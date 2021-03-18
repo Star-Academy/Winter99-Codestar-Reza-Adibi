@@ -8,11 +8,7 @@ namespace Project_05 {
         public InvertedIndex() {
             this.tokenMap = new Dictionary<string, List<string>>();
         }
-        public void InsertDataList(List<Tuple<string, string>> data) {
-            foreach (Tuple<string, string> pair in data)
-                InsertData(pair.Item2, pair.Item1);
-        }
-        public void InsertData(string token, string documentID) {
+        public override void InsertData(string token, string documentID) {
             List<string> documentIDs;
             if (tokenMap.TryGetValue(token, out documentIDs))
                 documentIDs.Add(documentID);
@@ -21,7 +17,7 @@ namespace Project_05 {
                 this.tokenMap.Add(token, documentIDs);
             }
         }
-        public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
+        public override bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             return this.tokenMap.TryGetValue(token, out output);
         }
     }

@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Xunit;
 
-namespace Project_03Test {
+namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class FileReaderTests : IDisposable {
         private readonly string directoryPath;

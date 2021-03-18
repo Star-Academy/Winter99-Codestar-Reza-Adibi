@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Project_03Test {
+namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class GeneralFunctions {
         /// <summary>

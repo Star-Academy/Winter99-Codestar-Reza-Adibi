@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
-namespace Project_03Test {
+namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class OrTests {
         [Fact]
