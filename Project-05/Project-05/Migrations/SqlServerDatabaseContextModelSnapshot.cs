@@ -8,8 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Project05.Migrations {
     [ExcludeFromCodeCoverage]
-    [DbContext(typeof(SqlDatabaseContext))]
-    partial class SqlDatabaseContextModelSnapshot : ModelSnapshot {
+    [DbContext(typeof(SqlServerDatabaseContext))]
+    partial class SqlServerDatabaseContextModelSnapshot : ModelSnapshot {
         protected override void BuildModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +38,13 @@ namespace Project05.Migrations {
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 b.Property<string>("DocumentPath")
-                    .HasColumnType("nvarchar(max)");
+                    .HasColumnType("nvarchar(450)");
 
                 b.HasKey("ID");
+
+                b.HasIndex("DocumentPath")
+                    .IsUnique()
+                    .HasFilter("[DocumentPath] IS NOT NULL");
 
                 b.ToTable("Documents");
             });
@@ -52,9 +56,13 @@ namespace Project05.Migrations {
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 b.Property<string>("TokenText")
-                    .HasColumnType("nvarchar(max)");
+                    .HasColumnType("nvarchar(450)");
 
                 b.HasKey("ID");
+
+                b.HasIndex("TokenText")
+                    .IsUnique()
+                    .HasFilter("[TokenText] IS NOT NULL");
 
                 b.ToTable("Tokens");
             });

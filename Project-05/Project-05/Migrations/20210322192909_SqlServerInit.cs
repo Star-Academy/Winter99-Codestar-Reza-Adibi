@@ -3,14 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Project05.Migrations {
     [ExcludeFromCodeCoverage]
-    public partial class CreateDatabase : Migration {
+    public partial class SqlServerInit : Migration {
         protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "Documents",
                 columns: table => new {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DocumentPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    DocumentPath = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table => {
                     table.PrimaryKey("PK_Documents", x => x.ID);
@@ -21,7 +21,7 @@ namespace Project05.Migrations {
                 columns: table => new {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TokenText = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TokenText = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table => {
                     table.PrimaryKey("PK_Tokens", x => x.ID);
@@ -50,9 +50,23 @@ namespace Project05.Migrations {
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Documents_DocumentPath",
+                table: "Documents",
+                column: "DocumentPath",
+                unique: true,
+                filter: "[DocumentPath] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DocumentToken_TokensID",
                 table: "DocumentToken",
                 column: "TokensID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tokens_TokenText",
+                table: "Tokens",
+                column: "TokenText",
+                unique: true,
+                filter: "[TokenText] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder) {

@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Project_05 {
     public class SqlDatabase : ProgramDatabase {
         private readonly SqlDatabaseContext databaseContext;
-        public SqlDatabase() {
-            this.databaseContext = new SqlDatabaseContext();
+        public SqlDatabase(DbmsName dbms) {
+            switch (dbms) {
+                case DbmsName.Sqlite: this.databaseContext = new SqliteDatabaseContext(); break;
+                case DbmsName.SqlServer: this.databaseContext = new SqlServerDatabaseContext(); break;
+            }
         }
         public override void InsertData(string token, string documentID) {
             var newToken = GetOrCreateToken(token);

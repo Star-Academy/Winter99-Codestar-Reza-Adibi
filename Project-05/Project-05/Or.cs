@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Project_05 {
@@ -27,6 +29,10 @@ namespace Project_05 {
             if (this.Token == or.Token)
                 return true;
             return false;
+        }
+        [ExcludeFromCodeCoverage]
+        public override int GetHashCode() {
+            return HashCode.Combine(Priority, Token);
         }
     }
 }

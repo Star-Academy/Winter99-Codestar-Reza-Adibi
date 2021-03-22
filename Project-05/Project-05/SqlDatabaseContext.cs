@@ -1,12 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Project_05 {
-    class SqlDatabaseContext : DbContext {
-        private static readonly string connectionString = @"Server=localhost;Database=Codestar_Project05;Trusted_Connection=True;";
-        public DbSet<Token> Tokens { get; set; }
-        public DbSet<Document> Documents { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlServer(connectionString);
+    public abstract class SqlDatabaseContext : DbContext {
+        public abstract DbSet<Token> Tokens { get; set; }
+        public abstract DbSet<Document> Documents { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder) {
+            builder.Entity<Document>()
+              .HasIndex(doc => doc.DocumentPath)
+                .IsUnique();
+            builder.Entity<Token>()
+              .HasIndex(tkn => tkn.TokenText)
+                .IsUnique();
         }
     }
 }

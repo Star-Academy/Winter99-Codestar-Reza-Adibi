@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Project_05 {
     public class Not : IOperator {
@@ -26,6 +28,10 @@ namespace Project_05 {
             if (this.Token == not.Token)
                 return true;
             return false;
+        }
+        [ExcludeFromCodeCoverage]
+        public override int GetHashCode() {
+            return HashCode.Combine(Priority, Token);
         }
     }
 }

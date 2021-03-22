@@ -25,4 +25,5 @@ namespace Project_05 {
         /// <returns> If invertedIndex contains token "true", otherwise "false". </returns>
         public abstract bool TryGetTokenDocumentIDs(string token, out List<string> output);
     }
+    public enum DbmsName { SqlServer, Sqlite }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Project_05 {
     public class InvertedIndex : ProgramDatabase {

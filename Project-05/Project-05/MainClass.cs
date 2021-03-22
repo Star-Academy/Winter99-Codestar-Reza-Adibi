@@ -9,7 +9,7 @@ namespace Project_05 {
             var dataPath = ui.UserDataPath;
             var fileReader = new FileReader(dataPath);
             var directoryData = fileReader.GetRawData();
-            var database = new SqlDatabase();
+            var database = new SqlDatabase(DbmsName.SqlServer);
             foreach (KeyValuePair<string, string> pair in directoryData) {
                 database.InsertDataList(Tokenizer.GetAllTokens(pair.Key, pair.Value));
             }
