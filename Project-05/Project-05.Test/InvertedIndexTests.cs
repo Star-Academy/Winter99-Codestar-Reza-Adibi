@@ -49,16 +49,12 @@ namespace Project_05Test {
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexDoesNotContainsToken() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
-            var expectedResult = new List<string> { "file1" };
             invertedIndex.InsertDataList(dataMap);
-            List<string> testResult;
-            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
+            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out var testResult));
         }
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexIsEmpty() {
-            var expectedResult = new List<string> { "file1" };
-            List<string> testResult;
-            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out testResult));
+            Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out var testResult));
         }
     }
 }
