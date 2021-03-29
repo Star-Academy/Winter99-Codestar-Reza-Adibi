@@ -20,7 +20,8 @@ namespace Project_05 {
             var words = text.Split(separatorsRegex);
             var tokens = new List<string>();
             foreach (string word in words)
-                tokens.Add(Tokenizer.Tokenize(word));
+                if (!string.IsNullOrWhiteSpace(word))
+                    tokens.Add(Tokenizer.Tokenize(word));
             return tokens;
         }
         /// <summary>

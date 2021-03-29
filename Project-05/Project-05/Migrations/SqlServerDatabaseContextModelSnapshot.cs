@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_05;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Project05.Migrations {
     [ExcludeFromCodeCoverage]
-    [DbContext(typeof(SqlServerDatabaseContext))]
+    [DbContext(typeof(SqlDatabaseContext))]
     partial class SqlServerDatabaseContextModelSnapshot : ModelSnapshot {
         protected override void BuildModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618

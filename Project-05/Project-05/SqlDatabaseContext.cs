@@ -12,6 +12,7 @@ namespace Project_05 {
             builder.Entity<Token>().
                 HasIndex(tkn => tkn.TokenText).
                 IsUnique();
+            builder.Entity<Document>().HasMany(doc => doc.Tokens).WithMany(tkn => tkn.Documents);
         }
     }
 }
