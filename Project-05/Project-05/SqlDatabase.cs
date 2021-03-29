@@ -5,11 +5,33 @@ using System.Linq;
 namespace Project_05 {
     public class SqlDatabase : ProgramDatabase {
         private readonly SqlDatabaseContext databaseContext;
-        public SqlDatabase(DbmsName dbms) {
+        public SqlDatabase(DbmsName dbms, string dbConnectionString) {
+            DbContextOptions<SqlDatabaseContext> options = null;
             switch (dbms) {
-                case DbmsName.Sqlite: this.databaseContext = new SqliteDatabaseContext(); break;
-                case DbmsName.SqlServer: this.databaseContext = new SqlServerDatabaseContext(); break;
+                case DbmsName.Sqlite: {
+                        options =
+                            new DbContextOptionsBuilder<SqlDatabaseContext>()
+                            .UseSqlite(dbConnectionString)
+                            .Options;
+                        break;
+                    }
+                case DbmsName.SqlServer: {
+                        options =
+                            new DbContextOptionsBuilder<SqlDatabaseContext>()
+                            .UseSqlServer(dbConnectionString)
+                            .Options;
+                        break;
+                    }
+                case DbmsName.Memory: {
+                        options =
+                            new DbContextOptionsBuilder<SqlDatabaseContext>()
+                            .UseInMemoryDatabase(dbConnectionString)
+                            .Options;
+                        break;
+                    }
             }
+            this.databaseContext = new SqlDatabaseContext(options);
+            this.databaseContext.Database.EnsureCreated();
         }
         public override void InsertData(string token, string documentID) {
             var newToken = GetOrCreateToken(token);

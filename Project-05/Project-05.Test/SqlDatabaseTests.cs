@@ -18,8 +18,13 @@ namespace Project_05Test {
             isRunningLock.WaitOne();
             isRunning++;
             isRunningLock.Release();
-            database = new SqlDatabase(DbmsName.Sqlite);
-            localDatabaseContext = new SqliteDatabaseContext();
+            var dbConnectionString = "inMemoryDatabase";
+            database = new SqlDatabase(DbmsName.Memory, dbConnectionString);
+            localDatabaseContext = new SqlDatabaseContext(
+                new DbContextOptionsBuilder<SqlDatabaseContext>().
+                UseInMemoryDatabase(dbConnectionString).
+                Options
+            );
         }
         [Fact]
         public void InsertDatasTestSingleData() {
@@ -66,9 +71,10 @@ namespace Project_05Test {
             isRunning--;
             isRunningLock.Release();
             if (isRunning == 0) {
-                localDatabaseContext.Tokens.RemoveRange(localDatabaseContext.Tokens);
-                localDatabaseContext.Documents.RemoveRange(localDatabaseContext.Documents);
-                localDatabaseContext.SaveChanges();
+                localDatabaseContext.Dispose();
+                //localDatabaseContext.Tokens.RemoveRange(localDatabaseContext.Tokens);
+                //localDatabaseContext.Documents.RemoveRange(localDatabaseContext.Documents);
+                //localDatabaseContext.SaveChanges();
             }
         }
         ~SqlDatabaseTests() {
