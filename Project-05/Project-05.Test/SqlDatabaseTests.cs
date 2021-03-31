@@ -40,7 +40,7 @@ namespace Project_05Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void InsertDataTestMultySameData() {
+        public void InsertDataTestMultiSameData() {
             database.InsertData("testToken2", "testFile2");
             database.InsertData("testToken2", "testFile2");
             var tokenCount =
@@ -49,11 +49,12 @@ namespace Project_05Test {
             Assert.Equal(1, tokenCount);
         }
         [Fact]
-        public void InsertDataListTest() {
-            var expectedResult = new List<string> { "testFile3", "testFile4" };
+        public void InsertDataListTestSingleTokenMultiDocuments() {
+            var expectedResult = new List<string> { "testFile3", "testFile4", "testFile5" };
             var dataList = new List<Tuple<string, string>>{
                 new Tuple<string, string>( "testFile3","testToken3"),
-                new Tuple<string, string>( "testFile4","testToken3")
+                new Tuple<string, string>( "testFile4","testToken3"),
+                new Tuple<string, string>( "testFile5","testToken3")
             };
             database.InsertDataList(dataList);
             var theToken =
@@ -66,16 +67,34 @@ namespace Project_05Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
+        public void InsertDataListTestMultiTokenSingleDocuments() {
+            var expectedResult = new List<string> { "testToken4", "testToken5", "testToken6" };
+            var dataList = new List<Tuple<string, string>>{
+                new Tuple<string, string>( "testFile6","testToken4"),
+                new Tuple<string, string>( "testFile6","testToken5"),
+                new Tuple<string, string>( "testFile6","testToken6")
+            };
+            database.InsertDataList(dataList);
+            var theDocument =
+                localDatabaseContext.Documents.Include(doc => doc.Tokens).
+                Where(doc => doc.DocumentPath == "testFile6").FirstOrDefault();
+            var testResult =
+                theDocument == null ?
+                null :
+                theDocument.Tokens.Select((tkn) => { return tkn.TokenText; }).ToList();
+            Assert.Equal(expectedResult, testResult);
+        }
+        [Fact]
         public void TryGetTokenDocumentIDsTestInvertedIndexContainsToken() {
-            var expectedResult = new List<string> { "testFile2" };
-            var newToken = new Token { TokenText = "testToken2", Documents = new List<Document>() };
-            var newDocument = new Document { DocumentPath = "testFile2", Tokens = new List<Token>() };
+            var expectedResult = new List<string> { "testFile7" };
+            var newToken = new Token { TokenText = "testToken7", Documents = new List<Document>() };
+            var newDocument = new Document { DocumentPath = "testFile7", Tokens = new List<Token>() };
             newToken.Documents.Add(newDocument);
             localDatabaseContext.Documents.Add(newDocument);
             localDatabaseContext.Tokens.Add(newToken);
             localDatabaseContext.SaveChanges();
             List<string> testResult;
-            database.TryGetTokenDocumentIDs("testToken2", out testResult);
+            database.TryGetTokenDocumentIDs("testToken7", out testResult);
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]

@@ -57,20 +57,34 @@ namespace Project_05 {
                 this.databaseContext.SaveChanges();
         }
         private Document GetOrCreateDocument(string documentPath) {
-            Document document = this.databaseContext.Documents.FirstOrDefault(doc => doc.DocumentPath == documentPath);
-            if (document == null) {
-                document = new Document() { DocumentPath = documentPath, Tokens = new List<Token>() };
-                this.databaseContext.Documents.Add(document);
+            var document = this.databaseContext.Documents.FirstOrDefault(doc => doc.DocumentPath == documentPath);
+            if (document != null) {
+                return document;
             }
-            return document;
+            var localDocument = this.databaseContext.Documents.Local.FirstOrDefault(doc => doc.DocumentPath == documentPath);
+            if (localDocument != null) {
+                return localDocument;
+            }
+            else {
+                var newDocument = new Document() { DocumentPath = documentPath, Tokens = new List<Token>() };
+                this.databaseContext.Documents.Add(newDocument);
+                return newDocument;
+            }
         }
         private Token GetOrCreateToken(string tokenText) {
-            Token token = this.databaseContext.Tokens.FirstOrDefault(tkn => tkn.TokenText == tokenText);
-            if (token == null) {
-                token = new Token() { TokenText = tokenText, Documents = new List<Document>() };
-                this.databaseContext.Tokens.Add(token);
+            var token = this.databaseContext.Tokens.FirstOrDefault(tkn => tkn.TokenText == tokenText);
+            if (token != null) {
+                return token;
             }
-            return token;
+            var localToken = this.databaseContext.Tokens.Local.FirstOrDefault(tkn => tkn.TokenText == tokenText);
+            if (localToken != null) {
+                return localToken;
+            }
+            else {
+                var newToken = new Token() { TokenText = tokenText, Documents = new List<Document>() };
+                this.databaseContext.Tokens.Add(newToken);
+                return newToken;
+            }
         }
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             var theToken = this.databaseContext.Tokens.Include(tkn => tkn.Documents).Where(tkn => tkn.TokenText == token).FirstOrDefault();
