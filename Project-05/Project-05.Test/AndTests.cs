@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Project_05;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -10,7 +11,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithNullStartingList() {
             var expectedResult = new List<string>();
-            var mickedDatabase = new Mock<ProgramDatabase>();
+            var mickedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new And("test");
             mickedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mickedDatabase,
@@ -25,7 +26,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestWithEmptyStartingList() {
             var expectedResult = new List<string>();
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new And("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -40,7 +41,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestInvalidToken() {
             var expectedResult = new List<string>();
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new And("invalid");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -55,7 +56,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestStartingList() {
             var expectedResult = new List<string> { "file1" };
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var firstOperator = new And("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -97,6 +98,13 @@ namespace Project_05Test {
             var firestOperator = new And("token");
             var secondOperator = new And("token");
             Assert.True(firestOperator.Equals(secondOperator));
+        }
+        [Fact]
+        public void GetHashCodeTest() {
+            var expectedResult = HashCode.Combine(2, "token");
+            var testOperator = new And("token");
+            var testResult = testOperator.GetHashCode();
+            Assert.Equal(expectedResult, testResult);
         }
     }
 }

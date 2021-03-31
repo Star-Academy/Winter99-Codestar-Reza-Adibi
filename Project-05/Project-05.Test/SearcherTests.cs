@@ -7,10 +7,10 @@ using Xunit;
 namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class SearcherTests {
-        private ProgramDatabase database;
+        private IProgramDatabase database;
         private Searcher searcher;
         public SearcherTests() {
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
                 "test",

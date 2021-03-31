@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Project_05;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithNullStartingList() {
             var expectedResult = new List<string> { "file1", "file2", "file3" };
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var firstOperator = new Or("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -34,7 +35,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithEmptyStartingList() {
             var expectedResult = new List<string> { "file1", "file2", "file3" };
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var firstOperator = new Or("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -57,7 +58,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithStartingList() {
             var expectedResult = new List<string> { "file4", "file1", "file2", "file3" };
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var firstOperator = new Or("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -99,6 +100,13 @@ namespace Project_05Test {
             IOperator firestOperator = new Or("token");
             IOperator secondOperator = new Or("token");
             Assert.True(firestOperator.Equals(secondOperator));
+        }
+        [Fact]
+        public void GetHashCodeTest() {
+            var expectedResult = HashCode.Combine(1, "token");
+            var testOperator = new Or("token");
+            var testResult = testOperator.GetHashCode();
+            Assert.Equal(expectedResult, testResult);
         }
     }
 }

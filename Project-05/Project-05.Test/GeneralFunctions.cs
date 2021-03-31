@@ -15,7 +15,7 @@ namespace Project_05Test {
         /// <param name="tokenDocumentIDs"> The TryGetTokenDocumentIDs output documentIDs. </param>
         /// <param name="returnValue"> The TryGetTokenDocumentIDs return value. </param>
         /// <returns> The mocked database with one more setup. </returns>
-        internal static Mock<ProgramDatabase> SetupDatabaseTryGetTokenDocumentIDs(Mock<ProgramDatabase> mockedDatabase, string token, List<string> tokenDocumentIDs, bool returnValue) {
+        internal static Mock<IProgramDatabase> SetupDatabaseTryGetTokenDocumentIDs(Mock<IProgramDatabase> mockedDatabase, string token, List<string> tokenDocumentIDs, bool returnValue) {
             mockedDatabase.Setup(db => db.TryGetTokenDocumentIDs(token, out tokenDocumentIDs)).Returns(returnValue);
             return mockedDatabase;
         }

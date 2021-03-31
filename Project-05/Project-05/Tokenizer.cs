@@ -26,10 +26,11 @@ namespace Project_05 {
         /// </summary>
         /// <returns> A token. </returns>
         public string GetNextToken() {
-            if (pointer == words.Count)
+            if (words.Count == 0)
                 return null;
-            var word = words.ElementAt(pointer++);
-            if (word.Equals(""))
+            var word = words.ElementAt(0);
+            words.RemoveAt(0);
+            if (string.IsNullOrWhiteSpace(word))
                 return GetNextToken();
             var token = Tokenize(word);
             return token;
@@ -44,19 +45,6 @@ namespace Project_05 {
             return token;
         }
         /// <summary>
-        /// Show is it end of text or not.
-        /// </summary>
-        /// <returns> "true" if pointer riched the end of text, otherwise "false". </returns>
-        public bool EndOfText() {
-            if (pointer >= words.Count)
-                return true;
-            else if (words.ElementAt(pointer) == "") {
-                pointer++;
-                return EndOfText();
-            }
-            return false;
-        }
-        /// <summary>
         /// Convert all of document text to tokens.
         /// </summary>
         /// <param name="documentID"> ID of document. </param>
@@ -65,8 +53,8 @@ namespace Project_05 {
         public static List<Tuple<string, string>> GetAllTokens(string documentID, string documentText) {
             var documentIdTokenPairs = new List<Tuple<string, string>>();
             var tokenizer = new Tokenizer(documentText);
-            while (!tokenizer.EndOfText())
-                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, tokenizer.GetNextToken()));
+            for (var token = tokenizer.GetNextToken(); token != null; token = tokenizer.GetNextToken())
+                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, token));
             return documentIdTokenPairs;
         }
     }

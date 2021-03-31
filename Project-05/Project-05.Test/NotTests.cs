@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Project_05;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -10,7 +11,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithNullStartingList() {
             var expectedResult = new List<string>();
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new Not("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -25,7 +26,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestWithEmptyStartingList() {
             var expectedResult = new List<string>();
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new Not("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -40,7 +41,7 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithStartingList() {
             var expectedResult = new List<string> { "file4" };
-            var mockedDatabase = new Mock<ProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var firstOperator = new Not("test");
             mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
                 mockedDatabase,
@@ -82,6 +83,13 @@ namespace Project_05Test {
             IOperator firestOperator = new Not("token");
             IOperator secondOperator = new Not("token");
             Assert.True(firestOperator.Equals(secondOperator));
+        }
+        [Fact]
+        public void GetHashCodeTest() {
+            var expectedResult = HashCode.Combine(3, "token");
+            var testOperator = new Not("token");
+            var testResult = testOperator.GetHashCode();
+            Assert.Equal(expectedResult, testResult);
         }
     }
 }

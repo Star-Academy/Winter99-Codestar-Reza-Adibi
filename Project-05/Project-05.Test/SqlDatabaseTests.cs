@@ -27,7 +27,7 @@ namespace Project_05Test {
             );
         }
         [Fact]
-        public void InsertDatasTestSingleData() {
+        public void InsertDataTestSingleData() {
             var expectedResult = new List<string> { "testFile1" };
             database.InsertData("testToken1", "testFile1");
             var theToken =
@@ -40,14 +40,30 @@ namespace Project_05Test {
             Assert.Equal(expectedResult, testResult);
         }
         [Fact]
-        public void InsertDatasTestMultySameData() {
-            var expectedResult = new List<string> { "testFile1" };
-            database.InsertData("testToken1", "testFile1");
-            database.InsertData("testToken1", "testFile1");
+        public void InsertDataTestMultySameData() {
+            database.InsertData("testToken2", "testFile2");
+            database.InsertData("testToken2", "testFile2");
             var tokenCount =
                 localDatabaseContext.Tokens.Include(tkn => tkn.Documents).
-                Where(tkn => tkn.TokenText == "testToken1").Count();
+                Where(tkn => tkn.TokenText == "testToken2").Count();
             Assert.Equal(1, tokenCount);
+        }
+        [Fact]
+        public void InsertDataListTest() {
+            var expectedResult = new List<string> { "testFile3", "testFile4" };
+            var dataList = new List<Tuple<string, string>>{
+                new Tuple<string, string>( "testFile3","testToken3"),
+                new Tuple<string, string>( "testFile4","testToken3")
+            };
+            database.InsertDataList(dataList);
+            var theToken =
+                localDatabaseContext.Tokens.Include(tkn => tkn.Documents).
+                Where(tkn => tkn.TokenText == "testToken3").FirstOrDefault();
+            var testResult =
+                theToken == null ?
+                null :
+                theToken.Documents.Select((doc) => { return doc.DocumentPath; }).ToList();
+            Assert.Equal(expectedResult, testResult);
         }
         [Fact]
         public void TryGetTokenDocumentIDsTestInvertedIndexContainsToken() {
@@ -72,9 +88,6 @@ namespace Project_05Test {
             isRunningLock.Release();
             if (isRunning == 0) {
                 localDatabaseContext.Dispose();
-                //localDatabaseContext.Tokens.RemoveRange(localDatabaseContext.Tokens);
-                //localDatabaseContext.Documents.RemoveRange(localDatabaseContext.Documents);
-                //localDatabaseContext.SaveChanges();
             }
         }
         ~SqlDatabaseTests() {

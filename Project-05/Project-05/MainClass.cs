@@ -14,7 +14,7 @@ namespace Project_05 {
             var fileReader = new FileReader(dataPath);
             var directoryData = fileReader.GetRawData();
             var database = new SqlDatabase(DbmsName.SqlServer, sqlSqeverConnectionString);
-            foreach (KeyValuePair<string, string> pair in directoryData) {
+            foreach (var pair in directoryData) {
                 database.InsertDataList(Tokenizer.GetAllTokens(pair.Key, pair.Value));
             }
             var userInputText = ui.UserInput;

@@ -12,6 +12,6 @@ namespace Project_05 {
         /// <returns>
         /// Result of using operator on operands( inputList and Token's DocumentIDs ).
         /// </returns>
-        List<string> Filter(List<string> inputList, ProgramDatabase database);
+        List<string> Filter(List<string> inputList, IProgramDatabase database);
     }
 }

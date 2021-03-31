@@ -12,7 +12,7 @@ namespace Project_05 {
         public Or(string token) {
             Token = token;
         }
-        public List<string> Filter(List<string> inputList, ProgramDatabase database) {
+        public List<string> Filter(List<string> inputList, IProgramDatabase database) {
             if (inputList == null)
                 inputList = new List<string>();
             List<string> tokenDocuments;
@@ -26,11 +26,8 @@ namespace Project_05 {
             if (this.GetType() != obj.GetType())
                 return false;
             Or or = (Or)obj;
-            if (this.Token == or.Token)
-                return true;
-            return false;
+            return this.Token == or.Token;
         }
-        [ExcludeFromCodeCoverage]
         public override int GetHashCode() {
             return HashCode.Combine(Priority, Token);
         }

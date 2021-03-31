@@ -12,7 +12,7 @@ namespace Project_05 {
         public And(string token) {
             Token = token;
         }
-        public List<string> Filter(List<string> inputList, ProgramDatabase database) {
+        public List<string> Filter(List<string> inputList, IProgramDatabase database) {
             if (inputList == null || inputList.Count == 0)
                 return new List<string>();
             List<string> tokenDocumentIDs;
@@ -26,11 +26,8 @@ namespace Project_05 {
             if (this.GetType() != obj.GetType())
                 return false;
             And and = (And)obj;
-            if (this.Token == and.Token)
-                return true;
-            return false;
+            return this.Token == and.Token;
         }
-        [ExcludeFromCodeCoverage]
         public override int GetHashCode() {
             return HashCode.Combine(Priority, Token);
         }
