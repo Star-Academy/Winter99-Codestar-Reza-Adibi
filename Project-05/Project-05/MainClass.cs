@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Project_05 {
     [ExcludeFromCodeCoverage]
     class MainClass {
-        private static readonly string sqliteConnectionString =
-            "Data Source=\"E:\\Programing\\CodeStarWinter99\\Project-05\\TestData\\sqlitedb.db\"";
-        private static readonly string sqlSqeverConnectionString =
-            @"Server=localhost;Database=Codestar_Project05;Trusted_Connection=True;";
+        private static readonly string sqliteFilePath =
+            "E:\\Programing\\CodeStarWinter99\\Project-05\\TestData\\sqlitedb.db";
+        private static readonly string sqlSqeverServerName = "localhost";
+        private static readonly string sqlSqeverDatabaseName = "Codestar_Project05";
         static void Main(string[] args) {
             IUserInterface ui = new ConsoleUI();
             var dataPath = ui.UserDataPath;
             var fileReader = new FileReader(dataPath);
             var directoryData = fileReader.GetRawData();
-            var database = new SqlDatabase(DbmsName.SqlServer, sqlSqeverConnectionString);
+            var database = new SqlDatabaseSqlServer(sqlSqeverServerName, sqlSqeverDatabaseName);
             foreach (var pair in directoryData) {
                 database.InsertDataList(Tokenizer.GetAllTokens(pair.Key, pair.Value));
             }

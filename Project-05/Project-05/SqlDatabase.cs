@@ -5,37 +5,8 @@ using System.Linq;
 
 namespace Project_05 {
     public class SqlDatabase : IProgramDatabase {
-        private readonly SqlDatabaseContext databaseContext;
-        private bool saveOnInsert;
-        public SqlDatabase(DbmsName dbms, string dbConnectionString) {
-            DbContextOptions<SqlDatabaseContext> options = null;
-            switch (dbms) {
-                case DbmsName.Sqlite: {
-                        options =
-                            new DbContextOptionsBuilder<SqlDatabaseContext>()
-                            .UseSqlite(dbConnectionString)
-                            .Options;
-                        break;
-                    }
-                case DbmsName.SqlServer: {
-                        options =
-                            new DbContextOptionsBuilder<SqlDatabaseContext>()
-                            .UseSqlServer(dbConnectionString)
-                            .Options;
-                        break;
-                    }
-                case DbmsName.Memory: {
-                        options =
-                            new DbContextOptionsBuilder<SqlDatabaseContext>()
-                            .UseInMemoryDatabase(dbConnectionString)
-                            .Options;
-                        break;
-                    }
-            }
-            this.databaseContext = new SqlDatabaseContext(options);
-            this.databaseContext.Database.EnsureCreated();
-            this.saveOnInsert = true;
-        }
+        protected SqlDatabaseContext databaseContext;
+        protected bool saveOnInsert;
         public void InsertDataList(List<Tuple<string, string>> data) {
             this.saveOnInsert = false;
             try {

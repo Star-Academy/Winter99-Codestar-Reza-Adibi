@@ -18,11 +18,11 @@ namespace Project_05Test {
             isRunningLock.WaitOne();
             isRunning++;
             isRunningLock.Release();
-            var dbConnectionString = "inMemoryDatabase";
-            database = new SqlDatabase(DbmsName.Memory, dbConnectionString);
+            var databaseName = "inMemoryDatabase";
+            database = new SqlDatabaseInMemory(databaseName);
             localDatabaseContext = new SqlDatabaseContext(
                 new DbContextOptionsBuilder<SqlDatabaseContext>().
-                UseInMemoryDatabase(dbConnectionString).
+                UseInMemoryDatabase(databaseName).
                 Options
             );
         }
