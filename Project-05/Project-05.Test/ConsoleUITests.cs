@@ -9,14 +9,17 @@ namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class ConsoleUITests {
         private IUserInterface ui;
+
         public ConsoleUITests() {
             ui = new ConsoleUI();
         }
+
         [Fact]
         public void ShowOutputTestEmptyList() {
             ui.ShowOutput(new List<string>());
             Assert.True(true);
         }
+
         [Fact]
         public void ShowOutputTest() {
             ui.ShowOutput(new List<string> {

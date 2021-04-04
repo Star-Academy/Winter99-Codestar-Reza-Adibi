@@ -8,6 +8,7 @@ namespace Project_05 {
         public InvertedIndex() {
             this.tokenMap = new Dictionary<string, List<string>>();
         }
+
         public void InsertData(string token, string documentID) {
             List<string> documentIDs;
             if (tokenMap.TryGetValue(token, out documentIDs))
@@ -17,6 +18,7 @@ namespace Project_05 {
                 this.tokenMap.Add(token, documentIDs);
             }
         }
+
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             return this.tokenMap.TryGetValue(token, out output);
         }

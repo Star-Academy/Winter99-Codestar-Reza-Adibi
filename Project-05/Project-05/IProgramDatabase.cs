@@ -8,12 +8,14 @@ namespace Project_05 {
         /// </summary>
         /// <param name="data"> List of Tuple\<string, string\>( documentID, token ). </param>
         public void InsertDataList(List<Tuple<string, string>> data);
+
         /// <summary>
         /// Insert documentID to token's documentIDs List. 
         /// </summary>
         /// <param name="token"> Your token. </param>
         /// <param name="documentID"> Token's documentID. </param>
         public void InsertData(string token, string documentID);
+
         /// <summary>
         /// Try to get token's documentIDs from InvertedIndex. 
         /// </summary>
@@ -22,5 +24,4 @@ namespace Project_05 {
         /// <returns> If invertedIndex contains token "true", otherwise "false". </returns>
         public bool TryGetTokenDocumentIDs(string token, out List<string> output);
     }
-    public enum DbmsName { SqlServer, Sqlite, Memory }
 }

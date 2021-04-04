@@ -10,14 +10,16 @@ using Xunit;
 namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class SqlDatabaseTests : IDisposable {
-        private SqlDatabase database;
-        private SqlDatabaseContext localDatabaseContext;
-        private static Semaphore isRunningLock = new Semaphore(1, 1);
-        private static int isRunning = 0;
+        private readonly SqlDatabase database;
+        private readonly SqlDatabaseContext localDatabaseContext;
+        private bool disposedValue;
+        private static int isRunningCount = 0;
+        private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
+
         public SqlDatabaseTests() {
-            isRunningLock.WaitOne();
-            isRunning++;
-            isRunningLock.Release();
+            isRunningCountLock.WaitOne();
+            isRunningCount++;
+            isRunningCountLock.Release();
             var databaseName = "inMemoryDatabase";
             database = new SqlDatabaseInMemory(databaseName);
             localDatabaseContext = new SqlDatabaseContext(
@@ -26,6 +28,7 @@ namespace Project_05Test {
                 Options
             );
         }
+
         [Fact]
         public void InsertDataTestSingleData() {
             var expectedResult = new List<string> { "testFile1" };
@@ -39,6 +42,7 @@ namespace Project_05Test {
                 theToken.Documents.Select((doc) => { return doc.DocumentPath; }).ToList();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void InsertDataTestMultiSameData() {
             database.InsertData("testToken2", "testFile2");
@@ -48,6 +52,7 @@ namespace Project_05Test {
                 Where(tkn => tkn.TokenText == "testToken2").Count();
             Assert.Equal(1, tokenCount);
         }
+
         [Fact]
         public void InsertDataListTestSingleTokenMultiDocuments() {
             var expectedResult = new List<string> { "testFile3", "testFile4", "testFile5" };
@@ -66,6 +71,7 @@ namespace Project_05Test {
                 theToken.Documents.Select((doc) => { return doc.DocumentPath; }).ToList();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void InsertDataListTestMultiTokenSingleDocuments() {
             var expectedResult = new List<string> { "testToken4", "testToken5", "testToken6" };
@@ -84,6 +90,7 @@ namespace Project_05Test {
                 theDocument.Tokens.Select((tkn) => { return tkn.TokenText; }).ToList();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void TryGetTokenDocumentIDsTestInvertedIndexContainsToken() {
             var expectedResult = new List<string> { "testFile7" };
@@ -93,24 +100,36 @@ namespace Project_05Test {
             localDatabaseContext.Documents.Add(newDocument);
             localDatabaseContext.Tokens.Add(newToken);
             localDatabaseContext.SaveChanges();
-            List<string> testResult;
-            database.TryGetTokenDocumentIDs("testToken7", out testResult);
+            database.TryGetTokenDocumentIDs("testToken7", out var testResult);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void TryGetTokenDocumentIDsTestInvertedIndexDoesNotContainsToken() {
             Assert.False(database.TryGetTokenDocumentIDs("bye", out var testResult));
         }
-        public void Dispose() {
-            isRunningLock.WaitOne();
-            isRunning--;
-            isRunningLock.Release();
-            if (isRunning == 0) {
-                localDatabaseContext.Dispose();
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                if (disposing) {
+                    isRunningCountLock.WaitOne();
+                    isRunningCount--;
+                    if (isRunningCount == 0) {
+                        localDatabaseContext.Dispose();
+                    }
+                    isRunningCountLock.Release();
+                }
+                disposedValue = true;
             }
         }
+
+        public void Dispose() {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
         ~SqlDatabaseTests() {
-            Dispose();
+            Dispose(disposing: false);
         }
     }
 }

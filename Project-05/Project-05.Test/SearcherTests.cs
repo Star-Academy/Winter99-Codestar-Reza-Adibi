@@ -26,6 +26,7 @@ namespace Project_05Test {
             database = mockedDatabase.Object;
             searcher = new Searcher();
         }
+
         [Fact]
         public void SearchTestInvertedIndexDataBase() {
             var expectedResult = new List<string> { "file2" };
@@ -37,6 +38,7 @@ namespace Project_05Test {
             var testResult = searcher.RunOperators(testOperators, database);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void SearchTestInvertedIndexDataBaseFirstOperatorIsAnd() {
             var expectedResult = new List<string> { "file2" };

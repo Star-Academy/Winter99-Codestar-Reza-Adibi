@@ -4,7 +4,9 @@ namespace Project_05 {
     public class SqlDatabaseContext : DbContext {
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Document> Documents { get; set; }
+
         public SqlDatabaseContext(DbContextOptions<SqlDatabaseContext> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<Document>().
                 HasIndex(doc => doc.DocumentPath).

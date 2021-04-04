@@ -15,6 +15,7 @@ namespace Project_05Test {
             var testResult = operatorExtractor.GetNextOperator();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextOperatorTestSingleAnd() {
             IOperator expectedResult = new And("hi");
@@ -23,6 +24,7 @@ namespace Project_05Test {
             var testResult = operatorExtractor.GetNextOperator();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextOperatorTestSingleNot() {
             IOperator expectedResult = new Not("hi");
@@ -31,6 +33,7 @@ namespace Project_05Test {
             var testResult = operatorExtractor.GetNextOperator();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetAllOperatorTest() {
             var expectedResult = new List<IOperator> {

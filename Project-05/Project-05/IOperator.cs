@@ -4,6 +4,7 @@ namespace Project_05 {
     public interface IOperator {
         int Priority { get; }
         string Token { get; }
+     
         /// <summary>
         /// Use operator on input list and Token's DocumentIds list.
         /// </summary>

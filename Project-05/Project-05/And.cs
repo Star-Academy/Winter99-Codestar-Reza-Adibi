@@ -12,14 +12,15 @@ namespace Project_05 {
         public And(string token) {
             Token = token;
         }
+
         public List<string> Filter(List<string> inputList, IProgramDatabase database) {
             if (inputList == null || inputList.Count == 0)
                 return new List<string>();
-            List<string> tokenDocumentIDs;
-            if (database.TryGetTokenDocumentIDs(Token, out tokenDocumentIDs))
+            if (database.TryGetTokenDocumentIDs(Token, out var tokenDocumentIDs))
                 return inputList.Intersect(tokenDocumentIDs).ToList();
             return new List<string>();
         }
+
         public override bool Equals(object obj) {
             if (obj == null)
                 return false;
@@ -28,6 +29,7 @@ namespace Project_05 {
             And and = (And)obj;
             return this.Token == and.Token;
         }
+
         public override int GetHashCode() {
             return HashCode.Combine(Priority, Token);
         }

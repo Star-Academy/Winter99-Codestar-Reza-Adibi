@@ -8,6 +8,7 @@ using Xunit;
 namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class NotTests {
+
         [Fact]
         public void FilterTestwithNullStartingList() {
             var expectedResult = new List<string>();
@@ -23,6 +24,7 @@ namespace Project_05Test {
             testResult = testOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestWithEmptyStartingList() {
             var expectedResult = new List<string>();
@@ -38,6 +40,7 @@ namespace Project_05Test {
             testResult = testOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestwithStartingList() {
             var expectedResult = new List<string> { "file4" };
@@ -61,29 +64,34 @@ namespace Project_05Test {
             testResult = secondOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void EqualsTestNullInput() {
             IOperator testOperator = new Not("token");
             Assert.False(testOperator.Equals(null));
         }
+
         [Fact]
         public void EqualsTestDifferentTypes() {
             IOperator firestOperator = new Not("token");
             IOperator secondOperator = new Or("token");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void EqualsTestDifferentTokens() {
             IOperator firestOperator = new Not("token");
             IOperator secondOperator = new Not("token2");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void EqualsTestSameOperators() {
             IOperator firestOperator = new Not("token");
             IOperator secondOperator = new Not("token");
             Assert.True(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void GetHashCodeTest() {
             var expectedResult = HashCode.Combine(3, "token");

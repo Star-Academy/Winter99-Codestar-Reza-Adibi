@@ -15,6 +15,7 @@ namespace Project_05Test {
             var testResult = tokenizer.GetNextToken();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextTokenTestSingleLowercaseWord() {
             var expectedResult = "string";
@@ -23,6 +24,7 @@ namespace Project_05Test {
             var testResult = tokenizer.GetNextToken();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextTokenTestSingleUppercaseWord() {
             var expectedResult = "string";
@@ -31,6 +33,7 @@ namespace Project_05Test {
             var testResult = tokenizer.GetNextToken();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextTokenTestSingleNumber() {
             var expectedResult = "0123";
@@ -39,6 +42,7 @@ namespace Project_05Test {
             var testResult = tokenizer.GetNextToken();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetNextTokenTestSingleUnderLineString() {
             var expectedResult = "____";
@@ -47,6 +51,7 @@ namespace Project_05Test {
             var testResult = tokenizer.GetNextToken();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetAllTokensTestUniqueWords() {
             var expectedResult = new List<Tuple<string, string>> {
@@ -58,6 +63,7 @@ namespace Project_05Test {
             var testResult = Tokenizer.GetAllTokens("id", inputText);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetAllTokensTestUnuniqueWords() {
             var expectedResult = new List<Tuple<string, string>> {
@@ -68,6 +74,7 @@ namespace Project_05Test {
             var testResult = Tokenizer.GetAllTokens("id", inputText);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void TokenizeTest() {
             var word = "STRING";

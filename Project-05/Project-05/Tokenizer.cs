@@ -13,6 +13,7 @@ namespace Project_05 {
             words = TextToWords(text);
             pointer = 0;
         }
+
         /// <summary>
         /// Convert string to list of words.
         /// </summary>
@@ -21,6 +22,7 @@ namespace Project_05 {
         private List<string> TextToWords(string text) {
             return Regex.Split(text, regex).ToList();
         }
+
         /// <summary>
         /// Get next token from your text.
         /// </summary>
@@ -35,6 +37,7 @@ namespace Project_05 {
             var token = Tokenize(word);
             return token;
         }
+
         /// <summary>
         /// Convert word to token.
         /// </summary>
@@ -44,6 +47,7 @@ namespace Project_05 {
             var token = word.ToLower();
             return token;
         }
+
         /// <summary>
         /// Convert all of document text to tokens.
         /// </summary>

@@ -11,18 +11,19 @@ namespace Project_05Test {
         [Fact]
         public void FilterTestwithNullStartingList() {
             var expectedResult = new List<string>();
-            var mickedDatabase = new Mock<IProgramDatabase>();
+            var mockedDatabase = new Mock<IProgramDatabase>();
             var testOperator = new And("test");
-            mickedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
-                mickedDatabase,
-                testOperator.Token,
-                new List<string> { "file1" },
-                true
-            );
+            mockedDatabase = GeneralFunctions.SetupDatabaseTryGetTokenDocumentIDs(
+                 mockedDatabase,
+                 testOperator.Token,
+                 new List<string> { "file1" },
+                 true
+             );
             List<string> testResult = null;
-            testResult = testOperator.Filter(testResult, mickedDatabase.Object);
+            testResult = testOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestWithEmptyStartingList() {
             var expectedResult = new List<string>();
@@ -38,6 +39,7 @@ namespace Project_05Test {
             testResult = testOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestInvalidToken() {
             var expectedResult = new List<string>();
@@ -53,6 +55,7 @@ namespace Project_05Test {
             testResult = testOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestStartingList() {
             var expectedResult = new List<string> { "file1" };
@@ -76,29 +79,34 @@ namespace Project_05Test {
             testResult = secondOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void EqualsTestNullInput() {
             var testOperator = new And("token");
             Assert.False(testOperator.Equals(null));
         }
+        
         [Fact]
         public void EqualsTestDifferentTypes() {
             var firestOperator = new And("token");
             var secondOperator = new Not("token");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+        
         [Fact]
         public void EqualsTestDifferentTokens() {
             var firestOperator = new And("token");
             var secondOperator = new And("token2");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+        
         [Fact]
         public void EqualsTestSameOperators() {
             var firestOperator = new And("token");
             var secondOperator = new And("token");
             Assert.True(firestOperator.Equals(secondOperator));
         }
+        
         [Fact]
         public void GetHashCodeTest() {
             var expectedResult = HashCode.Combine(2, "token");

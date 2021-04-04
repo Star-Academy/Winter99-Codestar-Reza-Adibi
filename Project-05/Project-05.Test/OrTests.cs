@@ -32,6 +32,7 @@ namespace Project_05Test {
             testResult = secondOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestwithEmptyStartingList() {
             var expectedResult = new List<string> { "file1", "file2", "file3" };
@@ -55,6 +56,7 @@ namespace Project_05Test {
             testResult = secondOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void FilterTestwithStartingList() {
             var expectedResult = new List<string> { "file4", "file1", "file2", "file3" };
@@ -78,29 +80,34 @@ namespace Project_05Test {
             testResult = secondOperator.Filter(testResult, mockedDatabase.Object);
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void EqualsTestNullInput() {
             IOperator testOperator = new Or("token");
             Assert.False(testOperator.Equals(null));
         }
+
         [Fact]
         public void EqualsTestDifferentTypes() {
             IOperator firestOperator = new Or("token");
             IOperator secondOperator = new Not("token");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void EqualsTestDifferentTokens() {
             IOperator firestOperator = new Or("token");
             IOperator secondOperator = new Or("token2");
             Assert.False(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void EqualsTestSameOperators() {
             IOperator firestOperator = new Or("token");
             IOperator secondOperator = new Or("token");
             Assert.True(firestOperator.Equals(secondOperator));
         }
+
         [Fact]
         public void GetHashCodeTest() {
             var expectedResult = HashCode.Combine(1, "token");

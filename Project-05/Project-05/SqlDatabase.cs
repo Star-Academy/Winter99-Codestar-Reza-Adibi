@@ -7,6 +7,7 @@ namespace Project_05 {
     public class SqlDatabase : IProgramDatabase {
         protected SqlDatabaseContext databaseContext;
         protected bool saveOnInsert;
+
         public void InsertDataList(List<Tuple<string, string>> data) {
             this.saveOnInsert = false;
             try {
@@ -18,6 +19,7 @@ namespace Project_05 {
                 this.saveOnInsert = true;
             }
         }
+
         public void InsertData(string token, string documentID) {
             var newToken = GetOrCreateToken(token);
             var newDocument = GetOrCreateDocument(documentID);
@@ -27,6 +29,7 @@ namespace Project_05 {
             if (this.saveOnInsert)
                 this.databaseContext.SaveChanges();
         }
+
         private Document GetOrCreateDocument(string documentPath) {
             var document = this.databaseContext.Documents.FirstOrDefault(doc => doc.DocumentPath == documentPath);
             if (document != null) {
@@ -42,6 +45,7 @@ namespace Project_05 {
                 return newDocument;
             }
         }
+
         private Token GetOrCreateToken(string tokenText) {
             var token = this.databaseContext.Tokens.FirstOrDefault(tkn => tkn.TokenText == tokenText);
             if (token != null) {
@@ -57,6 +61,7 @@ namespace Project_05 {
                 return newToken;
             }
         }
+
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             var theToken = this.databaseContext.Tokens.Include(tkn => tkn.Documents).Where(tkn => tkn.TokenText == token).FirstOrDefault();
             var tokenDocuments = theToken == null ? null : theToken.Documents;

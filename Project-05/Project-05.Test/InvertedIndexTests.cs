@@ -8,9 +8,11 @@ namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class InvertedIndexTests {
         private InvertedIndex invertedIndex;
+        
         public InvertedIndexTests() {
             invertedIndex = new InvertedIndex();
         }
+        
         [Fact]
         public void InsertDatasTestSingleData() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
@@ -19,6 +21,7 @@ namespace Project_05Test {
             var testResult = invertedIndex.TokenMap;
             Assert.Equal(expectedResult, testResult);
         }
+        
         [Fact]
         public void InsertDatasTestMultiData() {
             var dataMap = new List<Tuple<string, string>> {
@@ -37,21 +40,23 @@ namespace Project_05Test {
             var testResult = invertedIndex.TokenMap;
             Assert.Equal(expectedResult, testResult);
         }
+        
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexContainsToken() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
             var expectedResult = new List<string> { "file1" };
             invertedIndex.InsertDataList(dataMap);
-            List<string> testResult;
-            invertedIndex.TryGetTokenDocumentIDs("hello", out testResult);
+            invertedIndex.TryGetTokenDocumentIDs("hello", out var testResult);
             Assert.Equal(expectedResult, testResult);
         }
+        
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexDoesNotContainsToken() {
             var dataMap = new List<Tuple<string, string>> { new Tuple<string, string>("file1", "hello") };
             invertedIndex.InsertDataList(dataMap);
             Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out var testResult));
         }
+        
         [Fact]
         public void GetTokenDocumentIDsTestInvertedIndexIsEmpty() {
             Assert.False(invertedIndex.TryGetTokenDocumentIDs("bye", out var testResult));

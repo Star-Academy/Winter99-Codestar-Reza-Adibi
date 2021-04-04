@@ -11,14 +11,15 @@ namespace Project_05 {
         public Not(string token) {
             Token = token;
         }
+
         public List<string> Filter(List<string> inputList, IProgramDatabase database) {
             if (inputList == null || inputList.Count == 0)
                 return new List<string>();
-            var tokenDocumentIDs = new List<string>();
-            database.TryGetTokenDocumentIDs(Token, out tokenDocumentIDs);
+            database.TryGetTokenDocumentIDs(Token, out var tokenDocumentIDs);
             inputList.RemoveAll(item => tokenDocumentIDs.Contains(item));
             return inputList;
         }
+
         public override bool Equals(object obj) {
             if (obj == null)
                 return false;
@@ -27,6 +28,7 @@ namespace Project_05 {
             Not not = (Not)obj;
             return this.Token == not.Token;
         }
+
         public override int GetHashCode() {
             return HashCode.Combine(Priority, Token);
         }

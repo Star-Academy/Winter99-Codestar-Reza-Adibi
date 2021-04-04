@@ -3,20 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
 using Xunit;
 
 namespace Project_05Test {
     [ExcludeFromCodeCoverage]
     public class FileReaderTests : IDisposable {
-        private readonly string directoryPath;
+        private static readonly string directoryPath = @"../../../../TestData/data";
         private readonly FileReader fileReader;
+        private bool disposedValue;
+        private static int isRunningCount = 0;
+        private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
 
         public FileReaderTests() {
-            directoryPath = @"../../../../TestData/data";
+            isRunningCountLock.WaitOne();
+            isRunningCount++;
+            isRunningCountLock.Release();
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
             File.WriteAllText(directoryPath + "/sample", "this is simple file");
             File.WriteAllText(directoryPath + "/sample2", "this is second document");
             fileReader = new FileReader(directoryPath);
         }
+
         [Fact]
         public void GetRawDataTest() {
             var expectedResult = new Dictionary<string, string> {
@@ -26,6 +35,7 @@ namespace Project_05Test {
             var testResult = fileReader.GetRawData();
             Assert.Equal(expectedResult, testResult);
         }
+
         [Fact]
         public void GetRawDataTestWrongPath() {
             var expectedResult = new Dictionary<string, string>();
@@ -34,13 +44,26 @@ namespace Project_05Test {
             Assert.Equal(expectedResult, testResult);
         }
 
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                if (disposing) {
+                    isRunningCountLock.WaitOne();
+                    isRunningCount--;
+                    if (isRunningCount == 0)
+                        Directory.Delete(directoryPath, true);
+                    isRunningCountLock.Release();
+                }
+                disposedValue = true;
+            }
+        }
+
         public void Dispose() {
-            File.Delete(directoryPath + "/sample");
-            File.Delete(directoryPath + "/sample2");
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         ~FileReaderTests() {
-            Dispose();
+            Dispose(disposing: false);
         }
     }
 }
