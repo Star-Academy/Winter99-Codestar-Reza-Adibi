@@ -3,7 +3,7 @@ using System;
 using System.Text.Json.Serialization;
 
 namespace Libraries {
-    public class Person {
+    public class Person : IIndexItem {
         [JsonPropertyName("age")]
         public int Age { get; set; }
 
@@ -14,7 +14,12 @@ namespace Libraries {
         public string Name { get; set; }
 
         [JsonPropertyName("gender")]
-        public string Gender { get; set; }
+        public string Gender {
+            get { return PersonGender ? "male" : "female"; }
+            set { PersonGender = value.ToLower() == "male"; }
+        }
+
+        public bool PersonGender { get; set; }
 
         [JsonPropertyName("company")]
         public string Company { get; set; }

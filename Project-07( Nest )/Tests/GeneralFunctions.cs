@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Tests {
+namespace Libraries.Tests {
     class GeneralFunctions {
         public static void CreateFile(string path) {
             if (!File.Exists(path))

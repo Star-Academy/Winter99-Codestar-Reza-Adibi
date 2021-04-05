@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using Xunit;
 
-namespace Tests {
+namespace Libraries.Tests {
     public class ReaderTests : IDisposable {
         private readonly string testFilesDirectory = "../../../testFiles";
         private static int isRunningCount = 0;
