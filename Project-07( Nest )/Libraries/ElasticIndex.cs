@@ -1,7 +1,6 @@
 ﻿using Nest;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Libraries {
     public abstract class ElasticIndex {
@@ -28,8 +27,9 @@ namespace Libraries {
         /// </summary>
         protected void CheckConnection() {
             var response = elasticClient.Ping();
-            if (!response.IsValid) {
-                throw new Exception("Ping failed:\n" + response.DebugInformation);
+            var validator = new ElasticResponseValidator(response);
+            if (!validator.IsValid) {
+                throw new Exception("Ping failed:\n" + validator.DebugInformation);
             }
         }
 
@@ -53,8 +53,9 @@ namespace Libraries {
                 );
             }
             var response = elasticClient.Bulk(bulkDescriptor);
-            if (!response.IsValid) {
-                throw new Exception("Add failed:\n" + response.DebugInformation);
+            var validator = new ElasticResponseValidator(response);
+            if (!validator.IsValid) {
+                throw new Exception("Add failed:\n" + validator.DebugInformation);
             }
         }
     }

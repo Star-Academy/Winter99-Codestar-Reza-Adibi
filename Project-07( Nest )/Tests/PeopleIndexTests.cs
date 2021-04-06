@@ -1,10 +1,8 @@
-﻿using Elasticsearch.Net;
-using Moq;
+﻿using Moq;
 using Nest;
 using Nest.Specification.IndicesApi;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Libraries.Tests {

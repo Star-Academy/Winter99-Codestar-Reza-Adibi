@@ -1,6 +1,5 @@
 ﻿using Nest;
 using System;
-using System.Collections.Generic;
 
 namespace Libraries {
     public class PeopleIndex : ElasticIndex {
@@ -43,8 +42,9 @@ namespace Libraries {
                       GeoPoint(geoPoint => geoPoint.Name(person => person.Location))
                 ))
             );
-            if (!response.IsValid) {
-                throw new Exception("Create index failed: \n" + response.DebugInformation);
+            var validator = new ElasticResponseValidator(response);
+            if (!validator.IsValid) {
+                throw new Exception("Create index failed: \n" + validator.DebugInformation);
             }
         }
 
