@@ -54,7 +54,7 @@ namespace Libraries {
             }
             var response = elasticClient.Bulk(bulkDescriptor);
             if (!response.IsValid) {
-                throw new Exception("Ping failed:\n" + response.DebugInformation);
+                throw new Exception("Add failed:\n" + response.DebugInformation);
             }
         }
     }

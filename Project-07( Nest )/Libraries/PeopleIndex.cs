@@ -1,5 +1,6 @@
 ﻿using Nest;
 using System;
+using System.Collections.Generic;
 
 namespace Libraries {
     public class PeopleIndex : ElasticIndex {
@@ -47,5 +48,135 @@ namespace Libraries {
             }
         }
 
+        public void search() {
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Match(match => match.
+            //            Field("name").
+            //            Query("mohammad").
+            //            Fuzziness(Fuzziness.EditDistance(1))
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Term(term => term.
+            //            Field("name").
+            //            Value("mohammad")
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Terms(terms => terms.
+            //            Field("name").
+            //            Terms("mohammad", "mohamad")
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Range(range => range.
+            //            Field("age").
+            //            GreaterThanOrEquals(24).
+            //            LessThanOrEquals(35)
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        MultiMatch(multiMatch => multiMatch.
+            //            Fields(fields=>fields.Field("name").Field("last_name")).
+            //            Query("mohammad").
+            //            Fuzziness(Fuzziness.EditDistance(1))
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Bool(boolQ=>boolQ.
+            //            Must(must=>must.
+            //                Match(match=>match.
+            //                    Field("name").
+            //                    Query("mohammad").
+            //                    Fuzziness(Fuzziness.EditDistance(1))
+            //                )
+            //            ).
+            //            Should(should=>should.
+            //                Range(range=>range.
+            //                    Field("age").
+            //                    GreaterThanOrEquals(10).
+            //                    LessThanOrEquals(30)
+            //                )
+            //            )
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Bool(boolQ => boolQ.
+            //            Must(must => must.
+            //                Match(match => match.
+            //                    Field("name").
+            //                    Query("mohammad").
+            //                    Fuzziness(Fuzziness.EditDistance(1))
+            //                )
+            //            ).
+            //            MustNot(mustNot => mustNot.
+            //                Match(match => match.
+            //                    Field("last_name").
+            //                    Query("mostmand")
+            //                )
+            //            )
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        GeoDistance(geoDistance => geoDistance.
+            //            Field("location").
+            //            Location(-34, -22).
+            //            Distance(1000, DistanceUnit.Meters)
+            //        )
+            //    )
+            //);
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Query(query => query.
+            //        Bool(boolQ => boolQ.
+            //            Must(must => must.
+            //                Match(
+            //                match => match.
+            //                    Field("name").
+            //                    Query("mohammad").
+            //                    Fuzziness(Fuzziness.EditDistance(1))
+            //                ),
+            //                must => must.Match(match => match.
+            //                     Field("last_name").
+            //                     Query("mostmand")
+            //                )
+            //            )
+            //        )
+            //    )
+            //);
+            //var documents = response.Documents;
+            //var response = elasticClient.Search<Dictionary<string, object>>(s => s.
+            //    Index(IndexName).
+            //    Aggregations(aggs => aggs.
+            //        Sum("docs_age_sum", sum => sum.
+            //             Field("age")
+            //        )
+            //    )
+            //);
+            return;
+        }
     }
 }
