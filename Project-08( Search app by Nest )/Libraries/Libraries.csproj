@@ -3,7 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Project_08__Search_app_by_Nest__</RootNamespace>
+    <RootNamespace>Libraries</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NEST" Version="7.12.0" />
+  </ItemGroup>
 
 </Project>
