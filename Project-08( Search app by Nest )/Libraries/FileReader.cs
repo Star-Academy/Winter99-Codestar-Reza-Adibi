@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Project_05 {
+namespace Libraries {
     public class FileReader {
-        private readonly string directoryPath;
-        public FileReader(string directoryPath) {
-            this.directoryPath = directoryPath;
-        }
-
         /// <summary>
-        /// Read and concat text files in given directory.
+        /// Read all files in given directory.
         /// </summary>
-        /// <returns> Pairs of "fileID, texts" in given directory. </returns>
-        public Dictionary<string, string> GetRawData() {
+        /// <param name="directoryPath">Path to the drectory containing your files.</param>
+        /// <returns> Pairs of "fileID, text" in given directory or "null" if path is empty or doesn't exists. </returns>
+        public static Dictionary<string, string> ReadFromDirectory(string directoryPath) {
             var stringData = new Dictionary<string, string>();
             try {
                 var pathes = Directory.GetFiles(directoryPath);
@@ -24,7 +20,26 @@ namespace Project_05 {
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
             }
-            return stringData;
+            return stringData.Count == 0 ? null : stringData;
+        }
+
+        /// <summary>
+        /// Read file from given file path.
+        /// </summary>
+        /// <param name="filePath">Path to your file.</param>
+        /// <returns> Pair of "fileID, text" of your file or "null" if file doesn't exists. </returns>
+        public static Tuple<string, string> ReadFromFile(string filePath) {
+            Tuple<string, string> result = null;
+            try {
+                result = new Tuple<string, string>(
+                    filePath.Replace("\\", "/"),
+                    File.ReadAllText(filePath)
+                );
+            }
+            catch (Exception exception) {
+                Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
+            }
+            return result;
         }
     }
 }

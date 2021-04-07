@@ -8,9 +8,8 @@ namespace Libraries {
         public PeopleIndex(string indexName, IElasticClient elasticClient) : base(indexName, elasticClient) { }
 
         public override void CreateIndex() {
-            var index = IndexName;
             var response = elasticClient.Indices.Create(
-                index,
+                IndexName,
                 i => i.Settings(
                     settings => settings.Analysis(analysis => analysis.
                         TokenFilters(tokenFilters => tokenFilters.

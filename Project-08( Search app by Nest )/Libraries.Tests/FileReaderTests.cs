@@ -1,4 +1,3 @@
-using Project_05;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,11 +5,10 @@ using System.IO;
 using System.Threading;
 using Xunit;
 
-namespace Project_05Test {
+namespace Libraries.Tests {
     [ExcludeFromCodeCoverage]
     public class FileReaderTests : IDisposable {
         private static readonly string directoryPath = @"../../../../TestData/data";
-        private readonly FileReader fileReader;
         private bool disposedValue;
         private static int isRunningCount = 0;
         private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
@@ -23,24 +21,36 @@ namespace Project_05Test {
                 Directory.CreateDirectory(directoryPath);
             File.WriteAllText(directoryPath + "/sample", "this is simple file");
             File.WriteAllText(directoryPath + "/sample2", "this is second document");
-            fileReader = new FileReader(directoryPath);
         }
 
         [Fact]
-        public void GetRawDataTest() {
+        public void ReadFromDirectoryTest() {
             var expectedResult = new Dictionary<string, string> {
                 { directoryPath + "/sample", "this is simple file" },
                 { directoryPath + "/sample2", "this is second document" }
             };
-            var testResult = fileReader.GetRawData();
+            var testResult = FileReader.ReadFromDirectory(directoryPath);
             Assert.Equal(expectedResult, testResult);
         }
 
         [Fact]
-        public void GetRawDataTestWrongPath() {
-            var expectedResult = new Dictionary<string, string>();
-            var fileReader = new FileReader("wrong path");
-            var testResult = fileReader.GetRawData();
+        public void ReadFromDirectoryTestWrongPath() {
+            Dictionary<string, string> expectedResult = null;
+            var testResult = FileReader.ReadFromDirectory("wrong path");
+            Assert.Equal(expectedResult, testResult);
+        }
+
+        [Fact]
+        public void ReadFromFileTest() {
+            var expectedResult = new Tuple<string, string>(directoryPath + "/sample", "this is simple file");
+            var testResult = FileReader.ReadFromFile(directoryPath + "/sample");
+            Assert.Equal(expectedResult, testResult);
+        }
+
+        [Fact]
+        public void ReadFromFileTestWrongPath() {
+            Tuple<string, string> expectedResult = null;
+            var testResult = FileReader.ReadFromFile("wrong path");
             Assert.Equal(expectedResult, testResult);
         }
 

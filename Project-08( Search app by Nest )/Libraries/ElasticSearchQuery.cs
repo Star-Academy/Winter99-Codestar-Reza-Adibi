@@ -1,33 +1,41 @@
 ﻿using Nest;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Libraries {
     public abstract class ElasticSearchQuery {
-        public abstract QueryType Type { get; }
-        protected HashSet<string> Words { get; set; }
-        public abstract Func<QueryContainerDescriptor<Dictionary<string, object>>, QueryContainer>[] Query { get; }
+        public HashSet<string> Filters { get; set; }
 
-        public ElasticSearchQuery(QueryType type) {
-            Words = new HashSet<string>();
+        protected ElasticSearchQuery() {
+            Filters = new HashSet<string>();
         }
 
-        public void AddWord(string word) {
-            Words.Add(word);
+        public void AddFilter(string word) {
+            Filters.Add(word);
         }
 
-        public void AddWords(IEnumerable<string> words) {
-            Words.UnionWith(words);
+        public void AddFilters(IEnumerable<string> words) {
+            Filters.UnionWith(words);
         }
 
-        public override bool Equals(object obj) {
-            return obj is ElasticSearchQuery query &&
-                   Type == query.Type &&
-                   EqualityComparer<HashSet<string>>.Default.Equals(Words, query.Words);
+        public void RemoveFilter(string word) {
+            Filters.Remove(word);
         }
 
-        public override int GetHashCode() {
-            return HashCode.Combine(Type);
+        public void RemoveFilter(IEnumerable<string> words) {
+            Filters.RemoveWhere(word => words.Contains(word));
+        }
+
+        public bool ContainsFilter(string word) {
+            return Filters.Contains(word);
+        }
+
+        public List<QueryContainer> GetQuery() {
+            var containers = new List<QueryContainer>();
+            foreach (var filter in Filters)
+                containers.Add(new MatchQuery { Query = filter });
+            return containers;
         }
     }
 }

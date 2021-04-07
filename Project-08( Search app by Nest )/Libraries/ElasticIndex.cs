@@ -59,5 +59,8 @@ namespace Libraries {
             }
         }
 
+        public IEnumerable<IIndexItem> SearchIndex() {
+            throw new NotImplementedException("SearchIndex");
+        }
     }
 }
