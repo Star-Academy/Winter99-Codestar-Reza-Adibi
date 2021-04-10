@@ -2,9 +2,11 @@
 using Nest;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Libraries.Tests {
+    [ExcludeFromCodeCoverage]
     public class ElasticIndexTests {
         private readonly Mock<IElasticClient> mockedClient;
         private readonly Mock<PingResponse> mockedPingResponse;

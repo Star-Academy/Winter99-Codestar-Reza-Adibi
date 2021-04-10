@@ -1,5 +1,5 @@
 ﻿using Nest;
-using System;
+using System.Collections.Generic;
 
 namespace Libraries {
     public class TextDocumentIndex : ElasticIndex {
@@ -7,19 +7,20 @@ namespace Libraries {
 
         public TextDocumentIndex(string indexName, IElasticClient elasticClient) : base(indexName, elasticClient) { }
 
-        public override void CreateIndex() {
-            var response = elasticClient.Indices.Create(
-                    IndexName,
-                    i => i.
-                    Map<TextDocument>(map => map.Properties(properties => properties.
-                          Keyword(keyword => keyword.Name(textDocument => textDocument.Path)).
-                          Text(text => text.Name(textDocument => textDocument.Text))
-                    ))
+        protected override ITypeMapping GetTypeMappingDescriptor() {
+            return new TypeMappingDescriptor<TextDocument>()
+                .Properties(properties => properties
+                    .Keyword(keyword => keyword.Name(textDocument => textDocument.Path))
+                    .Text(text => text.Name(textDocument => textDocument.Text))
                 );
-            var validator = new ElasticResponseValidator(response);
-            if (!validator.IsValid) {
-                throw new Exception("Create index failed: \n" + validator.DebugInformation);
-            }
+        }
+
+        public override IEnumerable<IIndexItem> RunSearchQuery(QueryContainer query) {
+            var response = elasticClient.Search<TextDocument>(s => s
+                  .Index(IndexName)
+                  .Query(q => query)
+            );
+            return response.Documents;
         }
     }
 }

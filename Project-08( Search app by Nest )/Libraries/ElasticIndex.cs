@@ -12,7 +12,6 @@ namespace Libraries {
             var serverUri = new Uri(connectionAddress);
             var connectionSettings = new ConnectionSettings(serverUri);
             elasticClient = new ElasticClient(connectionSettings);
-            CheckConnection();
         }
 
         public ElasticIndex(string indexName, IElasticClient elasticClient) {
@@ -37,7 +36,39 @@ namespace Libraries {
         /// Create index using index mapping and settings.<br/>
         /// Throws exception if creating index failed.
         /// </summary>
-        public abstract void CreateIndex();
+        public void CreateIndex() {
+            var response = elasticClient.Indices.Create(
+                GetCreateIndexDescriptor()
+            );
+            var validator = new ElasticResponseValidator(response);
+            if (!validator.IsValid) {
+                throw new Exception("Create index failed: \n" + validator.DebugInformation);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private CreateIndexDescriptor GetCreateIndexDescriptor() {
+            return new CreateIndexDescriptor(IndexName)
+                .Map(map => GetTypeMappingDescriptor())
+                .Settings(GetIndexSettingsDescriptor);
+        }
+
+        /// <summary>
+        /// Get settings of this index.
+        /// </summary>
+        /// <returns>Settings of this elastic index for creating index.</returns>
+        protected IPromise<IIndexSettings> GetIndexSettingsDescriptor(IndexSettingsDescriptor settingsDescriptor) {
+            return settingsDescriptor;
+        }
+
+        /// <summary>
+        /// Get mappings of this index.
+        /// </summary>
+        /// <returns>Mappings of this elastic index for creating index.</returns>
+        protected abstract ITypeMapping GetTypeMappingDescriptor();
 
         /// <summary>
         /// Add documents to index using Bulk.<br/>
@@ -59,8 +90,7 @@ namespace Libraries {
             }
         }
 
-        public IEnumerable<IIndexItem> SearchIndex() {
-            throw new NotImplementedException("SearchIndex");
-        }
+        public abstract IEnumerable<IIndexItem> RunSearchQuery(QueryContainer query);
+
     }
 }
