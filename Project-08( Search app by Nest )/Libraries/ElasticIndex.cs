@@ -59,23 +59,13 @@ namespace Libraries {
             ElasticResponseValidator.Validate(response);
         }
 
-        /*create related functions.*/
         /// <summary>
         /// Get create index discriptor to create this index.
         /// </summary>
         /// <returns>The CreateIndexDescriptor needed to create this index.</returns>
         public CreateIndexDescriptor GetCreateIndexDescriptor() {
             return new CreateIndexDescriptor(IndexName)
-                .Map(map => GetTypeMappingDescriptor())
-                .Settings(GetIndexSettingsDescriptor);
-        }
-
-        /// <summary>
-        /// Get settings of this index.
-        /// </summary>
-        /// <returns>Settings of this elastic index for creating index.</returns>
-        protected IPromise<IIndexSettings> GetIndexSettingsDescriptor(IndexSettingsDescriptor settingsDescriptor) {
-            return settingsDescriptor;
+                .Map(map => GetTypeMappingDescriptor());
         }
 
         /// <summary>
@@ -84,7 +74,6 @@ namespace Libraries {
         /// <returns>Mappings of this elastic index for creating index.</returns>
         protected abstract ITypeMapping GetTypeMappingDescriptor();
 
-        /*add related functions.*/
         /// <summary>
         /// Add document to index using Bulk.<br/>
         /// Throws exception if inserting failed.
@@ -133,7 +122,6 @@ namespace Libraries {
             ElasticResponseValidator.Validate(response);
         }
 
-        /*search related functions.*/
         /// <summary>
         /// Run given query on this index.
         /// </summary>

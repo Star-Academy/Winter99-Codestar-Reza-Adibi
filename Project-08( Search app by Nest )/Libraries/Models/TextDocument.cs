@@ -49,5 +49,11 @@ namespace Libraries {
         public override int GetHashCode() {
             return System.HashCode.Combine(Path, DocText);
         }
+
+        public override string ToString() {
+            return
+                "Path: " + Path +
+                "\nText: " + DocText;
+        }
     }
 }
