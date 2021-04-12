@@ -20,7 +20,7 @@ namespace Libraries {
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
             }
-            return stringData.Count == 0 ? null : stringData;
+            return stringData;
         }
 
         /// <summary>
@@ -31,10 +31,9 @@ namespace Libraries {
         public static Tuple<string, string> ReadFromFile(string filePath) {
             Tuple<string, string> result = null;
             try {
-                result = new Tuple<string, string>(
-                    filePath.Replace("\\", "/"),
-                    File.ReadAllText(filePath)
-                );
+                var text = File.ReadAllText(filePath);
+                var id = filePath.Replace("\\", "/");
+                result = new Tuple<string, string>(id, text);
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);

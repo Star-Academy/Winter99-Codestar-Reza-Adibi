@@ -1,7 +1,7 @@
 ﻿using Nest;
 
 namespace Libraries {
-    public class QueryBuilderExtractor {
+    public class QueryExtractor {
         private static readonly string separatorsRegex = " ";
 
         /// <summary>

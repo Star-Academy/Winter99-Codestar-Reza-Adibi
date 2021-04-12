@@ -1,7 +1,8 @@
-﻿using Libraries;
-using Xunit;
+﻿using Elasticsearch.Net;
+using Nest;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Libraries.Tests {
     [ExcludeFromCodeCoverage]
@@ -69,8 +70,29 @@ namespace Libraries.Tests {
         }
 
         [Fact()]
-        public void GetQueryTest() {
-            Assert.True(false, "not implemented!");
+        public void GetQueryTestSingleFilter() {
+            var expectedResult = "{\"match\":{\"test_field\":{\"query\":\"word10\"}}}";
+            subBoolQuery.AddFilters(new List<string> { "word10" });
+            var query = subBoolQuery.GetQuery("test_field");
+            var client = new ElasticClient();
+            var testResult = "";
+            foreach (var item in query)
+                testResult += client.RequestResponseSerializer.SerializeToString<QueryContainer>(item);
+            Assert.Equal(expectedResult, testResult);
+        }
+
+        [Fact()]
+        public void GetQueryTestMultiFilter() {
+            var expectedResult =
+                "{\"match\":{\"test_field\":{\"query\":\"word11\"}}}" +
+                "{\"match\":{\"test_field\":{\"query\":\"word12\"}}}";
+            subBoolQuery.AddFilters(new List<string> { "word11", "word12" });
+            var query = subBoolQuery.GetQuery("test_field");
+            var client = new ElasticClient();
+            var testResult = "";
+            foreach (var item in query)
+                testResult += client.RequestResponseSerializer.SerializeToString<QueryContainer>(item);
+            Assert.Equal(expectedResult, testResult);
         }
     }
 }

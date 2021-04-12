@@ -1,19 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using Xunit;
 
 namespace Libraries.Tests {
-    [ExcludeFromCodeCoverage]
-    public class FileReaderTests : IDisposable {
-        private static readonly string directoryPath = @"../../../../TestData/FileReaderData";
+    public class TextDocumentTests : IDisposable {
+        private static readonly string directoryPath = @"../../../../TestData/TextDocumentData";
         private bool disposedValue;
         private static int isRunningCount = 0;
         private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
 
-        public FileReaderTests() {
+        public TextDocumentTests() {
             isRunningCountLock.WaitOne();
             isRunningCount++;
             isRunningCountLock.Release();
@@ -23,34 +21,43 @@ namespace Libraries.Tests {
             File.WriteAllText(directoryPath + "/sample2", "this is second document");
         }
 
-        [Fact]
-        public void ReadFromDirectoryTest() {
-            var expectedResult = new Dictionary<string, string> {
-                { directoryPath + "/sample", "this is simple file" },
-                { directoryPath + "/sample2", "this is second document" }
+        [Fact()]
+        public void GetFomeFileTest() {
+            var expectedResult = new TextDocument {
+                Path = directoryPath + "/sample",
+                DocText = "this is simple file"
             };
-            var testResult = FileReader.ReadFromDirectory(directoryPath);
+            var testResult = TextDocument.GetFomeFile(directoryPath + "/sample");
             Assert.Equal(expectedResult, testResult);
         }
 
-        [Fact]
-        public void ReadFromDirectoryTestWrongPath() {
-            Dictionary<string, string> expectedResult = new Dictionary<string, string>();
-            var testResult = FileReader.ReadFromDirectory("wrong path");
+        [Fact()]
+        public void GetFomeFileTestBadPath() {
+            TextDocument expectedResult = null;
+            var testResult = TextDocument.GetFomeFile("badPath");
             Assert.Equal(expectedResult, testResult);
         }
 
-        [Fact]
-        public void ReadFromFileTest() {
-            var expectedResult = new Tuple<string, string>(directoryPath + "/sample", "this is simple file");
-            var testResult = FileReader.ReadFromFile(directoryPath + "/sample");
+        [Fact()]
+        public void GetFomeDirectoryTest() {
+            var expectedResult = new List<TextDocument>{
+                new TextDocument {
+                Path = directoryPath + "/sample",
+                DocText = "this is simple file"
+                },
+                new TextDocument {
+                    Path = directoryPath + "/sample2",
+                    DocText = "this is second document"
+                }
+            };
+            var testResult = TextDocument.GetFomeDirectory(directoryPath);
             Assert.Equal(expectedResult, testResult);
         }
 
-        [Fact]
-        public void ReadFromFileTestWrongPath() {
-            Tuple<string, string> expectedResult = null;
-            var testResult = FileReader.ReadFromFile("wrong path");
+        [Fact()]
+        public void GetFomeDirectoryTestBadPath() {
+            List<TextDocument> expectedResult = new List<TextDocument>();
+            var testResult = TextDocument.GetFomeDirectory("badPath");
             Assert.Equal(expectedResult, testResult);
         }
 
@@ -72,7 +79,7 @@ namespace Libraries.Tests {
             GC.SuppressFinalize(this);
         }
 
-        ~FileReaderTests() {
+        ~TextDocumentTests() {
             Dispose(disposing: false);
         }
     }
