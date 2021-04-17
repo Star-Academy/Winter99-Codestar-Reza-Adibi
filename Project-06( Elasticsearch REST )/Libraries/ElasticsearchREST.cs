@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,11 +44,18 @@ namespace Libraries {
                                 }
                             }
                     }";
+
         public ElasticsearchREST(string elasticsearchAddress) {
             httpClient = new HttpClient();
             this.elasticsearchAddress = elasticsearchAddress;
         }
-        public async Task<bool> CreateIndex(string indexName) {
+
+        public string CreateIndex(string indexName) {
+            var task = Task.Run(() => CreateIndexTask(indexName));
+            return GetResult(task);
+        }
+
+        public async Task<bool> CreateIndexTask(string indexName) {
             var t = Task.Run(() => IndexExists(indexName));
             if (!t.Result) {
                 var link = new Uri(elasticsearchAddress + indexName);
@@ -67,7 +73,13 @@ namespace Libraries {
             }
             return true;
         }
-        public async Task<bool> IndexExists(string indexName) {
+
+        public bool IndexExists(string indexName) {
+            var task = Task.Run(() => IndexExistsTask(indexName));
+            return task.Result;
+        }
+
+        private async Task<bool> IndexExistsTask(string indexName) {
             var link = new Uri(elasticsearchAddress + indexName);
             try {
                 var response = await httpClient.GetAsync(link);
@@ -78,10 +90,16 @@ namespace Libraries {
                 return false;
             }
         }
-        public async Task<bool> AddToIndex(string indexName, string content) {
+
+        public string AddToIndex(string indexName, string content) {
+            var task = Task.Run(() => AddToIndexTask(indexName, content));
+            return GetResult(task);
+        }
+
+        private async Task<bool> AddToIndexTask(string indexName, string content) {
             try {
                 await httpClient.PostAsync(
-                    elasticsearchAddress + indexName + "/_doc",
+                   elasticsearchAddress + indexName + "/_doc",
                     new StringContent(content, Encoding.UTF8, "application/json")
                 );
                 return true;
@@ -89,6 +107,10 @@ namespace Libraries {
             catch (HttpRequestException) {
                 return false;
             }
+        }
+
+        private string GetResult(Task<bool> task) {
+            return task.Result ? "Success" : "Failure";
         }
     }
 }

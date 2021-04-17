@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Libraries {
     class Program {
@@ -7,10 +6,10 @@ namespace Libraries {
         static void Main(string[] args) {
             var indexName = "test1";
             var elasticsearch = new ElasticsearchREST(link);
-            var createTask = Task.Run(() => elasticsearch.CreateIndex(indexName));
-            Console.WriteLine("createTask.Result" + createTask.Result.ToString());
-            var existsTask = Task.Run(() => elasticsearch.IndexExists(indexName));
-            Console.WriteLine("existsTask.Result" + existsTask.Result.ToString());
+            var createResult = elasticsearch.CreateIndex(indexName);
+            Console.WriteLine("createTask.Result" + createResult);
+            var existsResult = elasticsearch.IndexExists(indexName);
+            Console.WriteLine("existsTask.Result" + existsResult);
             var person =
                 @"{ 
                 ""age"": 26,    
@@ -25,8 +24,8 @@ namespace Libraries {
                 ""registration_date"": ""2015/02/16 11:11:31"",    
                 ""location"": ""-21.459832,-148.208613""
                 }";
-            var addTask = Task.Run(() => elasticsearch.AddToIndex(indexName, person));
-            Console.WriteLine("addTask.Result" + addTask.Result.ToString());
+            var addResponse = elasticsearch.AddToIndex(indexName, person);
+            Console.WriteLine("addTask.Result" + addResponse);
         }
     }
 }
