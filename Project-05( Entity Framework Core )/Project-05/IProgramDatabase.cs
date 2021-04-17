@@ -6,8 +6,8 @@ namespace Project_05 {
         /// <summary>
         /// Insert list of Tuple(documentID, token) to database.
         /// </summary>
-        /// <param name="data"> List of Tuple\<string, string\>( documentID, token ). </param>
-        public void InsertDataList(List<Tuple<string, string>> data);
+        /// <param name="data"> List of TDocTokens. </param>
+        public void InsertDataList(List<DocToken> data);
 
         /// <summary>
         /// Insert documentID to token's documentIDs List. 

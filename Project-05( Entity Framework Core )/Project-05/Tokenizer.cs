@@ -54,11 +54,18 @@ namespace Project_05 {
         /// <param name="documentID"> ID of document. </param>
         /// <param name="documentText"> The document's content. </param>
         /// <returns> All tokens of document. </returns>
-        public static List<Tuple<string, string>> GetAllTokens(string documentID, string documentText) {
-            var documentIdTokenPairs = new List<Tuple<string, string>>();
+        public static List<DocToken> GetAllTokens(string documentID, string documentText) {
+            var documentIdTokenPairs = new List<DocToken>();
             var tokenizer = new Tokenizer(documentText);
-            for (var token = tokenizer.GetNextToken(); token != null; token = tokenizer.GetNextToken())
-                documentIdTokenPairs.Add(new Tuple<string, string>(documentID, token));
+            for (var token = tokenizer.GetNextToken(); token != null; token = tokenizer.GetNextToken()) {
+                documentIdTokenPairs.Add(
+                   new DocToken
+                   {
+                       DocumentID = documentID,
+                       Token = token
+                   }
+               );
+            }
             return documentIdTokenPairs;
         }
     }

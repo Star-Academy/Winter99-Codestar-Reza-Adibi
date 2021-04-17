@@ -1,5 +1,4 @@
 ﻿using Project_05;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -54,10 +53,10 @@ namespace Project_05Test {
 
         [Fact]
         public void GetAllTokensTestUniqueWords() {
-            var expectedResult = new List<Tuple<string, string>> {
-                new Tuple<string, string>("id", "string"),
-                new Tuple<string, string>("id", "___"),
-                new Tuple<string, string>("id", "10254")
+            var expectedResult = new List<DocToken> {
+                new DocToken { DocumentID = "id", Token = "string" },
+                new DocToken { DocumentID = "id", Token = "___" },
+                new DocToken { DocumentID = "id", Token = "10254" }
             };
             var inputText = "!@#$%^&*()+=-/?><|\"\\;:'][{}STRING ___ 10254";
             var testResult = Tokenizer.GetAllTokens("id", inputText);
@@ -66,9 +65,9 @@ namespace Project_05Test {
 
         [Fact]
         public void GetAllTokensTestUnuniqueWords() {
-            var expectedResult = new List<Tuple<string, string>> {
-                new Tuple<string, string>("id", "string"),
-                new Tuple<string, string>("id", "string")
+            var expectedResult = new List<DocToken> {
+                new DocToken { DocumentID = "id", Token = "string" },
+                new DocToken { DocumentID = "id", Token = "string" }
             };
             var inputText = "string string";
             var testResult = Tokenizer.GetAllTokens("id", inputText);

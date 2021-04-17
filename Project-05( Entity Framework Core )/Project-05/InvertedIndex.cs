@@ -23,9 +23,9 @@ namespace Project_05 {
             return this.tokenMap.TryGetValue(token, out output);
         }
 
-        public void InsertDataList(List<Tuple<string, string>> data) {
-            foreach (Tuple<string, string> pair in data)
-                InsertData(pair.Item2, pair.Item1);
+        public void InsertDataList(List<DocToken> data) {
+            foreach (var pair in data)
+                InsertData(pair.Token, pair.DocumentID);
         }
     }
 }

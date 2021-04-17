@@ -8,11 +8,11 @@ namespace Project_05 {
         protected SqlDatabaseContext databaseContext;
         protected bool saveOnInsert;
 
-        public void InsertDataList(List<Tuple<string, string>> data) {
+        public void InsertDataList(List<DocToken> data) {
             this.saveOnInsert = false;
             try {
-                foreach (Tuple<string, string> pair in data)
-                    InsertData(pair.Item2, pair.Item1);
+                foreach (var pair in data)
+                    InsertData(pair.Token, pair.DocumentID);
                 this.databaseContext.SaveChanges();
             }
             finally {
@@ -64,7 +64,7 @@ namespace Project_05 {
 
         public bool TryGetTokenDocumentIDs(string token, out List<string> output) {
             var theToken = this.databaseContext.Tokens.Include(tkn => tkn.Documents).Where(tkn => tkn.TokenText == token).FirstOrDefault();
-            var tokenDocuments = theToken == null ? null : theToken.Documents;
+            var tokenDocuments = theToken?.Documents;
             if (tokenDocuments == null) {
                 output = new List<string>();
                 return false;

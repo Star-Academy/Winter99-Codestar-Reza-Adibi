@@ -12,13 +12,8 @@ namespace Project_05Test {
         private static readonly string directoryPath = @"../../../../TestData/data";
         private readonly FileReader fileReader;
         private bool disposedValue;
-        private static int isRunningCount = 0;
-        private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
 
         public FileReaderTests() {
-            isRunningCountLock.WaitOne();
-            isRunningCount++;
-            isRunningCountLock.Release();
             if (!Directory.Exists(directoryPath))
                 Directory.CreateDirectory(directoryPath);
             File.WriteAllText(directoryPath + "/sample", "this is simple file");
@@ -47,11 +42,7 @@ namespace Project_05Test {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (disposing) {
-                    isRunningCountLock.WaitOne();
-                    isRunningCount--;
-                    if (isRunningCount == 0)
-                        Directory.Delete(directoryPath, true);
-                    isRunningCountLock.Release();
+                    Directory.Delete(directoryPath, true);
                 }
                 disposedValue = true;
             }

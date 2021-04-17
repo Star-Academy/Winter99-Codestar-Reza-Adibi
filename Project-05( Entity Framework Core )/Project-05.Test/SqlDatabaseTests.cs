@@ -13,13 +13,8 @@ namespace Project_05Test {
         private readonly SqlDatabase database;
         private readonly SqlDatabaseContext localDatabaseContext;
         private bool disposedValue;
-        private static int isRunningCount = 0;
-        private static readonly Semaphore isRunningCountLock = new Semaphore(1, 1);
 
         public SqlDatabaseTests() {
-            isRunningCountLock.WaitOne();
-            isRunningCount++;
-            isRunningCountLock.Release();
             var databaseName = "inMemoryDatabase";
             database = new SqlDatabaseInMemory(databaseName);
             localDatabaseContext = new SqlDatabaseContext(
@@ -56,10 +51,10 @@ namespace Project_05Test {
         [Fact]
         public void InsertDataListTestSingleTokenMultiDocuments() {
             var expectedResult = new List<string> { "testFile3", "testFile4", "testFile5" };
-            var dataList = new List<Tuple<string, string>>{
-                new Tuple<string, string>( "testFile3","testToken3"),
-                new Tuple<string, string>( "testFile4","testToken3"),
-                new Tuple<string, string>( "testFile5","testToken3")
+            var dataList = new List<DocToken>{
+                new DocToken { DocumentID = "testFile3", Token = "testToken3" },
+                new DocToken { DocumentID = "testFile4", Token = "testToken3" },
+                new DocToken { DocumentID = "testFile5", Token = "testToken3" }
             };
             database.InsertDataList(dataList);
             var theToken =
@@ -75,10 +70,10 @@ namespace Project_05Test {
         [Fact]
         public void InsertDataListTestMultiTokenSingleDocuments() {
             var expectedResult = new List<string> { "testToken4", "testToken5", "testToken6" };
-            var dataList = new List<Tuple<string, string>>{
-                new Tuple<string, string>( "testFile6","testToken4"),
-                new Tuple<string, string>( "testFile6","testToken5"),
-                new Tuple<string, string>( "testFile6","testToken6")
+            var dataList = new List<DocToken>{
+                new DocToken { DocumentID = "testFile6", Token = "testToken4" },
+                new DocToken { DocumentID = "testFile6", Token = "testToken5" },
+                new DocToken { DocumentID = "testFile6", Token = "testToken6" }
             };
             database.InsertDataList(dataList);
             var theDocument =
@@ -112,12 +107,7 @@ namespace Project_05Test {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (disposing) {
-                    isRunningCountLock.WaitOne();
-                    isRunningCount--;
-                    if (isRunningCount == 0) {
-                        localDatabaseContext.Dispose();
-                    }
-                    isRunningCountLock.Release();
+                    localDatabaseContext.Dispose();
                 }
                 disposedValue = true;
             }

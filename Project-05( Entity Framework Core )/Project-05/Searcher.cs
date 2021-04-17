@@ -11,7 +11,7 @@ namespace Project_05 {
         /// <returns> List of document ids. </returns>
         public List<string> RunOperators(List<IOperator> operators, IProgramDatabase database) {
             var result = new List<string>();
-            var firstOperatorIsAnd = operators.ElementAt(0).GetType() == typeof(And);
+            var firstOperatorIsAnd = operators.ElementAt(0) is And;
             for (int i = 0; i < operators.Count; i++) {
                 IOperator op = operators.ElementAt(i);
                 if (firstOperatorIsAnd) {
