@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Libraries {
-    public class TextDocument : IIndexItem {
+    public class TextDocument : IModel {
         [JsonPropertyName("path")]
         public string Path { set; get; }
         [JsonPropertyName("doc_text")]
         public string DocText { set; get; }
 
-        IIndexItem IIndexItem.GetFomeFile(string filePath) {
+        IModel IModel.GetFomeFile(string filePath) {
             return TextDocument.GetFomeFile(filePath);
         }
 
@@ -22,7 +23,7 @@ namespace Libraries {
             return data == null ? null : new TextDocument { Path = data.Item1, DocText = data.Item2 };
         }
 
-        IEnumerable<IIndexItem> IIndexItem.GetFomeDirectory(string directoryPath) {
+        IEnumerable<IModel> IModel.GetFomeDirectory(string directoryPath) {
             return TextDocument.GetFomeDirectory(directoryPath);
         }
 
@@ -33,10 +34,7 @@ namespace Libraries {
         /// <returns>List of extracted index items.</returns>
         public static IEnumerable<TextDocument> GetFomeDirectory(string directoryPath) {
             var datas = FileReader.ReadFromDirectory(directoryPath);
-            var textDocuments = new List<TextDocument>();
-            foreach (var data in datas) {
-                textDocuments.Add(new TextDocument { Path = data.Key, DocText = data.Value });
-            }
+            var textDocuments = datas.Select(data => new TextDocument { DocText = data.Value, Path = data.Key }).ToList();
             return textDocuments;
         }
 

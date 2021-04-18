@@ -7,10 +7,10 @@ using Xunit;
 namespace Libraries.Tests {
     [ExcludeFromCodeCoverage]
     public class SubBoolQueryTests {
-        private SubBoolQuery subBoolQuery;
+        private MatchSubBoolQuery subBoolQuery;
 
         public SubBoolQueryTests() {
-            subBoolQuery = new SubBoolQuery();
+            subBoolQuery = new MatchSubBoolQuery();
         }
 
         [Fact()]

@@ -14,7 +14,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("test", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("test", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -29,7 +30,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test2\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("test test2", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("test test2", fieldName);
+            var query = queryExtractore.ExtractQuery(); 
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -43,7 +45,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("-test", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("-test", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -58,7 +61,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test2\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("-test -test2", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("-test -test2", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -72,7 +76,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("+test", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("+test", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -87,7 +92,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test2\"}}}" +
                 "]}" +
                 "}";
-            var query = QueryExtractor.ExtractBoolQuery("+test +test2", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("+test +test2", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);
@@ -107,7 +113,8 @@ namespace Libraries.Tests {
                 "{\"match\":{\"" + fieldName + "\":{\"query\":\"test2\"}}}" +
                 "]" +
                 "}}";
-            var query = QueryExtractor.ExtractBoolQuery("test +test2 -test3", fieldName);
+            var queryExtractore = new BasicBoolQueryExtractor("test +test2 -test3", fieldName);
+            var query = queryExtractore.ExtractQuery();
             var client = new ElasticClient();
             var testResult = client.RequestResponseSerializer.SerializeToString<QueryContainer>(query);
             Assert.Equal(expectedResult, testResult);

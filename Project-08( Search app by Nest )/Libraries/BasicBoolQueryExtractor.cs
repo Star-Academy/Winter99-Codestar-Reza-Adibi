@@ -1,19 +1,22 @@
 ﻿using Nest;
 
 namespace Libraries {
-    public class QueryExtractor {
+    public class BasicBoolQueryExtractor : IQueryExtractore {
         private static readonly string separatorsRegex = " ";
+        private readonly string queryText;
+        private readonly string fieldName;
 
-        /// <summary>
-        /// Extract a bool query from given query text on given field.
-        /// </summary>
         /// <param name="queryText">A text containing or( + ), not( - ) & and( ony word ) filters.</param>
         /// <param name="fieldName">The index field that to run queries on it.</param>
-        /// <returns>An elasticSearch bool query.</returns>
-        public static QueryContainer ExtractBoolQuery(string queryText, string fieldName) {
-            var must = new SubBoolQuery();
-            var mustNot = new SubBoolQuery();
-            var should = new SubBoolQuery();
+        public BasicBoolQueryExtractor(string queryText, string fieldName) {
+            this.queryText = queryText;
+            this.fieldName = fieldName;
+        }
+
+        public QueryContainer ExtractQuery() {
+            var must = new MatchSubBoolQuery();
+            var mustNot = new MatchSubBoolQuery();
+            var should = new MatchSubBoolQuery();
             var words = queryText.Split(separatorsRegex);
             foreach (var word in words) {
                 if (!string.IsNullOrWhiteSpace(word)) {
@@ -24,7 +27,8 @@ namespace Libraries {
                     }
                 }
             }
-            return new BoolQuery {
+            return new BoolQuery
+            {
                 Must = must.GetQuery(fieldName),
                 MustNot = mustNot.GetQuery(fieldName),
                 Should = should.GetQuery(fieldName)

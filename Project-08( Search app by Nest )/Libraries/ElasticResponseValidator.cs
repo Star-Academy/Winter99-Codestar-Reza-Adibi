@@ -3,8 +3,8 @@ using System;
 using System.Linq;
 
 namespace Libraries {
-    public class ElasticResponseValidator {
-        public static void Validate(ResponseBase response) {
+    public static class ElasticResponseValidator {
+        public static T Validate<T>(this T response) where T : IResponse {
             if (response == null)
                 throw new Exception("Unknown Error!");
             if (!response.IsValid) {
@@ -17,6 +17,7 @@ namespace Libraries {
                     );
                 throw new Exception("Unknown Error!");
             }
+            return response;
         }
     }
 }

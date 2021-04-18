@@ -15,11 +15,11 @@ namespace Libraries {
                 );
         }
 
-        public override IEnumerable<IIndexItem> RunSearchQuery(QueryContainer query) {
+        public override IEnumerable<IModel> RunSearchQuery(QueryContainer query) {
             var response = elasticClient.Search<TextDocument>(s => s
                   .Index(IndexName)
                   .Query(q => query)
-            );
+            ).Validate();
             return response.Documents;
         }
     }

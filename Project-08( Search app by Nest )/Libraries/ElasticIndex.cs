@@ -1,13 +1,17 @@
 ﻿using Nest;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Libraries {
     public abstract class ElasticIndex {
         public IElasticClient elasticClient;
+        List<char> invalidChars = new List<char> { '\\', '/', '*', '?', '"', '<', '>', '|', ' ', ',' };
         public string IndexName { get; }
 
+
         public ElasticIndex(string indexName, string connectionAddress) {
+            ValidateIndexName(indexName);
             IndexName = indexName;
             var serverUri = new Uri(connectionAddress);
             var connectionSettings = new ConnectionSettings(serverUri);
@@ -16,11 +20,25 @@ namespace Libraries {
         }
 
         public ElasticIndex(string indexName, IElasticClient elasticClient) {
+            ValidateIndexName(indexName);
             IndexName = indexName;
             this.elasticClient = elasticClient;
             Setup();
         }
 
+        /// <summary>
+        /// Validate index name and if index name was invalid throw exeption.
+        /// </summary>
+        /// <param name="indexName">Name of your index.</param>
+        private void ValidateIndexName(string indexName) {
+            if (invalidChars.Any(c => indexName.Contains(c)))
+                throw new Exception("Invalid index name!");
+
+        }
+
+        /// <summary>
+        /// Check connection an make sure of index existence.
+        /// </summary>
         private void Setup() {
             CheckConnection();
             if (!IndexExists())
@@ -32,14 +50,12 @@ namespace Libraries {
         /// Throws exeption if ping failed.
         /// </summary>
         private void CheckConnection() {
-            var response = elasticClient.Ping();
-            ElasticResponseValidator.Validate(response);
+            var response = elasticClient.Ping().Validate();
         }
 
         private bool IndexExists() {
-            var response = elasticClient.Indices.Exists(IndexName);
             try {
-                ElasticResponseValidator.Validate(response);
+                var response = elasticClient.Indices.Exists(IndexName).Validate();
                 return true;
             }
             catch (Exception e) {
@@ -55,8 +71,7 @@ namespace Libraries {
         private void CreateIndex() {
             var response = elasticClient.Indices.Create(
                 GetCreateIndexDescriptor()
-            );
-            ElasticResponseValidator.Validate(response);
+            ).Validate();
         }
 
         /// <summary>
@@ -79,10 +94,9 @@ namespace Libraries {
         /// Throws exception if inserting failed.
         /// </summary>
         /// <param name="items">An instance of IIndexItems. </param>
-        public void AddToIndex(IIndexItem item) {
-            BulkDescriptor bulkDescriptor = GetBulkDescriptor(new List<IIndexItem> { item });
-            var response = elasticClient.Bulk(bulkDescriptor);
-            ElasticResponseValidator.Validate(response);
+        public void AddToIndex(IModel item) {
+            BulkDescriptor bulkDescriptor = GetBulkDescriptor(new List<IModel> { item });
+            var response = elasticClient.Bulk(bulkDescriptor).Validate();
             RefreshIndex();
         }
 
@@ -91,10 +105,9 @@ namespace Libraries {
         /// Throws exception if inserting failed.
         /// </summary>
         /// <param name="items">An enumerable of IndexItems. </param>
-        public void AddToIndex(IEnumerable<IIndexItem> items) {
+        public void AddToIndex(IEnumerable<IModel> items) {
             BulkDescriptor bulkDescriptor = GetBulkDescriptor(items);
-            var response = elasticClient.Bulk(bulkDescriptor);
-            ElasticResponseValidator.Validate(response);
+            var response = elasticClient.Bulk(bulkDescriptor).Validate();
             RefreshIndex();
         }
 
@@ -103,10 +116,10 @@ namespace Libraries {
         /// </summary>
         /// <param name="items">List of IIndexItems.</param>
         /// <returns>BulkDescriptor created to add given items to index</returns>
-        public BulkDescriptor GetBulkDescriptor(IEnumerable<IIndexItem> items) {
+        public BulkDescriptor GetBulkDescriptor(IEnumerable<IModel> items) {
             var bulkDescriptor = new BulkDescriptor();
             foreach (var item in items) {
-                bulkDescriptor.Index<IIndexItem>(x => x
+                bulkDescriptor.Index<IModel>(x => x
                     .Index(IndexName)
                     .Document(item)
                 );
@@ -118,8 +131,7 @@ namespace Libraries {
         /// Refresh this index shardes.
         /// </summary>
         protected void RefreshIndex() {
-            var response = elasticClient.Indices.Refresh(IndexName);
-            ElasticResponseValidator.Validate(response);
+            var response = elasticClient.Indices.Refresh(IndexName).Validate();
         }
 
         /// <summary>
@@ -127,6 +139,6 @@ namespace Libraries {
         /// </summary>
         /// <param name="query">A search query.</param>
         /// <returns>Query result.</returns>
-        public abstract IEnumerable<IIndexItem> RunSearchQuery(QueryContainer query);
+        public abstract IEnumerable<IModel> RunSearchQuery(QueryContainer query);
     }
 }

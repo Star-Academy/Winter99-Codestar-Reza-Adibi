@@ -34,12 +34,11 @@ namespace ConsoleApp {
         }
 
         private string GetIndexName() {
-            var invalidChars = new List<char> { '\\', '/', '*', '?', '"', '<', '>', '|', ' ', ',' };
             var input = "";
             do {
                 Console.WriteLine("Write your index name:");
                 input = Console.ReadLine();
-            } while (string.IsNullOrWhiteSpace(input) || invalidChars.Any(c => input.Contains(c)));
+            } while (string.IsNullOrWhiteSpace(input));
             return input;
         }
 
@@ -50,25 +49,25 @@ namespace ConsoleApp {
         private void AddingToIndexRoutine() {
             var doNotExit = "";
             do {
-                var userChoise = "";
+                var userChoice = "";
                 do {
                     Console.WriteLine("Write 'f' to add single file, 'd' to add folder of files to index or 's' to skip addeing:");
-                    userChoise = Console.ReadLine();
-                } while (userChoise != "f" && userChoise != "d" && userChoise != "s");
-                if (userChoise == "s")
+                    userChoice = Console.ReadLine();
+                } while (userChoice != "f" && userChoice != "d" && userChoice != "s");
+                if (userChoice == "s")
                     return;
-                string path = GetPath(userChoise);
-                switch (userChoise) {
+                string path = GetPath(userChoice);
+                switch (userChoice) {
                     case "f": {
-                            var item = TextDocument.GetFomeFile(path);
-                            index.AddToIndex(item);
-                            break;
-                        }
+                        var item = TextDocument.GetFomeFile(path);
+                        index.AddToIndex(item);
+                        break;
+                    }
                     case "d": {
-                            var items = TextDocument.GetFomeDirectory(path);
-                            index.AddToIndex(items);
-                            break;
-                        }
+                        var items = TextDocument.GetFomeDirectory(path);
+                        index.AddToIndex(items);
+                        break;
+                    }
                 }
                 Console.WriteLine("Do you like to add more data?( y / anything else ):");
                 doNotExit = Console.ReadLine();
@@ -94,7 +93,8 @@ namespace ConsoleApp {
                 } while (string.IsNullOrWhiteSpace(userQuery));
                 if (userQuery == "e")
                     return;
-                var query = QueryExtractor.ExtractBoolQuery(userQuery, "docText");
+                var queryExtractore = new BasicBoolQueryExtractor(userQuery, "docText");
+                var query = queryExtractore.ExtractQuery();
                 var searchResult = index.RunSearchQuery(query);
                 ShowSearchResult(searchResult);
                 Console.WriteLine("Do you like to continue searching?( y / anything else ):");
@@ -102,7 +102,7 @@ namespace ConsoleApp {
             } while (doNotExit == "y");
         }
 
-        private void ShowSearchResult(IEnumerable<IIndexItem> searchResult) {
+        private void ShowSearchResult(IEnumerable<IModel> searchResult) {
             if (searchResult == null || searchResult.Count() == 0) {
                 Console.WriteLine("No result!");
                 return;
