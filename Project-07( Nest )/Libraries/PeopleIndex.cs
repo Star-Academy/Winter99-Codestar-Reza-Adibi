@@ -41,10 +41,8 @@ namespace Libraries {
                       GeoPoint(geoPoint => geoPoint.Name(person => person.Location))
                 ))
             );
-            var validator = new ElasticResponseValidator(response);
-            if (!validator.IsValid) {
-                throw new Exception("Create index failed: \n" + validator.DebugInformation);
-            }
+            var validator = new ElasticResponseValidator();
+            validator.Validate(response);
         }
 
         public void search() {

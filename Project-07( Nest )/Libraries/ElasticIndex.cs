@@ -27,10 +27,8 @@ namespace Libraries {
         /// </summary>
         protected void CheckConnection() {
             var response = elasticClient.Ping();
-            var validator = new ElasticResponseValidator(response);
-            if (!validator.IsValid) {
-                throw new Exception("Ping failed:\n" + validator.DebugInformation);
-            }
+            var validator = new ElasticResponseValidator();
+            validator.Validate(response);
         }
 
         /// <summary>
@@ -53,10 +51,8 @@ namespace Libraries {
                 );
             }
             var response = elasticClient.Bulk(bulkDescriptor);
-            var validator = new ElasticResponseValidator(response);
-            if (!validator.IsValid) {
-                throw new Exception("Add failed:\n" + validator.DebugInformation);
-            }
+            var validator = new ElasticResponseValidator();
+            validator.Validate(response);
         }
     }
 }
