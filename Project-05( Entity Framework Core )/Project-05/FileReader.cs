@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Project_05 {
     public class FileReader {
@@ -17,9 +18,7 @@ namespace Project_05 {
             var stringData = new Dictionary<string, string>();
             try {
                 var pathes = Directory.GetFiles(directoryPath);
-                foreach (string path in pathes) {
-                    stringData.Add(path.Replace("\\", "/"), File.ReadAllText(path));
-                }
+                stringData = pathes.ToDictionary(path => path.Replace("\\", "/"), path => File.ReadAllText(path));
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
