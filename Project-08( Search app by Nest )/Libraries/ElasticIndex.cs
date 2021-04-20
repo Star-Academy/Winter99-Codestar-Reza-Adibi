@@ -9,7 +9,6 @@ namespace Libraries {
         List<char> invalidChars = new List<char> { '\\', '/', '*', '?', '"', '<', '>', '|', ' ', ',' };
         public string IndexName { get; }
 
-
         public ElasticIndex(string indexName, string connectionAddress) {
             ValidateIndexName(indexName);
             IndexName = indexName;

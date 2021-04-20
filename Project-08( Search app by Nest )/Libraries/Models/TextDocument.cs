@@ -34,7 +34,7 @@ namespace Libraries {
         /// <returns>List of extracted index items.</returns>
         public static IEnumerable<TextDocument> GetFomeDirectory(string directoryPath) {
             var datas = FileReader.ReadFromDirectory(directoryPath);
-            var textDocuments = datas.Select(data => new TextDocument { DocText = data.Value, Path = data.Key }).ToList();
+            var textDocuments = datas.Select(data => new TextDocument { Path = data.Item1, DocText = data.Item2 }).ToList();
             return textDocuments;
         }
 

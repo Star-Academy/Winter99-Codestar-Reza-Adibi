@@ -25,9 +25,9 @@ namespace Libraries.Tests {
 
         [Fact]
         public void ReadFromDirectoryTest() {
-            var expectedResult = new Dictionary<string, string> {
-                { directoryPath + "/sample", "this is simple file" },
-                { directoryPath + "/sample2", "this is second document" }
+            var expectedResult = new List<Tuple<string, string>> {
+                new Tuple<string, string>( directoryPath + "/sample", "this is simple file" ),
+                new Tuple<string, string>( directoryPath + "/sample2", "this is second document" )
             };
             var testResult = FileReader.ReadFromDirectory(directoryPath);
             Assert.Equal(expectedResult, testResult);
@@ -35,7 +35,7 @@ namespace Libraries.Tests {
 
         [Fact]
         public void ReadFromDirectoryTestWrongPath() {
-            Dictionary<string, string> expectedResult = new Dictionary<string, string>();
+            var expectedResult = new List<Tuple<string, string>>();
             var testResult = FileReader.ReadFromDirectory("wrong path");
             Assert.Equal(expectedResult, testResult);
         }
