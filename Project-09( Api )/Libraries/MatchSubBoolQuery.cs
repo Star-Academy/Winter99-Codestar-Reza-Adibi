@@ -32,13 +32,14 @@ namespace Libraries {
         }
 
         public IEnumerable<QueryContainer> GetQuery(string fieldName) {
-            var query = new List<QueryContainer>();
-            foreach (var filter in Filters)
-                query.Add(new MatchQuery
+            var query = Filters.Select<string, QueryContainer>(
+                filter =>
+                new MatchQuery
                 {
                     Field = fieldName,
                     Query = filter
-                });
+                }
+            );
             return query;
         }
     }

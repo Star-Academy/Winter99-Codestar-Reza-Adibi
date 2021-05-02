@@ -20,7 +20,7 @@ namespace Project_9.Services {
         }
 
         private IEnumerable<TextDocument> ConvertToTextDocument(IEnumerable<Document> items) {
-            return items.Select(item => item.ConvertToTextDocument()).ToList();
+            return items.Select(item => item.ConvertToTextDocument());
         }
 
         public IEnumerable<Document> Search(string stringQuery) {
@@ -32,7 +32,7 @@ namespace Project_9.Services {
         }
 
         private IEnumerable<Document> ConvertToDocument(IEnumerable<TextDocument> items) {
-            return items.Select(item => new Document(item)).ToList();
+            return items.Select(item => new Document(item));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Project_9.Controllers {
         /// </param>
         /// <returns>Status code 200 If query has result.<br/> Status code 404 If exaption occured or query has no result.</returns>
         [HttpGet]
-        public IActionResult Search(string query) {
+        public IActionResult Search([FromQuery] string query) {
             try {
                 var result = searchService.Search(query);
                 if (result.Count() == 0)
@@ -47,7 +47,7 @@ namespace Project_9.Controllers {
         /// </param>
         /// <returns>Status code 200 If no exeption occure, otherwise Status code 500.</returns>
         [HttpPost]
-        public IActionResult AddToIndex(IEnumerable<Document> documents) {
+        public IActionResult AddToIndex([FromBody] IEnumerable<Document> documents) {
             try {
                 searchService.AddToIndex(documents);
                 return Ok();
