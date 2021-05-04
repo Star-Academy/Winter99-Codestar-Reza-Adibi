@@ -1,9 +1,5 @@
 ﻿using Libraries;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Project_9.Models {
     public class SearchIndex : ElasticIndexTextDocumentIndex {

@@ -1,10 +1,7 @@
 ﻿using Libraries;
-using Microsoft.Extensions.Configuration;
 using Project_9.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Project_9.Services {
     public class SearchService : ISearchService {
@@ -21,6 +18,11 @@ namespace Project_9.Services {
 
         private IEnumerable<TextDocument> ConvertToTextDocument(IEnumerable<Document> items) {
             return items.Select(item => item.ConvertToTextDocument());
+        }
+
+        public void AddToIndex(Document item) {
+            var textDocument = item.ConvertToTextDocument();
+            index.AddToIndex(textDocument);
         }
 
         public IEnumerable<Document> Search(string stringQuery) {

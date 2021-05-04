@@ -1,9 +1,5 @@
-﻿using Libraries;
-using Project_9.Models;
-using System;
+﻿using Project_9.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Project_9.Services {
     public interface ISearchService {
@@ -26,5 +22,11 @@ namespace Project_9.Services {
         /// </summary>
         /// <param name="items">List of documents.</param>
         public void AddToIndex(IEnumerable<Document> items);
+
+        /// <summary>
+        /// Add a document to index.
+        /// </summary>
+        /// <param name="items">Single document.</param>
+        public void AddToIndex(Document items);
     }
 }
