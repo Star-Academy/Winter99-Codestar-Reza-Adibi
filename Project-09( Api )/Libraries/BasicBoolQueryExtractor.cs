@@ -1,7 +1,7 @@
 ﻿using Nest;
 
 namespace Libraries {
-    public class BasicBoolQueryExtractor : IQueryExtractore {
+    public class BasicBoolQueryExtractor : IQueryExtractor {
         private static readonly string separatorsRegex = " ";
         private readonly string queryText;
         private readonly string fieldName;

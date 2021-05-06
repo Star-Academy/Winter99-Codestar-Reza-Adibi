@@ -1,7 +1,7 @@
 ﻿using Nest;
 
 namespace Libraries {
-    public interface IQueryExtractore {
+    public interface IQueryExtractor {
         /// <summary>
         /// Extract a query from class query text on class field.
         /// </summary>

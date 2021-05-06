@@ -20,7 +20,7 @@ namespace Libraries {
         /// <returns>Extracted index item.</returns>
         public static TextDocument GetFomeFile(string filePath) {
             var data = FileReader.ReadFromFile(filePath);
-            return data == null ? null : new TextDocument { Path = data.Item1, DocText = data.Item2 };
+            return data == null ? null : new TextDocument { Path = data.Path, DocText = data.Data };
         }
 
         IEnumerable<IModel> IModel.GetFomeDirectory(string directoryPath) {
@@ -34,7 +34,7 @@ namespace Libraries {
         /// <returns>List of extracted index items.</returns>
         public static IEnumerable<TextDocument> GetFomeDirectory(string directoryPath) {
             var datas = FileReader.ReadFromDirectory(directoryPath);
-            var textDocuments = datas.Select(data => new TextDocument { Path = data.Item1, DocText = data.Item2 }).ToList();
+            var textDocuments = datas.Select(data => new TextDocument { Path = data.Path, DocText = data.Data }).ToList();
             return textDocuments;
         }
 

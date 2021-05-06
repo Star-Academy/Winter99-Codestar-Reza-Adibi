@@ -10,14 +10,18 @@ namespace Libraries {
         /// </summary>
         /// <param name="directoryPath">Path to the drectory containing your files.</param>
         /// <returns> Pairs of "fileID, text" in given directory or empty list if path is empty or doesn't exists. </returns>
-        public static IEnumerable<Tuple<string, string>> ReadFromDirectory(string directoryPath) {
-            var stringData = new List<Tuple<string, string>>();
+        public static IEnumerable<FileData> ReadFromDirectory(string directoryPath) {
+            var stringData = new List<FileData>();
             try {
                 var pathes = Directory.GetFiles(directoryPath);
-                stringData = pathes.Select(path => new Tuple<string, string>(
-                      path.Replace("\\", "/"),
-                      File.ReadAllText(path)
-                      )).ToList();
+                stringData =
+                    pathes.Select(
+                        path => new FileData
+                        {
+                            Path = path.Replace("\\", "/"),
+                            Data = File.ReadAllText(path)
+                        }
+                    ).ToList();
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
@@ -30,12 +34,16 @@ namespace Libraries {
         /// </summary>
         /// <param name="filePath">Path to your file.</param>
         /// <returns> Pair of "fileID, text" of your file or "null" if file doesn't exists. </returns>
-        public static Tuple<string, string> ReadFromFile(string filePath) {
-            Tuple<string, string> result = null;
+        public static FileData ReadFromFile(string filePath) {
+            FileData result = null;
             try {
+                var path = filePath.Replace("\\", "/");
                 var text = File.ReadAllText(filePath);
-                var id = filePath.Replace("\\", "/");
-                result = new Tuple<string, string>(id, text);
+                result = new FileData
+                {
+                    Path = path,
+                    Data = text
+                };
             }
             catch (Exception exception) {
                 Console.WriteLine(exception.Message + '\n' + exception.StackTrace);
