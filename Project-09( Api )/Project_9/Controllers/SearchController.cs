@@ -27,8 +27,6 @@ namespace Project_9.Controllers {
         public IActionResult Search([FromQuery] string query) {
             try {
                 var result = searchService.Search(query);
-                if (result.Count() == 0)
-                    throw new Exception();
                 return Ok(result);
             }
             catch (Exception e) {
