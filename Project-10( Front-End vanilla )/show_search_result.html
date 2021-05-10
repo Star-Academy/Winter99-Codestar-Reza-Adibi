@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Result</title>
+    <link rel="stylesheet" href="./styles/common.styles.css" />
+    <link rel="stylesheet" href="./styles/show_search_result.styles.css" />
+  </head>
+  <body onload="checkQueryString();getSearchResult()">
+    <div class="header">
+      <div class="title_container">
+        <a href="index.html">Search</a>
+      </div>
+      <form class="search_form" method="GET" action="show_search_result.html">
+        <input
+          type="text"
+          placeholder="Write some of document text"
+          name="query"
+          id="search_query"
+        />
+        <input type="submit" value="Search" />
+      </form>
+    </div>
+    <div class="result_list"></div>
+    <div class="result_show" onclick="hideElement(event)">
+      <div class="id_container"><p></p></div>
+      <hr />
+      <div class="text_container"><p></p></div>
+    </div>
+  </body>
+  <script src="./scrips/show_serach_result.scripts.js"></script>
+</html>

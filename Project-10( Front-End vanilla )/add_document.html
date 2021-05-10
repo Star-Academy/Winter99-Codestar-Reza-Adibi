@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Document</title>
+    <link rel="stylesheet" href="./styles/common.styles.css" />
+    <link rel="stylesheet" href="./styles/add_document.styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="title_container">
+        <a href="index.html">Search</a>
+      </div>
+      <form class="search_form" method="GET" action="show_search_result.html">
+        <input
+          type="text"
+          placeholder="Write some of document text"
+          name="query"
+          id="search_query"
+        />
+        <input type="submit" value="Search" />
+      </form>
+    </div>
+    <form
+      class="new_document"
+      method="POST"
+      onsubmit="event.preventDefault(); sendRequest()"
+    >
+      <h1>New Document</h1>
+      <div class="id_container">
+        <label for="id">Id:</label>
+        <input type="text" name="id" id="id" required />
+      </div>
+      <hr />
+      <div class="text_container">
+        <label for="text">Text:</label>
+        <textarea type="text" name="text" id="text" required></textarea>
+      </div>
+      <input type="submit" class="button" id="button_add" value="Add" />
+      <input
+        type="button"
+        class="button"
+        id="button_cancel"
+        value="Cancle"
+        onclick="goHome()"
+      />
+    </form>
+    <script src="scrips/add_document.scripts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+.new_document {
+  border: 1px solid black;
+  margin: 20px;
+  padding: 30px;
+  padding-bottom: 50px;
+}
+.new_document > h1 {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 40px;
+  font-family: Npitala;
+}
+.id_container {
+  display: flex;
+  min-height: 20%;
+}
+.id_container > label {
+  line-height: 35px;
+  width: 45px;
+}
+.id_container > input {
+  line-height: 20px;
+  flex: 1;
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: rgb(226, 237, 243);
+  border-right: 2px solid black;
+  outline: none;
+}
+.text_container {
+  display: flex;
+  min-height: 56vh;
+  margin-bottom: 20px;
+}
+.text_container > label {
+  line-height: 35px;
+  width: 45px;
+}
+.text_container > textarea {
+  resize: none;
+  flex: 1;
+  margin-left: 5px;
+  padding: 10px;
+  border: none;
+  background-color: rgb(226, 237, 243);
+  border-right: 2px solid black;
+  outline: none;
+}
+.new_document > .button {
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 20px;
+  width: 90px;
+  font-family: Npitala;
+}
+.new_document > #button_add {
+  float: right;
+  border: 2px solid rgb(91, 190, 10);
+  color: rgb(91, 190, 10);
+  background-color: inherit;
+  margin-right: 100px;
+}
+.new_document > #button_add:hover {
+  box-shadow: 0px 0px 5px rgb(91, 190, 10);
+}
+.new_document > #button_add:active {
+  background-color: rgb(215, 247, 189);
+}
+.new_document > #button_cancel {
+  border: 2px solid rgb(255, 39, 39);
+  color: rgb(245, 39, 39);
+  float: left;
+  background-color: inherit;
+  margin-left: 100px;
+}
+.new_document > #button_cancel:hover {
+  box-shadow: 0px 0px 5px rgb(255, 72, 72);
+}
+.new_document > #button_cancel:active {
+  background-color: rgb(247, 189, 194);
+}

@@ -1,0 +1,25 @@
+<app-search-bar></app-search-bar>
+<form
+  class="new_document"
+  method="POST"
+  onsubmit="event.preventDefault(); sendRequest()"
+>
+  <h1>New Document</h1>
+  <div class="id_container">
+    <label for="id">Id:</label>
+    <input type="text" name="id" id="id" required />
+  </div>
+  <hr />
+  <div class="text_container">
+    <label for="text">Text:</label>
+    <textarea type="text" name="text" id="text" required></textarea>
+  </div>
+  <input type="submit" class="button" id="button_add" value="Add" />
+  <input
+    type="button"
+    class="button"
+    id="button_cancel"
+    value="Cancle"
+    onclick="goHome()"
+  />
+</form>

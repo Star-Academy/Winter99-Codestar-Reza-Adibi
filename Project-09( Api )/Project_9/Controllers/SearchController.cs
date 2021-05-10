@@ -26,11 +26,14 @@ namespace Project_9.Controllers {
         [HttpGet]
         public IActionResult Search([FromQuery] string query) {
             try {
+                if (string.IsNullOrEmpty(query)) {
+                    throw new Exception();
+                }
                 var result = searchService.Search(query);
                 return Ok(result);
             }
             catch (Exception e) {
-                return NotFound(e.Message);
+                return Problem(detail: "Somting went wrong!\n" + e.Message, statusCode: 500);
             }
         }
 

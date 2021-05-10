@@ -1,0 +1,58 @@
+::ng-deep app-logo > .logo {
+  margin-top: 30vh;
+  font-size: 80px;
+  text-align: center;
+  width: 100%;
+}
+.search_form {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.search_form > input[type="text"] {
+  width: 50%;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid rgb(100, 100, 100);
+  padding: 0 10px;
+  line-height: 30px;
+  font-size: 25px;
+  text-align: center;
+  transition: border-width 0.075s linear;
+}
+.search_form > input[type="text"]:focus {
+  border-right: 3px solid black;
+  border-left: 3px solid black;
+  outline: none;
+}
+.search_form > input[type="submit"] {
+  margin: 20px;
+  background-color: rgb(240, 236, 236);
+  border: 1px solid white;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+.search_form > input[type="submit"]:hover {
+  border: 1px solid black;
+}
+.search_form > input[type="submit"]:active {
+  background-color: rgb(202, 199, 199);
+}
+.new_document {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.new_document > a {
+  text-decoration: none;
+  font-size: 30px;
+  font-family: npitala;
+  color: teal;
+  padding: 5px 10px;
+}
+.new_document > a:hover {
+  color: rgb(4, 156, 110);
+}
+.new_document > a:active {
+  background-color: rgb(238, 234, 234);
+}
