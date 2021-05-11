@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HidableFlex } from 'src/app/Interfaces/Hidables/HidableFlex';
 import { TextDocument } from 'src/app/models/Document';
 
 @Component({
@@ -6,18 +7,15 @@ import { TextDocument } from 'src/app/models/Document';
   templateUrl: './result-panel.component.html',
   styleUrls: ['./result-panel.component.scss'],
 })
-export class ResultPanelComponent implements OnInit {
-  public opacity: number = 0;
-  public display: string = 'none';
+export class ResultPanelComponent extends HidableFlex implements OnInit {
   private _document?: TextDocument;
-  private faidingDuration: number = 300;
 
   @Input()
   public set document(newDocument: TextDocument | undefined) {
     if (newDocument !== undefined) {
       this._document = newDocument;
       console.log(newDocument);
-      this.showDocument();
+      this.show();
     }
   }
 
@@ -27,21 +25,9 @@ export class ResultPanelComponent implements OnInit {
       : this._document;
   }
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   ngOnInit(): void {}
-
-  showDocument() {
-    this.display = 'flex';
-    setTimeout(() => {
-      this.opacity = 100;
-    }, this.faidingDuration);
-  }
-
-  hidePanel() {
-    this.opacity = 0;
-    setTimeout(() => {
-      this.display = 'none';
-    }, this.faidingDuration);
-  }
 }

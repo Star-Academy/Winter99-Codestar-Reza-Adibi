@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Validatable } from 'src/app/Interfaces/Validatable';
 import { TextDocument } from 'src/app/models/Document';
 import { SearchService } from 'src/app/services/search/search.service';
 
@@ -8,7 +10,7 @@ import { SearchService } from 'src/app/services/search/search.service';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent extends Validatable implements OnInit {
   public documents: TextDocument[] | null = [];
   public seletedDocument: TextDocument | undefined;
   public searchQuery: string;
@@ -18,6 +20,7 @@ export class SearchResultsComponent implements OnInit {
     private route: ActivatedRoute,
     private searchService: SearchService
   ) {
+    super();
     this.searchQuery = this.getQueryFromUri();
   }
 
@@ -41,7 +44,6 @@ export class SearchResultsComponent implements OnInit {
   }
 
   selectCard(document: TextDocument): void {
-    this.unselectCard();
     this.seletedDocument = document;
   }
 
@@ -52,8 +54,13 @@ export class SearchResultsComponent implements OnInit {
   getSrarchResults(): void {
     const results = this.searchService.search(this.searchQuery);
     results.subscribe(
-      (documents) =>
-        (this.documents = documents.length === 0 ? null : documents)
+      (documents) => {
+        this.documents = documents.length === 0 ? null : documents;
+      },
+      (error) => {
+        this.validateResponse(error);
+        this.documents = null;
+      }
     );
   }
 }

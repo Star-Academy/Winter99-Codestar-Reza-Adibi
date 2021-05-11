@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { ResultCardComponent } from './components/search-results/result-card/res
 import { ResultPanelComponent } from './components/search-results/result-panel/result-panel.component';
 import { AddDocumentComponent } from './components/add-document/add-document.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ResultPanelComponent,
     AddDocumentComponent,
     NotFoundComponent,
+    ErrorMessageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MatButtonModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatButtonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

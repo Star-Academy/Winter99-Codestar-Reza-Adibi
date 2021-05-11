@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+import { Validatable } from 'src/app/Interfaces/Validatable';
+import { TextDocument } from 'src/app/models/Document';
 import { AddDocumentService } from 'src/app/services/add-document/add-document.service';
 
 @Component({
@@ -6,10 +10,37 @@ import { AddDocumentService } from 'src/app/services/add-document/add-document.s
   templateUrl: './add-document.component.html',
   styleUrls: ['./add-document.component.scss'],
 })
-export class AddDocumentComponent implements OnInit {
-  constructor(private addService: AddDocumentService) {}
+export class AddDocumentComponent extends Validatable {
+  id = new FormControl('', [Validators.required]);
+  content = new FormControl('', [Validators.required]);
 
-  ngOnInit(): void {}
+  constructor(private addService: AddDocumentService) {
+    super();
+  }
 
-  sendAddRequest() {}
+  sendAddRequest(): void {
+    this.validateForm();
+
+    this.addService
+      .Add(new TextDocument(this.id.value, this.content.value))
+      .subscribe(
+        (success) => {
+          alert('Success!');
+        },
+        (error) => {
+          this.validateResponse(error);
+        }
+      );
+  }
+
+  private validateForm() {
+    if (this.id.invalid) {
+      alert('Id is required!');
+      throw new Error('Id is required!');
+    }
+    if (this.content.invalid) {
+      alert('Content is required!');
+      throw new Error('Content is required!');
+    }
+  }
 }

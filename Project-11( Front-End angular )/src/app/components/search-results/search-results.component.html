@@ -6,7 +6,7 @@
     (click)="selectCard(document)"
   ></app-result-card>
   <div class="no-result-contaner" *ngIf="documents === null">
-    <p>Sorry your search query has no results!</p>
+    <p>Sorry, there is nothing to show!</p>
     <br />
     <img src="../../../assets/images/no result.jpg" alt="" />
   </div>
@@ -15,3 +15,7 @@
   [document]="seletedDocument"
   (click)="unselectCard()"
 ></app-result-panel>
+<app-error-message
+  [error]="errorValue"
+  (click)="removeError()"
+></app-error-message>

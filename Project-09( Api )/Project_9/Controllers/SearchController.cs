@@ -10,6 +10,8 @@ namespace Project_9.Controllers {
     [ApiController]
     public class SearchController : ControllerBase {
         private readonly ISearchService searchService;
+        private readonly string serverErrorMessage = "Somting went wrong in server!";
+
 
         public SearchController(ISearchService searchService) {
             this.searchService = searchService;
@@ -33,7 +35,7 @@ namespace Project_9.Controllers {
                 return Ok(result);
             }
             catch (Exception e) {
-                return Problem(detail: "Somting went wrong!\n" + e.Message, statusCode: 500);
+                return Problem(detail: $"{this.serverErrorMessage}\n{e.Message}", statusCode: 500);
             }
         }
 
@@ -52,7 +54,7 @@ namespace Project_9.Controllers {
                 return Ok();
             }
             catch (Exception e) {
-                return Problem(detail: "Somting went wrong!\n" + e.Message, statusCode: 500);
+                return Problem(detail: $"{this.serverErrorMessage}\n{e.Message}", statusCode: 500);
             }
         }
 
