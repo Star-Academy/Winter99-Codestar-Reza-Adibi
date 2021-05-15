@@ -7,14 +7,13 @@ import { TextDocument } from 'src/app/models/Document';
   templateUrl: './result-panel.component.html',
   styleUrls: ['./result-panel.component.scss'],
 })
-export class ResultPanelComponent extends HidableFlex implements OnInit {
+export class ResultPanelComponent extends HidableFlex {
   private _document?: TextDocument;
 
   @Input()
   public set document(newDocument: TextDocument | undefined) {
     if (newDocument !== undefined) {
       this._document = newDocument;
-      console.log(newDocument);
       this.show();
     }
   }
@@ -28,6 +27,4 @@ export class ResultPanelComponent extends HidableFlex implements OnInit {
   constructor() {
     super();
   }
-
-  ngOnInit(): void {}
 }

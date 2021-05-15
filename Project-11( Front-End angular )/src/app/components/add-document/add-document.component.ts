@@ -20,7 +20,6 @@ export class AddDocumentComponent extends Validatable {
 
   sendAddRequest(): void {
     this.validateForm();
-
     this.addService
       .Add(new TextDocument(this.id.value, this.content.value))
       .subscribe(

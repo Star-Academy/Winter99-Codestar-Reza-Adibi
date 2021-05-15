@@ -12,7 +12,7 @@ export abstract class Hidable {
     this.display = this.displayType;
     setTimeout(() => {
       this.opacity = 100;
-    }, this.faidingDuration);
+    }, 0);
   }
 
   hide() {
