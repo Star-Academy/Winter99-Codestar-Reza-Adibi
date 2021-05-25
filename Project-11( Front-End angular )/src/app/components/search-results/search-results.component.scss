@@ -1,0 +1,22 @@
+.result_list {
+  border-top: 1px solid black;
+  margin: 20px;
+  margin-bottom: 0;
+  padding: 20px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.no-result-contaner {
+  text-align: center;
+}
+.no-result-contaner > p {
+  display: block;
+  font-family: segoeui;
+  font-size: xx-large;
+  margin: 10px;
+}
+.no-result-contaner > img {
+  max-width: 100%;
+}

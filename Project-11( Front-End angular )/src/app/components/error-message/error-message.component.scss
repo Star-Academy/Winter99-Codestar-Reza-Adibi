@@ -1,0 +1,30 @@
+.background {
+  width: 100%;
+  min-height: 100%;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(180, 197, 190, 0.8);
+  margin: 0;
+}
+.contaner {
+  margin-top: 10%;
+  padding: 20px;
+  display: inline-block;
+  min-width: 300px;
+  max-width: 80%;
+  background-color: white;
+  text-align: center;
+}
+.contaner > img {
+  width: 200px;
+}
+.contaner > p {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(170, 2, 2);
+  color: white;
+  font-family: SegoeUI;
+}

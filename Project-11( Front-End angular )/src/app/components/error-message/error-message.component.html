@@ -1,0 +1,17 @@
+<div
+  class="background"
+  [ngStyle]="{ opacity: opacity, display: display }"
+  (click)="hide()"
+>
+  <div class="contaner" (click)="$event.stopPropagation()">
+    <img
+      class="error-sign"
+      src="../../../assets/images/error-handling-300x300.jpg"
+    />
+    <p class="message">
+      <b> Oops! Something went wrong. </b>
+      <br />
+      {{ errorMessage }}
+    </p>
+  </div>
+</div>

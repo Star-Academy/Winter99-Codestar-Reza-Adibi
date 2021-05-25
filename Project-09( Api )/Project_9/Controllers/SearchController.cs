@@ -10,6 +10,8 @@ namespace Project_9.Controllers {
     [ApiController]
     public class SearchController : ControllerBase {
         private readonly ISearchService searchService;
+        private readonly string serverErrorMessage = "Somting went wrong in server!";
+
 
         public SearchController(ISearchService searchService) {
             this.searchService = searchService;
@@ -26,11 +28,14 @@ namespace Project_9.Controllers {
         [HttpGet]
         public IActionResult Search([FromQuery] string query) {
             try {
+                if (string.IsNullOrEmpty(query)) {
+                    throw new Exception();
+                }
                 var result = searchService.Search(query);
                 return Ok(result);
             }
             catch (Exception e) {
-                return NotFound(e.Message);
+                return Problem(detail: $"{this.serverErrorMessage}\n{e.Message}", statusCode: 500);
             }
         }
 
@@ -49,7 +54,7 @@ namespace Project_9.Controllers {
                 return Ok();
             }
             catch (Exception e) {
-                return Problem(detail: "Somting went wrong!\n" + e.Message, statusCode: 500);
+                return Problem(detail: $"{this.serverErrorMessage}\n{e.Message}", statusCode: 500);
             }
         }
 

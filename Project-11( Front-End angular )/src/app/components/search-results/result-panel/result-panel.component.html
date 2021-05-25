@@ -1,0 +1,13 @@
+<div
+  class="result_panel"
+  [ngStyle]="{ opacity: opacity, display: display }"
+  (click)="hide()"
+>
+  <div class="id_container" (click)="$event.stopPropagation()">
+    <p>{{ document == undefined ? "" : document.id }}</p>
+  </div>
+  <hr />
+  <div class="text_container" (click)="$event.stopPropagation()">
+    <p>{{ document == undefined ? "" : document.content }}</p>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<app-search-bar [searchQuery]="searchQuery"></app-search-bar>
+<div class="result_list">
+  <app-result-card
+    *ngFor="let document of documents"
+    [document]="document"
+    (click)="selectCard(document)"
+  ></app-result-card>
+  <div class="no-result-contaner" *ngIf="documents === null">
+    <p>Sorry, there is nothing to show!</p>
+    <br />
+    <img src="../../../assets/images/no result.jpg" alt="" />
+  </div>
+</div>
+<app-result-panel
+  [document]="seletedDocument"
+  (click)="unselectCard()"
+></app-result-panel>
+<app-error-message
+  [error]="errorValue"
+  (click)="removeError()"
+></app-error-message>

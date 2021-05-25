@@ -3,13 +3,13 @@
 namespace Project_9.Models {
     public class Document {
         public string Id { get; set; }
-        public string Text { get; set; }
+        public string Content { get; set; }
 
         public Document() { }
 
         public Document(TextDocument textDocument) {
             Id = textDocument.Path;
-            Text = textDocument.DocText;
+            Content = textDocument.DocText;
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Project_9.Models {
         public TextDocument ConvertToTextDocument() {
             return new TextDocument
             {
-                DocText = Text,
+                DocText = Content,
                 Path = Id
             };
         }

@@ -1,0 +1,25 @@
+<app-search-bar></app-search-bar>
+<form
+  class="new_document"
+  method="POST"
+  onsubmit="event.preventDefault();"
+  (submit)="sendAddRequest()"
+  action=""
+>
+  <h1>New Document</h1>
+  <div class="id_container">
+    <label for="id">Id:</label>
+    <input type="text" id="id" [formControl]="id" required />
+  </div>
+  <hr />
+  <div class="text_container">
+    <label for="text">Text:</label>
+    <textarea type="text" id="text" [formControl]="content" required></textarea>
+  </div>
+  <input type="submit" class="button" id="button_add" value="Add" />
+  <a class="button" id="button_cancel" href="/">Cancle</a>
+</form>
+<app-error-message
+  [error]="errorValue"
+  (click)="removeError()"
+></app-error-message>
